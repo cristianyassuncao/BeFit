@@ -6,7 +6,7 @@ class ClienteController {
     
     def cadastroService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -36,27 +36,13 @@ class ClienteController {
          render(view:'edit', model:[clienteInstance: clienteInstance])
     }
 
-    @Transactional
-    def update(Cliente clienteInstance) {
-        if (clienteInstance == null) {
-            notFound()
+    def update = {
+        def clienteInstance = cadastroService.salvarCliente(params)
+        if (clienteInstance.hasErrors()) {
+            render(view:'edit', model:[clienteInstance: clienteInstance])
             return
-        }
-
-        if (!clienteInstance.validate()) {
-            respond clienteInstance.errors, view:'edit'
-            return
-        }
-
-        clienteInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Cliente.label', default: 'Cliente'), clienteInstance.id])
-                redirect clienteInstance
-            }
-            '*'{ respond clienteInstance, [status: OK] }
-        }
+        }    
+        redirect(action: "show", id: clienteInstance?.id)
     }
 
     @Transactional

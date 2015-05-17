@@ -5,6 +5,11 @@
             <g:set var="entityName" value="${message(code: 'cliente.label', default: 'Cliente')}" />
             <title><g:message code="default.edit.label" args="[entityName]" /></title>
             <g:javascript src="pessoa.js"/>
+            <script>
+                $(function(){
+                    $("#diaMesNascimento").mask("99/99");                 
+                })  
+            </script>
 	</head>
 	<body>
             <a href="#edit-cliente" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -27,10 +32,25 @@
                         </g:eachError>
                     </ul>
                 </g:hasErrors>
-                <g:form url="[resource:clienteInstance, action:'update']" method="PUT" >
+                <g:form url="[action:'update']">
                     <g:hiddenField name="version" value="${clienteInstance?.version}" />
                     <fieldset class="form">
-                        <g:render template="form"/>
+                        <g:render template="/pessoa/dadosPrincipaisPF" model="['pessoaInstance': clienteInstance?.pessoa]" />
+                        <fieldset>
+                            <legend>Dados Complementares</legend>
+                            <div class="campos">
+                                <div class="campo">
+                                    <div class="nome">
+                                        <g:message code="cliente.dataInclusao.label"/>:
+                                        <span class="required-indicator">*</span>
+                                    </div>
+                                    <div class="valor">
+                                        <input type="text" id="dataInclusao" name="dataInclusao" value="<g:formatDate date="${clienteInstance?.dataInclusao}" format="dd/MM/yyyy"/>" readonly=""/>
+                                    </div>
+                                </div>
+                            </div>    
+                        </fieldset>        
+                        <g:render template="/pessoa/detalhes" model="['pessoaInstance': clienteInstance?.pessoa]" />
                     </fieldset>
                     <fieldset class="buttons">
                         <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

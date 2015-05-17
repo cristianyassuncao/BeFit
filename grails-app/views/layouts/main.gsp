@@ -31,7 +31,7 @@
                             <li><a href="${createLinkTo(dir:'cidade')}">Cidades</a></li>
                         </ul>
                     </li>
-                    <li class="submenu"><a href="${createLinkTo(dir:'pessoa')}">Pessoas</a>
+                    <li class="submenu"><a href="${createLinkTo(dir:'cliente')}">Clientes</a>
                     <li class="submenu"><a href="${createLinkTo(dir:'pedido')}">Pedidos</a>    
                 </ul>
             </div>    

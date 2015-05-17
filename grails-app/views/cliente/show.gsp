@@ -19,17 +19,10 @@
 			<g:if test="${flash.message}">
                             <div class="message" role="status">${flash.message}</div>
 			</g:if>
+                        <g:render template="/pessoa/dadosPrincipaisPFShow" model="['pessoaInstance': clienteInstance?.pessoa]" />
                         <fieldset>
-                            <legend>Dados Gerais</legend>
+                            <legend>Dados Complementares</legend>
                             <div class="campos">
-                                <div class="campo">
-                                    <div class="nome">
-                                        <g:message code="cliente.nome.label" default="Nome"/>:
-                                    </div>
-                                    <div class="valor">
-                                        <g:fieldValue bean="${clienteInstance}" field="nome"/>
-                                    </div>
-                                </div>
                                 <div class="campo">
                                     <div class="nome">
                                         <g:message code="cliente.dataInclusao.label" default="Data Inclusao" />:
@@ -38,44 +31,14 @@
                                         <g:formatDate date="${clienteInstance?.dataInclusao}" format="dd/MM/yyyy"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="campos">
-                                <div class="campo">
-                                    <div class="nome">
-                                        <g:message code="cliente.diaMesNascimento.label"/>:
-                                    </div>
-                                    <div class="valor">
-                                        ${clienteInstance?.diaMesNascimento}
-                                    </div>
-                                </div>
-                                <div class="campo">
-                                    <div class="nome">
-                                        <g:message code="cliente.email.label"/>:
-                                    </div>
-                                    <div class="valor">
-                                        ${clienteInstance?.email}
-                                    </div>
-                                </div>    
-                            </div>
-                        </fieldset>    
-                        <fieldset>    
-                            <legend>Endere&ccedil;os</legend>
-                            <g:render template="/endereco/list" model="[somenteLeitura: true]"/>
-                        </fieldset>
-			
-                        <g:if test="${clienteInstance?.telefones}">
-                            <li class="fieldcontain">
-                                    <span id="telefones-label" class="property-label"><g:message code="cliente.telefones.label" default="Telefones" /></span>
-                                    <g:each in="${clienteInstance.telefones}" var="t">
-                                        <span class="property-value" aria-labelledby="telefones-label"><g:link controller="telefone" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></span>
-                                    </g:each>
-                            </li>
-                        </g:if>
-			<g:form url="[resource:clienteInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${clienteInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
+                            </div>    
+                        </fieldset>        
+                        <g:render template="/pessoa/detalhes" model="['pessoaInstance': clienteInstance?.pessoa, 'somenteLeitura': true]" />
+                        <g:form url="[resource:clienteInstance, action:'delete']" method="DELETE">
+                            <fieldset class="buttons">
+                                <g:link class="edit" action="edit" resource="${clienteInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+                                <g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+                            </fieldset>
 			</g:form>
 		</div>
 	</body>

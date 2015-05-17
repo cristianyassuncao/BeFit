@@ -2,9 +2,7 @@ class Cliente {
     
     Pessoa pessoa
     Date dataInclusao
-           
-    static hasMany = [telefones: Telefone, enderecos: Endereco]
-
+ 
     static constraints = {
         
     }
