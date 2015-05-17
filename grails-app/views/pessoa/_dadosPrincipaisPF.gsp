@@ -3,7 +3,7 @@
         $("#diaMesNascimento").mask("99/99");                 
     })  
 </script>
-
+<input type="hidden" name="pessoa.id" value="${pessoaInstance?.id}">
 <fieldset>
     <legend>Dados Gerais</legend>
     <div class="campos">

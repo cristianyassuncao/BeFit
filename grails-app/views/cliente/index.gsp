@@ -22,14 +22,14 @@
 			<thead>
                             <tr>
                                 <g:sortableColumn property="id" title="${message(code: 'cliente.id.label', default: 'Código')}" />
-                                <g:sortableColumn property="nome" title="${message(code: 'cliente.nome.label', default: 'Nome')}" />
+                                <g:sortableColumn property="nome" title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
                             </tr>
                         </thead>
 				<tbody>
 				<g:each in="${clienteInstanceList}" status="i" var="clienteInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                             <td><g:link action="show" id="${clienteInstance.id}">${fieldValue(bean: clienteInstance, field: "id")}</g:link></td>
-                                            <td>${fieldValue(bean: clienteInstance, field: "nome")}</td>
+                                            <td>${clienteInstance?.pessoa?.nome}</td>
 					</tr>
 				</g:each>
 				</tbody>

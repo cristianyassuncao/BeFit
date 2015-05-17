@@ -3,6 +3,8 @@ import grails.transaction.Transactional
 import grails.converters.JSON
 
 class ClienteController {
+    
+    def cadastroService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -16,29 +18,22 @@ class ClienteController {
     }
 
     def create() {
+        params.dataInclusao = new Date()
         respond new Cliente(params), model: [somenteLeitura: true]
     }
-
-    @Transactional
-    def save(Cliente clienteInstance) {
-        if (clienteInstance == null) {
-            notFound()
-            return
-        }
-
-        if (!clienteInstance.validate()) {
+    
+    def save = {
+        def clienteInstance = cadastroService.salvarCliente(params)
+        if (clienteInstance.hasErrors()) {
             render(view:'create', model:[clienteInstance: clienteInstance, somenteLeitura: true])
             return
-        }
-
-        clienteInstance.save flush:true
-
-        render(view:'edit', model:[clienteInstance: clienteInstance])
+        }    
+        redirect(action: "edit", params: [id: clienteInstance.id])
     }
 
     def edit = {
         def clienteInstance = Cliente.get(params.id)
-        respond clienteInstance
+         render(view:'edit', model:[clienteInstance: clienteInstance])
     }
 
     @Transactional
