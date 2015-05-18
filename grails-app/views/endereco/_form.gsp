@@ -5,7 +5,7 @@
             <span class="required-indicator">*</span>
         </div>
         <div class="valor">
-            <input type="text" id="rua" name="rua" required="" maxlength="200" size="80" value="${enderecoInstance?.rua}"/>
+            <input type="text" id="rua" name="rua" maxlength="200" size="80" value="${enderecoInstance?.rua}"/>
         </div>    
     </div>
 </div>
@@ -16,7 +16,7 @@
             <span class="required-indicator">*</span>
         </div>
         <div class="valor">
-            <input type="text" id="numero" name="numero" required="" maxlength="10" size="10" value="${enderecoInstance?.numero}"/>
+            <input type="text" id="numero" name="numero" maxlength="10" size="10" value="${enderecoInstance?.numero}"/>
         </div>    
     </div>
 </div>
@@ -37,7 +37,7 @@
             <span class="required-indicator">*</span>
         </div>
         <div class="valor">
-            <g:select id="bairro" name="bairro.id" from="${Bairro.list()}" optionKey="id" optionValue="nome" required="" noSelection="['':'-Escolha o Bairro-']" value="${enderecoInstance?.bairro?.id}"/>
+            <g:select id="bairro" name="bairro.id" from="${Bairro.list()}" optionKey="id" optionValue="nome" noSelection="['':'-Escolha o Bairro-']" value="${enderecoInstance?.bairro?.id}"/>
         </div>    
     </div>
 </div>

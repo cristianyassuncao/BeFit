@@ -73,47 +73,5 @@ class ClienteController {
             '*'{ render status: NOT_FOUND }
         }
     }
-    
-    def loadEndereco = {
-        def enderecoInstance = null
-        if (params.idEndereco == null) {
-            def clienteInstance = Cliente.get(params.idCliente)
-            if (clienteInstance == null) {
-                response.setStatus(500)
-                render("Cliente não cadastrado!!!") as JSON
-                return 
-            }
-            enderecoInstance = new Endereco(cliente: Cliente.get(params.idCliente))
-        } else {
-            enderecoInstance = Endereco.get(params.idEndereco)
-        }
-        render(view: '/endereco/create', model: [enderecoInstance: enderecoInstance])        
-    }
-    
-    def updateEndereco = {
-        def clienteInstance = Cliente.get(params["cliente.id"])
-        def enderecoInstance = Endereco.get(params.id) 
-        if (!enderecoInstance) {
-           enderecoInstance = new Endereco()
-        }
-        enderecoInstance.properties = params
-        enderecoInstance.cep = enderecoInstance?.cep?.replace("-","") 
-        if (!enderecoInstance.validate()) {
-            render(view:'/endereco/create', model:[enderecoInstance: enderecoInstance])
-            response.setStatus(500)
-            return
-        }
-        enderecoInstance.save flush:true
-        clienteInstance.refresh()
-        render(template:'/endereco/list', model:[clienteInstance: clienteInstance])
-    }
-    
-    def deleteEndereco = {
-        def enderecoInstance = Endereco.get(params.id) 
-        def clienteInstance = enderecoInstance.cliente
-        enderecoInstance.delete(flush: true)
-        clienteInstance.refresh()
-        render(template:'/endereco/list', model:[clienteInstance: clienteInstance])
-    }
-    
+           
 }

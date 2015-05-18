@@ -42,7 +42,7 @@
                                     </div>
                                 </div>    
                             </fieldset>       
-                            <g:render template="/endereco/cadastroComplementar" model="['enderecoInstance': enderecoInstance]"/>
+                            <g:render template="/endereco/cadastroComplementar" model="['enderecoInstance': clienteInstance?.pessoa?.enderecoInstance]"/>
                             <fieldset class="buttons">
                                 <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                             </fieldset>
