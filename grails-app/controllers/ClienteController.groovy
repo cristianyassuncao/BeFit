@@ -8,9 +8,27 @@ class ClienteController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Cliente.list(params), model:[clienteInstanceCount: Cliente.count()]
+    def index = {
+        params.max = Math.min( params.max ? params.max.toInteger() : 10, 100)
+        if (!params.sort) params.sort = "pessoa"
+        if (!params.order) params.order = "desc"
+        def result = Cliente.createCriteria().list(params) {
+            if (params.nome != null && params.nome != "") {
+                pessoa { 
+                    eq("class", "PessoaFisica") 
+                    ilike("nome", "%"+params.nome+"%") 
+                } 
+            }
+            if (params.numeroTelefone != null && params.numeroTelefone != "") {
+                pessoa {
+                    telefones {
+                        eq("numero", Telefone.removerMascara(params.numeroTelefone))
+                    }
+                }
+            }
+            order(params.sort, params.order)
+        }    
+        return [clienteInstanceList: result, clienteInstanceTotal: result.totalCount]
     }
 
     def show(Cliente clienteInstance) {
@@ -30,7 +48,7 @@ class ClienteController {
     }
     
     def save = {
-        def clienteInstance = cadastroService.salvarCliente(params)
+        def clienteInstance = cadastroService.criarCliente(params)
         if (clienteInstance.hasErrors()) {
             render(view:'create', model:[clienteInstance: clienteInstance, somenteLeitura: true])
             return

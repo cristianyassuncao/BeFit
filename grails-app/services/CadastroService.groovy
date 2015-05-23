@@ -7,8 +7,7 @@ class CadastroService {
            
     boolean transactional = true
     
-    def salvarCliente(params) {
-        def pessoaInstance = definirPessoa(params)
+    def definirCliente(params, pessoaInstance) {
         def clienteInstance = Cliente.get(params.id)
         if (!clienteInstance) {
             clienteInstance = new Cliente()
@@ -27,8 +26,13 @@ class CadastroService {
         }
         return clienteInstance
     }
+    
+    def criarCliente(params) {
+        def pessoaInstance = definirCadastroCompletoPessoa(params)
+        return definirCliente(params, pessoaInstance)
+    }
        
-    private Pessoa definirPessoa(params) {
+    private Pessoa definirCadastroCompletoPessoa(params) {
         def parametros = [:]
         params.each {
             if (it.key.contains('pessoa.')) {
@@ -74,7 +78,6 @@ class CadastroService {
     }
     
     private Endereco definirEndereco(params) {
-        if (!params.containsKey("rua")) return null
         def enderecoInstance = new Endereco()
         enderecoInstance.rua = params?.rua
         enderecoInstance.numero = params?.numero
@@ -93,15 +96,41 @@ class CadastroService {
     }
     
     private Telefone definirTelefone(params) {
-        if (!params.containsKey("numeroTelefone")) return null
         def telefoneInstance = new Telefone()
         telefoneInstance.numero = Telefone.removerMascara(params?.numeroTelefone)
         telefoneInstance.whatsapp = (params?.whatsapp == null ? false : params?.whatsapp)
+        println telefoneInstance.whatsapp
         def idTipoTelefone = params['tipoTelefone.id']
         if (idTipoTelefone != null) {
             telefoneInstance.tipoTelefone = TipoTelefone.get(idTipoTelefone)
         }    
         return telefoneInstance
+    }
+    
+    def salvarCliente(params) {
+        def pessoaInstance = definirCadastroBasicoPessoa(params)
+        return definirCliente(params, pessoaInstance)
+    }
+    
+    private Pessoa definirCadastroBasicoPessoa(params) {
+        def parametros = [:]
+        params.each {
+            if (it.key.contains('pessoa.')) {
+                parametros[it.key.replace('pessoa.', '')] = it.value
+            }    
+        }
+        def pessoaInstance = Pessoa.get(parametros.id)
+        if (!pessoaInstance){
+            pessoaInstance = new PessoaFisica()
+        }
+        pessoaInstance.properties = parametros
+        pessoaInstance.validate()
+        if (!pessoaInstance.hasErrors()) {
+            pessoaInstance.save(flush: true)
+            def idPessoa = pessoaInstance.id
+            pessoaInstance = Pessoa.get(idPessoa)
+        }
+        return pessoaInstance
     }
         
 }

@@ -9,7 +9,6 @@ class PessoaFisica extends Pessoa {
     }
     
     static mapping = {
-        discriminator value: "F"
         nome column: 'NOM_PESSOA'
         diaMesNascimento column: 'TXT_DIA_MES_NASCIMENTO'
     }

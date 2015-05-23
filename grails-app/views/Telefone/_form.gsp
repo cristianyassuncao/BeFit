@@ -16,7 +16,7 @@
             <g:message code="telefone.whatsapp.label"/>
         </div>
         <div class="valor">
-            <input type="checkbox" id="whatsapp" name="whatsapp" <g:if test="${telefoneInstance?.whatsapp}">checked</g:if> value="${telefoneInstance?.whatsapp}">
+            <input type="checkbox" id="whatsapp" name="whatsapp" <g:if test="${telefoneInstance?.whatsapp}">checked</g:if> value="true">
         </div>    
     </div>
 </div>

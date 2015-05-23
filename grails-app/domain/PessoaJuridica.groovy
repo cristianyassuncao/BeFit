@@ -7,7 +7,6 @@ class PessoaJuridica extends Pessoa {
     }
     
     static mapping = {
-        discriminator value: "J"
         razaoSocial column: 'NOM_RAZAO_SOCIAL'
     }
     
