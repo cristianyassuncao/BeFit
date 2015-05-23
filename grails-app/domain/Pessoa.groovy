@@ -18,7 +18,7 @@ class Pessoa {
         dataInclusao column: 'DAT_INCLUSAO'
         email column: 'TXT_EMAIL'
         enderecos joinTable: false, column: 'SEQ_PESSOA', cascade:"all-delete-orphan"
-        telefones joinTable: false, column: 'SEQ_PESSOA'
+        telefones joinTable: false, column: 'SEQ_PESSOA', cascade:"all-delete-orphan"
     }
     
 }

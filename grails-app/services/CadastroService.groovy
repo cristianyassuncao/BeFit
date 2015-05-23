@@ -3,6 +3,8 @@ import grails.transaction.Transactional
 @Transactional
 class CadastroService {
     
+    def messageSource
+           
     boolean transactional = true
     
     def salvarCliente(params) {
@@ -14,13 +16,15 @@ class CadastroService {
         clienteInstance.properties = params
         clienteInstance.dataInclusao = new Date()
         clienteInstance.pessoa = pessoaInstance
-        
+        clienteInstance.validate()
         if (pessoaInstance.hasErrors()) {
             pessoaInstance.errors.getAllErrors().each {
-                clienteInstance.errors.rejectValue('pessoa', 'pessoaError', it.toString())
+                clienteInstance.errors.rejectValue('pessoa', 'pessoaError', messageSource.getMessage(it, null))
             }
         }
-        clienteInstance.save(flush: true)
+        if (!clienteInstance.hasErrors()) {
+            clienteInstance.save(flush: true)
+        }
         return clienteInstance
     }
        
@@ -33,23 +37,44 @@ class CadastroService {
         }
         def pessoaInstance = Pessoa.get(parametros.id)
         def enderecoInstance = null
+        def telefoneInstance = null
         if (!pessoaInstance){
             pessoaInstance = new PessoaFisica()
             enderecoInstance = definirEndereco(params)
+            telefoneInstance = definirTelefone(params)
         }
         pessoaInstance.properties = parametros
-        if (pessoaInstance.save(flush: true)) {
+        pessoaInstance.validate()
+        if (enderecoInstance != null && !enderecoInstance?.validate()) {
+            enderecoInstance.errors.getAllErrors().each {
+                if (!it.getField().equals("pessoa")) {
+                    pessoaInstance.errors.rejectValue('enderecos', 'enderecoError', messageSource.getMessage(it, null))
+                }
+            }
+        }
+        if (telefoneInstance != null && !telefoneInstance?.validate()) {
+            telefoneInstance.errors.getAllErrors().each {
+                if (!it.getField().equals("pessoa")) {
+                    pessoaInstance.errors.rejectValue('telefones', 'telefoneError', messageSource.getMessage(it, null))
+                }
+            }
+        }
+        if (!pessoaInstance.hasErrors()) {
+            pessoaInstance.save(flush: true)
             def idPessoa = pessoaInstance.id
             pessoaInstance = Pessoa.get(idPessoa)
             if (enderecoInstance != null) {
                 pessoaInstance.addToEnderecos(enderecoInstance)
             }
-        }    
+            if (telefoneInstance != null) {
+                pessoaInstance.addToTelefones(telefoneInstance)
+            }
+        }
         return pessoaInstance
     }
     
     private Endereco definirEndereco(params) {
-        if (!params?.rua) return null
+        if (!params.containsKey("rua")) return null
         def enderecoInstance = new Endereco()
         enderecoInstance.rua = params?.rua
         enderecoInstance.numero = params?.numero
@@ -60,11 +85,23 @@ class CadastroService {
         }    
         enderecoInstance.cep = params?.cep?.replace("-","") 
         enderecoInstance.pontoReferencia = params?.pontoReferencia
-        def idTipoEndereco = params['tipo.id']
+        def idTipoEndereco = params['tipoEndereco.id']
         if (idTipoEndereco != null) {
-            enderecoInstance.tipo = TipoEndereco.get(idTipoEndereco)
+            enderecoInstance.tipoEndereco = TipoEndereco.get(idTipoEndereco)
         }    
         return enderecoInstance
     }
     
+    private Telefone definirTelefone(params) {
+        if (!params.containsKey("numeroTelefone")) return null
+        def telefoneInstance = new Telefone()
+        telefoneInstance.numero = Telefone.removerMascara(params?.numeroTelefone)
+        telefoneInstance.whatsapp = (params?.whatsapp == null ? false : params?.whatsapp)
+        def idTipoTelefone = params['tipoTelefone.id']
+        if (idTipoTelefone != null) {
+            telefoneInstance.tipoTelefone = TipoTelefone.get(idTipoTelefone)
+        }    
+        return telefoneInstance
+    }
+        
 }

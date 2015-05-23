@@ -98,7 +98,7 @@ class PessoaController {
             def pessoaInstance = Pessoa.get(params.idPessoa)
             if (pessoaInstance == null) {
                 response.setStatus(500)
-                render("Pessoa não cadastrado!!!") as JSON
+                render("Pessoa não cadastrada!!!") as JSON
                 return 
             }
             enderecoInstance = new Endereco(pessoa: Pessoa.get(params.idPessoa))
@@ -132,6 +132,49 @@ class PessoaController {
         enderecoInstance.delete(flush: true)
         pessoaInstance.refresh()
         render(template:'/endereco/list', model:[pessoaInstance: pessoaInstance])
+    }
+    
+    def loadTelefone = {
+        def telefoneInstance = null
+        if (params.idTelefone == null) {
+            def pessoaInstance = Pessoa.get(params.idPessoa)
+            if (pessoaInstance == null) {
+                response.setStatus(500)
+                render("Pessoa não cadastrada!!!") as JSON
+                return 
+            }
+            telefoneInstance = new Telefone(pessoa: Pessoa.get(params.idPessoa))
+        } else {
+            telefoneInstance = Telefone.get(params.idTelefone)
+        }
+        render(view: '/telefone/create', model: [telefoneInstance: telefoneInstance])        
+    }
+    
+    def updateTelefone = {
+        def pessoaInstance = Pessoa.get(params["pessoa.id"])
+        def telefoneInstance = Telefone.get(params.id) 
+        if (!telefoneInstance) {
+           telefoneInstance = new Telefone()
+        }
+        telefoneInstance.properties = params
+        telefoneInstance.numero = Telefone.removerMascara(params?.numeroTelefone)
+        telefoneInstance.whatsapp = (params?.whatsapp == null ? false : params?.whatsapp)
+        if (!telefoneInstance.validate()) {
+            render(view:'/telefone/create', model:[telefoneInstance: telefoneInstance])
+            response.setStatus(500)
+            return
+        }
+        telefoneInstance.save flush:true
+        pessoaInstance.refresh()
+        render(template:'/telefone/list', model:[pessoaInstance: pessoaInstance])
+    }
+    
+    def deleteTelefone = {
+        def telefoneInstance = Telefone.get(params.id) 
+        def pessoaInstance = telefoneInstance.pessoa
+        telefoneInstance.delete(flush: true)
+        pessoaInstance.refresh()
+        render(template:'/telefone/list', model:[pessoaInstance: pessoaInstance])
     }
     
 }

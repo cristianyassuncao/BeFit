@@ -22,7 +22,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="dataInclusao" name="pessoa.dataInclusao" class="data" value="<g:formatDate date="${pessoaInstance?.dataInclusao}" format="dd/MM/yyyy"/>"/>
+                <input type="text" id="dataInclusao" name="pessoa.dataInclusao" class="data" value="<g:formatDate date="${pessoaInstance?.dataInclusao}" format="dd/MM/yyyy"/>" readonly=""/>
             </div>
         </div>
     </div>

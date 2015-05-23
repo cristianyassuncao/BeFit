@@ -1,17 +1,13 @@
-<!--
-  To change this license header, choose License Headers in Project Properties.
-  To change this template file, choose Tools | Templates
-  and open the template in the editor.
--->
-
-<%@ page contentType="text/html;charset=UTF-8" %>
-
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sample title</title>
-    </head>
-    <body>
-        <h1>Sample line</h1>
-    </body>
-</html>
+<link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pessoa.css')}" />
+<g:hasErrors bean="${telefoneInstance}">
+    <ul class="errors" role="alert">
+        <g:eachError bean="${telefoneInstance}" var="error">
+            <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+        </g:eachError>
+    </ul>
+</g:hasErrors>
+<form id="formTelefone" action="/BeFit/pessoa/updateTelefone">
+    <input type="hidden" name="id" value="${telefoneInstance?.id}"/>
+    <input type="hidden" name="pessoa.id" value="${telefoneInstance?.pessoa?.id}"/>
+    <g:render template="/telefone/form" model="['telefoneInstance': telefoneInstance]" />
+</form>

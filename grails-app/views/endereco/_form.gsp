@@ -64,10 +64,10 @@
 <div class="campos">
     <div class="campo">
         <div class="nome">
-            <g:message code="endereco.tipo.label" default="Tipo" />
+            <g:message code="endereco.tipoEndereco.label" default="Tipo" />
         </div>
         <div class="valor">
-            <g:select id="tipo" name="tipo.id" from="${TipoEndereco.list()}" optionKey="id" optionValue="descricao" noSelection="['':'-Escolha o Tipo de Endereço-']" value="${enderecoInstance?.tipo?.id}"/>
+            <g:select id="tipoEndereco" name="tipoEndereco.id" from="${TipoEndereco.list()}" optionKey="id" optionValue="descricao" noSelection="['':'-Escolha o Tipo de Endereço-']" value="${enderecoInstance?.tipoEndereco?.id}"/>
         </div>    
     </div>
 </div>

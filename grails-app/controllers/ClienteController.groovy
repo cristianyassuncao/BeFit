@@ -17,7 +17,14 @@ class ClienteController {
         respond clienteInstance
     }
 
+    private Pessoa inicializarPessoa() {
+        def pessoaInstance = new PessoaFisica()
+        pessoaInstance.dataInclusao = new Date()
+        return pessoaInstance
+    }
+    
     def create() {
+        params.pessoa = inicializarPessoa()
         params.dataInclusao = new Date()
         respond new Cliente(params), model: [somenteLeitura: true]
     }

@@ -53,7 +53,7 @@
                                 <g:message code="endereco.cep.label"/>:
                             </div>
                             <div class="valor"> 
-                                <input type="text" class="cep label" value="${endereco?.cep}" readonly="">
+                                <input type="text" class="cep label" value="${endereco?.cepComMascara}" readonly="">
                             </div>    
                         </div> 
                     </div>
@@ -70,10 +70,10 @@
                     <div class="campos">
                         <div class="campo">
                             <div class="nome">
-                                <g:message code="endereco.tipo.label"/>:
+                                <g:message code="endereco.tipoEndereco.label"/>:
                             </div>
                             <div class="valor"> 
-                                ${endereco?.tipo?.descricao}
+                                ${endereco?.tipoEndereco?.descricao}
                             </div>    
                         </div> 
                     </div>

@@ -1,93 +1,48 @@
 <div id="listaTelefones">
     <ul>
-        <g:each var="endereco" in="${clienteInstance.enderecos}" status="i">
+        <g:each var="telefone" in="${pessoaInstance?.telefones}" status="i">
             <li class="detalhe">
                 <div class="dados">
                     <div class="campos">
                         <div class="campo">
                             <div class="nome">
-                                <g:message code="endereco.rua.label"/>:
+                                <g:message code="telefone.numero.label"/>:
+                            </div>
+                            <div class="valor"> 
+                                ${telefone?.numeroComMascara}
+                            </div>    
+                        </div>
+                        <div class="campo">
+                            <div class="nome">
+                                <g:message code="telefone.whatsapp.label"/>:
                             </div>
                             <div class="valor">
-                               ${endereco?.rua}
+                                <input type="checkbox" <g:if test="${telefone?.whatsapp}">checked</g:if> disabled="true">
                             </div>
-                        </div>
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="endereco.numero.label"/>:
-                            </div>
-                            <div class="valor"> 
-                                ${endereco?.numero}
-                            </div>    
                         </div>
                     </div>
                     <div class="campos">
                         <div class="campo">
                             <div class="nome">
-                                <g:message code="endereco.complemento.label"/>:
+                                <g:message code="telefone.tipoTelefone.label"/>:
                             </div>
                             <div class="valor">
-                               ${endereco?.complemento}
+                               ${telefone?.tipoTelefone?.descricao}
                             </div>
                         </div>
-                    </div>
-                    <div class="campos">
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="endereco.bairro.label"/>:
-                            </div>
-                            <div class="valor"> 
-                                ${endereco?.bairro?.nome}
-                            </div>    
-                        </div>
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="endereco.cidade.label"/>:
-                            </div>
-                            <div class="valor"> 
-                               ${endereco?.bairro?.cidade?.nome}
-                            </div>    
-                        </div>
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="endereco.cep.label"/>:
-                            </div>
-                            <div class="valor"> 
-                                <input type="text" class="cep label" value="${endereco?.cep}" readonly="">
-                            </div>    
-                        </div> 
-                    </div>
-                    <div class="campos">
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="endereco.pontoReferencia.label"/>:
-                            </div>
-                            <div class="valor"> 
-                                ${endereco?.pontoReferencia}
-                            </div>    
-                        </div> 
-                    </div>     
-                    <div class="campos">
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="endereco.tipo.label"/>:
-                            </div>
-                            <div class="valor"> 
-                                ${endereco?.tipo?.descricao}
-                            </div>    
-                        </div> 
-                    </div>
+                    </div>    
                 </div>
                 <g:if test="${somenteLeitura == null}">
                     <div class="operacoes">
                         <span class="botao_navegacao">
-                            <input class="edit" type="button" value="Alterar" onclick="editEndereco(${endereco?.id})">
+                            <input class="edit" type="button" value="Alterar" onclick="editTelefone(${telefone?.id})">
                         </span>
                         <span class="botao_navegacao">
-                            <input class="delete" type="button" value="Excluir" onclick="deleteEndereco(${endereco?.id})">
+                            <input class="delete" type="button" value="Excluir" onclick="deleteTelefone(${telefone?.id})">
                         </span>
                     </div>
                 </g:if>
             </li>                
         </g:each>
     </ul>
+</div>

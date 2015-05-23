@@ -1,3 +1,6 @@
+
+import javax.swing.text.MaskFormatter
+
 class Endereco {
     
     String rua
@@ -6,9 +9,11 @@ class Endereco {
     Bairro bairro
     String cep
     String pontoReferencia
-    TipoEndereco tipo
+    TipoEndereco tipoEndereco
+    String cepComMascara
     
     static belongsTo = [pessoa: Pessoa]
+    static transients = ["cepComMascara"]
 
     static constraints = {
         rua(nullable: false, blank: false)
@@ -16,7 +21,7 @@ class Endereco {
         bairro(nullable: false, blank: false)
         cep(nullable: true, blank: true)
         pontoReferencia(nullable: true, blank: true)
-        tipo(nullable: true, blank: true)
+        tipoEndereco(nullable: true, blank: true)
         complemento(nullable: true, blank: true)
     }
     
@@ -30,8 +35,15 @@ class Endereco {
         bairro column: 'SEQ_BAIRRO'
         cep column: 'TXT_CEP'
         pontoReferencia column: 'TXT_PONTO_REFERENCIA'
-        tipo column: 'SEQ_TIPO_ENDERECO'
+        tipoEndereco column: 'SEQ_TIPO_ENDERECO'
         pessoa column: 'SEQ_PESSOA'
     }    
+    
+    public String getCepComMascara() {
+        String cepMask= "#####-###";
+        MaskFormatter maskFormatter= new MaskFormatter(cepMask);
+        maskFormatter.setValueContainsLiteralCharacters(false);
+        return maskFormatter.valueToString(cep) ;   
+    }
    
 }
