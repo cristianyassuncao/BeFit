@@ -16,7 +16,7 @@
 		<div id="list-cliente" class="content scaffold-list" role="main">
 			<h1>Clientes</h1>
 			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
+                            <div class="message" role="status">${flash.message}</div>
 			</g:if>
                         <g:form id="ajaxForm" name="ajaxForm" url="[controller: 'cliente', action:'index']" update="[sucess:'message',failure:'error']">
                             <div class="detalhes">
@@ -31,11 +31,9 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="botoes">
-                                <span class="botao">
-                                    <input class="procurar" type="submit" value="Procurar" />
-                                </span>
-                            </div>
+                            <fieldset class="buttons">
+                                <input class="procurar" type="submit" value="Procurar" />
+                            </fieldset>
                         </g:form>
 			<table class="listagem">
                             <thead>

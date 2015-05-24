@@ -17,5 +17,6 @@
                 <input type="text" id="dataInclusao" name="dataInclusao" value="<g:formatDate date="${clienteInstance?.dataInclusao}" format="dd/MM/yyyy"/>" readonly=""/>
             </div>
         </div>
+    </div>    
 </fieldset>        
 <g:render template="/pessoa/detalhes" model="['pessoaInstance': clienteInstance?.pessoa]" />

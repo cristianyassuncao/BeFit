@@ -4,6 +4,38 @@
  * and open the template in the editor.
  */
 
+organizaMenu =  function horizontal() {
+    var navItems = document.getElementById("menuBar").getElementsByTagName("li");
+    for (var i=0; i< navItems.length; i++) {
+        if(navItems[i].className == "submenu"){
+            if(navItems[i].getElementsByTagName('ul')[0] != null){
+                navItems[i].onmouseover=function() {
+                    this.getElementsByTagName('ul')[0].style.display= "block";
+                }
+                navItems[i].onmouseout=function() {
+                    this.getElementsByTagName('ul')[0].style.display = "none";
+                }
+            }
+        }
+    }
+}
+
+var Ajax;
+if (Ajax && (Ajax != null)) {
+    Ajax.Responders.register({
+        onCreate: function() {
+            if ($('spinner') && Ajax.activeRequestCount > 0)
+                Effect.Appear('spinner', {duration:0.5, queue:'end'});
+        },
+        onComplete: function() {
+            if ($('spinner') && Ajax.activeRequestCount == 0)
+                Effect.Fade('spinner', {duration:0.5, queue:'end'});
+        }
+    });
+}
+
+window.onload = organizaMenu;
+
 $(function(){
       $("input.data").mask("99/99/9999");
       $("input.data").datepicker({

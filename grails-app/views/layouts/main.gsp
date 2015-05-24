@@ -27,12 +27,14 @@
                 <ul id="menuBar">
                     <li class="submenu"><a href="#">Cadastros Básicos</a>
                         <ul>
-                            <li><a href="${createLinkTo(dir:'bairro')}">Bairros</a></li>
-                            <li><a href="${createLinkTo(dir:'cidade')}">Cidades</a></li>
+                            <li>
+                                <a href="${createLinkTo(dir:'bairro')}">Bairros</a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="submenu"><a href="${createLinkTo(dir:'cliente')}">Clientes</a>
-                    <li class="submenu"><a href="${createLinkTo(dir:'pedido')}">Pedidos</a>    
+                    <li class="submenu">
+                        <a href="${createLinkTo(dir:'cliente')}">Clientes</a>
+                    </li>    
                 </ul>
             </div>    
             <g:layoutBody/>

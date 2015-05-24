@@ -37,18 +37,18 @@ div.menu ul li a {
 
 /* Menu no segundo nível - Sub-Menu */
 div.menu li ul {
-	position: absolute;
-	left: 2px;
+    position: absolute;
+    left: 2px;
     top: 16px;
     width: 200px;
     display: none;
-	padding: 0px;
+    padding: 0px;
 }
 
 /* Estilo dos itens sub-menu */
 div.menu ul li ul li {
-    background-color: #50728E;
-	display: block;
+    background-color: #2CB243;
+    display: block;
     position: relative;
     width:100%;
     margin-bottom:0px;
