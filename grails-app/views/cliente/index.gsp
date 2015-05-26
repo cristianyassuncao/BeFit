@@ -38,21 +38,21 @@
 			<table class="listagem">
                             <thead>
                                 <tr>
-                                    <g:sortableColumn property="id" title="${message(code: 'cliente.id.label', default: 'Código')}" />
-                                    <g:sortableColumn property="nome" title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
+                                    <th>${message(code: 'cliente.id.label', default: 'Código')}</th>
+                                    <th>${message(code: 'pessoa.nome.label', default: 'Nome')}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <g:each in="${clienteInstanceList}" status="i" var="clienteInstance">
                                     <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                                         <td><g:link action="show" id="${clienteInstance.id}">${fieldValue(bean: clienteInstance, field: "id")}</g:link></td>
-                                        <td>${clienteInstance?.pessoa?.nome}</td>
+                                        <td>${clienteInstance?.nome}</td>
                                     </tr>
                                 </g:each>
                             </tbody>
 			</table>
 			<div class="pagination">
-                            <g:paginate total="${clienteInstanceCount ?: 0}" />
+                            <g:paginate total="${clienteInstanceTotal ?: 0}" max="10"/>
 			</div>
 		</div>
 	</body>

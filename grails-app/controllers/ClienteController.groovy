@@ -9,9 +9,10 @@ class ClienteController {
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index = {
-        params.max = Math.min( params.max ? params.max.toInteger() : 10, 100)
-        if (!params.sort) params.sort = "pessoa"
-        if (!params.order) params.order = "desc"
+        def max = Math.min( params.max ? params.max.toInteger() : 10, 100)
+        def offset = params.offset ?: 0 
+        params?.max = null
+        params?.offset = null
         def result = Cliente.createCriteria().list(params) {
             if (params.nome != null && params.nome != "") {
                 pessoa { 
@@ -26,9 +27,13 @@ class ClienteController {
                     }
                 }
             }
-            order(params.sort, params.order)
         }    
-        return [clienteInstanceList: result, clienteInstanceTotal: result.totalCount]
+        def totalRegistros = result.totalCount
+        Collections.sort(result)
+        result = ((max as Integer) <= 0 || (offset as Integer) < 0) ? [] : result.subList( Math.min( offset as Integer, totalRegistros), Math.min((offset as Integer) + (max as Integer), totalRegistros))
+        params?.max = max
+        params?.offset = offset
+        return render(view: 'index', model: [clienteInstanceList: result, clienteInstanceTotal: totalRegistros])
     }
 
     def show(Cliente clienteInstance) {

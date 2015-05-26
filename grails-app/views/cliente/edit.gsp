@@ -34,6 +34,7 @@
                 </g:hasErrors>
                 <g:form url="[action:'update']">
                     <g:hiddenField name="version" value="${clienteInstance?.version}" />
+                    <g:hiddenField name="id" value="${clienteInstance?.id}" />
                     <fieldset class="form">
                         <g:render template="/pessoa/dadosPrincipaisPF" model="['pessoaInstance': clienteInstance?.pessoa]" />
                         <fieldset>
