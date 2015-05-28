@@ -1,10 +1,3 @@
-<script>
-    $(function(){
-        $("#diaMesNascimento").mask("99/99");                 
-    })  
-</script>
-
-<g:render template="/pessoa/dadosPrincipaisPF" model="['pessoaInstance': clienteInstance?.pessoa]" />
 <fieldset>
     <legend>Dados Complementares</legend>
     <div class="campos">
@@ -19,4 +12,3 @@
         </div>
     </div>    
 </fieldset>        
-<g:render template="/pessoa/detalhes" model="['pessoaInstance': clienteInstance?.pessoa]" />

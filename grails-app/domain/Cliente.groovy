@@ -7,7 +7,7 @@ class Cliente implements Comparable {
     static transients=['nome']
  
     static constraints = {
-        
+        pessoa(unique: true)
     }
     
     static mapping = {

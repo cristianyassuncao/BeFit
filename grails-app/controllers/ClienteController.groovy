@@ -35,7 +35,7 @@ class ClienteController {
         params?.offset = offset
         return render(view: 'index', model: [clienteInstanceList: result, clienteInstanceTotal: totalRegistros])
     }
-
+    
     def show(Cliente clienteInstance) {
         respond clienteInstance
     }
@@ -55,7 +55,9 @@ class ClienteController {
     def save = {
         def clienteInstance = cadastroService.criarCliente(params)
         if (clienteInstance.hasErrors()) {
-            render(view:'create', model:[clienteInstance: clienteInstance, somenteLeitura: true])
+            def enderecoInstance = cadastroService.definirEndereco(params)
+            def telefoneInstance = cadastroService.definirTelefone(params)
+            render(view:'create', model:[clienteInstance: clienteInstance, enderecoInstance: enderecoInstance, telefoneInstance: telefoneInstance, somenteLeitura: true])
             return
         }    
         redirect(action: "edit", params: [id: clienteInstance.id])

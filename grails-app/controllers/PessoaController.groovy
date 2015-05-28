@@ -176,5 +176,5 @@ class PessoaController {
         pessoaInstance.refresh()
         render(template:'/telefone/list', model:[pessoaInstance: pessoaInstance])
     }
-    
+        
 }

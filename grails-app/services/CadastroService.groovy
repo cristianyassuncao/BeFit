@@ -77,7 +77,7 @@ class CadastroService {
         return pessoaInstance
     }
     
-    private Endereco definirEndereco(params) {
+    public Endereco definirEndereco(params) {
         def enderecoInstance = new Endereco()
         enderecoInstance.rua = params?.rua
         enderecoInstance.numero = params?.numero
@@ -95,11 +95,10 @@ class CadastroService {
         return enderecoInstance
     }
     
-    private Telefone definirTelefone(params) {
+    public Telefone definirTelefone(params) {
         def telefoneInstance = new Telefone()
         telefoneInstance.numero = Telefone.removerMascara(params?.numeroTelefone)
         telefoneInstance.whatsapp = (params?.whatsapp == null ? false : params?.whatsapp)
-        println telefoneInstance.whatsapp
         def idTipoTelefone = params['tipoTelefone.id']
         if (idTipoTelefone != null) {
             telefoneInstance.tipoTelefone = TipoTelefone.get(idTipoTelefone)

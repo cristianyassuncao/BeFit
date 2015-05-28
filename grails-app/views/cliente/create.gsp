@@ -28,22 +28,9 @@
 			</g:hasErrors>
 			<g:form url="[resource:clienteInstance, action:'save']" >
                             <g:render template="/pessoa/dadosPrincipaisPF" model="['pessoaInstance': clienteInstance?.pessoa]"/>
-                            <fieldset>
-                                <legend>Dados Complementares</legend>
-                                <div class="campos">
-                                    <div class="campo">
-                                        <div class="nome">
-                                            <g:message code="cliente.dataInclusao.label"/>:
-                                            <span class="required-indicator">*</span>
-                                        </div>
-                                        <div class="valor">
-                                            <input type="text" id="dataInclusao" name="dataInclusao" value="<g:formatDate date="${clienteInstance?.dataInclusao}" format="dd/MM/yyyy"/>" readonly=""/>
-                                        </div>
-                                    </div>
-                                </div>    
-                            </fieldset>       
-                            <g:render template="/endereco/cadastroComplementar" model="['enderecoInstance': clienteInstance?.pessoa?.enderecos?.get(0)]"/>
-                            <g:render template="/telefone/cadastroComplementar" model="['telefoneInstance': clienteInstance?.pessoa?.telefones?.get(0)]"/>
+                            <g:render template="form"/>
+                            <g:render template="/endereco/cadastroComplementar" model="['enderecoInstance': enderecoInstance]"/>
+                            <g:render template="/telefone/cadastroComplementar" model="['telefoneInstance': telefoneInstance]"/>
                             <fieldset class="buttons">
                                 <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                             </fieldset>

@@ -30,6 +30,9 @@
                             <li>
                                 <a href="${createLinkTo(dir:'bairro')}">Bairros</a>
                             </li>
+                            <li>
+                                <a href="${createLinkTo(dir:'produto')}">Produtos</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="submenu">
