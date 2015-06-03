@@ -34,9 +34,9 @@
     </div>
     <div class="imagemExibicao">
         <div id="moldura">
-            <g:if test="${produtoIntance?.imagem != null}">
-                <img src="/BeFit/produto/exibirImagem?id=${produtoInstance?.id}" width='150' height="150"/>
-            </g:if>    
+            
+                <img id="imagemProduto" src="/BeFit/produto/exibirImagem?id=${produtoInstance?.id}" width='150' height="150"/>
+            
         </div>        
         <div class="campos">
             <div class="campo">
@@ -44,7 +44,7 @@
                     <g:message code="produto.imagem.label"/>:
                 </div>
                 <div class="valor">
-                    <input type="file" id="imagem" name="imagem" />
+                    <input type="file" id="imagem" name="imagem" onchange="loadFile(event)"/>
                 </div>  
             </div>    
         </div>

@@ -3,6 +3,7 @@
     <head>
         <meta name="layout" content="main">
         <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'produto.css')}" />
+        <g:javascript src="produto.js"/>
         <g:set var="entityName" value="${message(code: 'produto.label', default: 'Produto')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
