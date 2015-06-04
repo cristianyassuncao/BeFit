@@ -7,7 +7,7 @@ div.imagemExibicao {
     margin-top: 7px;
 }
 
-div.exibicaoProduto {
+div.detalhesProduto {
     overflow: auto;
     height: 20em;
 }

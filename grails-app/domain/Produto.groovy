@@ -5,7 +5,7 @@ class Produto {
     byte[] imagem
     String tipoImagem
     
-    static hasMany = [categorias: CategoriaProduto]
+    static hasMany = [categorias: CategoriaProduto, precos: Preco]
 
     static constraints = {
     }
@@ -18,7 +18,8 @@ class Produto {
         descricao column: 'DSC_PRODUTO'
         imagem column: 'ARQ_IMAGEM'
         tipoImagem column: 'TIP_IMAGEM'
-        categorias joinTable: [name: 'TB_PRODUTO_CATEGORIA', key: 'SEQ_CATEGORIA', column: 'SEQ_PRODUTO']
+        categorias joinTable: [name: 'TB_PRODUTO_CATEGORIA', key: 'SEQ_PRODUTO', column: 'SEQ_CATEGORIA']
+        precos joinTable: false, column: 'SEQ_PRODUTO', cascade:"all-delete-orphan"
     }
     
 }

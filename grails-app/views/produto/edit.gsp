@@ -32,6 +32,7 @@
                 <g:hiddenField name="version" value="${produtoInstance?.version}" />
                 <fieldset class="form">
                     <g:render template="form"/>
+                    <g:render template="/produto/detalhes" model="['produtoInstance': produtoInstance]"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

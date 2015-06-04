@@ -6,7 +6,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class ProdutoController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -22,17 +22,12 @@ class ProdutoController {
     }
 
     def save = {
-        def file = params.imagem
-        def produtoInstance = new Produto(params)
-        produtoInstance.properties = params
-        produtoInstance.imagem = file.getBytes()
-        produtoInstance.tipoImagem = file.contentType
-        if (!produtoInstance.validate()) {
-            respond produtoInstance.errors, view:'create'
+        def produtoInstance = cadastroService.criarProduto(params)
+        if (produtoInstance.hasErrors()) {
+            render(view:'create', model:[produtoInstance: produtoInstance, somenteLeitura: true])
             return
-        }
-        produtoInstance.save flush:true
-        redirect(action: "edit", params: [id: produto.id])
+        }    
+        redirect(action: "edit", params: [id: produtoInstance.id])
     }
     
     def exibirImagem = {
@@ -48,27 +43,13 @@ class ProdutoController {
         render(view:'edit', model:[produtoInstance: produtoInstance])
     }
 
-    @Transactional
-    def update(Produto produtoInstance) {
-        if (produtoInstance == null) {
-            notFound()
-            return
-        }
-
+    def update = {
+        def produtoInstance = cadastroService.salvarProduto(params)
         if (produtoInstance.hasErrors()) {
-            respond produtoInstance.errors, view:'edit'
+            render(view:'edit', model:[produtoInstance: produtoInstance])
             return
-        }
-
-        produtoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Produto.label', default: 'Produto'), produtoInstance.id])
-                redirect produtoInstance
-            }
-            '*'{ respond produtoInstance, [status: OK] }
-        }
+        }    
+        redirect(action: "show", id: produtoInstance?.id)
     }
 
     @Transactional

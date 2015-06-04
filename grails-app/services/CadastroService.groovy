@@ -131,5 +131,51 @@ class CadastroService {
         }
         return pessoaInstance
     }
-        
+    
+    public criarProduto(params) {
+        def produtoInstance = definirProduto(params)
+        def precoInstance = definirPreco(params.valor)
+        if (precoInstance != null && !precoInstance?.validate()) {
+            precoInstance.errors.getAllErrors().each {
+                if (!it.getField().equals("produto")) {
+                    produtoInstance.errors.rejectValue('precos', 'precoError', messageSource.getMessage(it, null))
+                }
+            }
+        }
+        if (!produtoInstance.hasErrors()) {
+            produtoInstance.save flush:true
+            produtoInstance.addToPrecos(precoInstance)
+        }
+        return produtoInstance
+    }
+    
+    
+    private definirProduto(params) {
+        def produtoInstance = Produto.get(params.id)
+        if (!produtoInstance) {
+            produtoInstance = new Produto()
+        }
+        def file = params.imagem
+        produtoInstance.properties = params
+        produtoInstance.imagem = file.getBytes()
+        produtoInstance.tipoImagem = file.contentType
+        produtoInstance.validate()
+        return produtoInstance
+    }
+    
+    public salvarProduto(params) {
+        def produtoInstance = definirProduto(params)
+        if (!produtoInstance.hasErrors()) {
+            produtoInstance.save flush:true
+        }
+        return produtoInstance
+    }
+    
+    public Preco definirPreco(valor) {
+        def precoInstance = new Preco()
+        precoInstance.aPartirDe = new Date()
+        precoInstance.valor = valor
+        return precoInstance
+    }
+           
 }
