@@ -9,7 +9,7 @@
                                 <g:message code="preco.aPartirDe.label"/>:
                             </div>
                             <div class="valor"> 
-                                ${preco?.aPartirDe}
+                                <g:formatDate date="${preco?.aPartirDe}" format="dd/MM/yyyy"/>
                             </div>    
                         </div>
                         <div class="campo">
@@ -17,7 +17,7 @@
                                 <g:message code="preco.valor.label"/>:
                             </div>
                             <div class="valor">
-                                <format:formatNumber number="${preco?.valor}" format="#,##0.00"></format:formatNumber>
+                                <g:formatNumber number="${preco?.valor}" format="###,##0.00"/>
                             </div>
                         </div>
                     </div>

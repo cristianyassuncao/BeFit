@@ -31,6 +31,9 @@
                                 <a href="${createLinkTo(dir:'bairro')}">Bairros</a>
                             </li>
                             <li>
+                                <a href="${createLinkTo(dir:'categoriaProduto')}">Categorias de Produtos</a>
+                            </li>
+                            <li>
                                 <a href="${createLinkTo(dir:'produto')}">Produtos</a>
                             </li>
                         </ul>

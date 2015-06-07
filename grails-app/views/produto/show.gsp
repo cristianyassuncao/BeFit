@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="main">
@@ -59,9 +59,7 @@
                                     <g:message code="produto.categorias.label"/>:
                                 </div>
                                 <div class="valor">
-                                    <g:each in="${produtoInstance.categorias}" var="categoria">
-                                        <span>${categoria?.nome}</span>
-                                    </g:each>
+                                    <g:select name="categorias" from="${CategoriaProduto.list()}" multiple="multiple" optionKey="id" optionValue="nome" size="5" value="${produtoInstance?.categorias*.id}" class="many-to-many" readonly="readonly"/>
                                 </div>
                             </div>
                         </div>
@@ -73,6 +71,7 @@
                     </div>    
                 </div>
             </fieldset>    
+            <g:render template="/produto/detalhes" model="['produtoInstance': produtoInstance, 'somenteLeitura': true]"/>
             <g:form url="[resource:produtoInstance, action:'delete']" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${produtoInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

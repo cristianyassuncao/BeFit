@@ -1,4 +1,4 @@
-class CategoriaProduto {
+class CategoriaProduto implements Comparable {
     
     String nome
     CategoriaProduto categoriaPai
@@ -13,4 +13,14 @@ class CategoriaProduto {
         nome column: 'NOM_CATEGORIA'
         categoriaPai column: 'SEQ_CATEGORIA_PAI'
     }
+    
+    int compareTo(Object obj) {
+        def categoria = (CategoriaProduto) obj
+        def resultado = categoriaPai.compareTo(categoria?.categoriaPai)
+        if (resultado == 0) {
+           resultado = nome.compareTo(categoria?.nome) 
+        }
+        return resultado
+    }
+    
 }

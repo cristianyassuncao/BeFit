@@ -1,4 +1,4 @@
-class Preco {
+class Preco implements Comparable {
     
     BigDecimal valor
     Date aPartirDe
@@ -6,6 +6,8 @@ class Preco {
     static belongsTo = [produto: Produto]
 
     static constraints = {
+        aPartirDe unique: 'produto'
+        valor(nullable: false, blank: false)
     }
    
     static mapping = {
@@ -17,4 +19,9 @@ class Preco {
         produto column: 'SEQ_PRODUTO'
     }
     
+    int compareTo(Object obj) {
+        def preco = (Preco) obj
+        return aPartirDe.compareTo(preco?.aPartirDe)
+    }
+     
 }

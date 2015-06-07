@@ -1,4 +1,5 @@
 import grails.transaction.Transactional
+import java.text.DecimalFormatSymbols
 
 @Transactional
 class CadastroService {
@@ -149,16 +150,21 @@ class CadastroService {
         return produtoInstance
     }
     
-    
     private definirProduto(params) {
         def produtoInstance = Produto.get(params.id)
         if (!produtoInstance) {
             produtoInstance = new Produto()
         }
-        def file = params.imagem
+        def imagemAnterior = produtoInstance?.imagem
+        def tipoImagemAnterior = produtoInstance?.tipoImagem
         produtoInstance.properties = params
-        produtoInstance.imagem = file.getBytes()
-        produtoInstance.tipoImagem = file.contentType
+        produtoInstance.imagem = imagemAnterior
+        produtoInstance.tipoImagem = tipoImagemAnterior
+        def novaImagem = params.imagemFile
+        if (!novaImagem.isEmpty()) { 
+            produtoInstance.imagem = novaImagem.getBytes()
+            produtoInstance.tipoImagem = novaImagem.contentType
+        } 
         produtoInstance.validate()
         return produtoInstance
     }
@@ -174,8 +180,15 @@ class CadastroService {
     public Preco definirPreco(valor) {
         def precoInstance = new Preco()
         precoInstance.aPartirDe = new Date()
-        precoInstance.valor = valor
+        precoInstance.valor = toBigDecimal(valor)
         return precoInstance
     }
-           
+    
+    public BigDecimal toBigDecimal(String valor) {
+        if (valor == "" || valor == null) {
+            return null;
+        }
+        def decimalFormat = new java.text.DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale ("pt", "BR")));
+        return decimalFormat.parse(valor)
+    }       
 }

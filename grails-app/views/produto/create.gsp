@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div id="create-produto" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1>Adicionar um novo produto</h1>
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
@@ -29,17 +29,7 @@
             </g:hasErrors>
             <g:form url="[resource:produtoInstance, action:'save']" enctype="multipart/form-data">
                 <fieldset class="form">
-                    <g:render template="form"/>
-                    <div class="campos">
-                        <div class="campo">
-                            <div class="nome">
-                                <g:message code="preco.valor.label"/>:
-                            </div>
-                            <div class="valor">
-                                <input type="text" id="valor" name="valor"/>
-                            </div>
-                        </div>
-                    </div>
+                    <g:render template="form" model="['isCadastroCompleto': true]"/>
                 </fieldset>
                 <fieldset class="buttons">
                         <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

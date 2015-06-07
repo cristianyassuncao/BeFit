@@ -4,10 +4,15 @@ class Produto {
     String descricao
     byte[] imagem
     String tipoImagem
+    SortedSet precos
     
     static hasMany = [categorias: CategoriaProduto, precos: Preco]
 
     static constraints = {
+        nome(nullable: false, blank: false)
+        descricao(nullable: true, blank: true)
+        imagem(nullable: true, blank: true)
+        tipoImagem(nullable: true, blank: true)
     }
     
     static mapping = {

@@ -49,5 +49,5 @@ $(function(){
         prevText: 'Anterior'
       });
       $("input.cep").mask("99999-999");            
-      $("input.telefone").mask("(99) 9999-9999?9");
+      $("input.telefone").mask("(99) 99999-999?9");
 }); 

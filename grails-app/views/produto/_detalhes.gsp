@@ -4,6 +4,6 @@
     </div>
 </g:if>
 <fieldset>
-    <legend>Hist&oacute;rido de Pre&ccedil;os</legend>
+    <legend>Hist&oacute;rico de Pre&ccedil;os</legend>
     <g:render template="/preco/list" model="['produtoInstance': produtoInstance, 'somenteLeitura': somenteLeitura]"/>
 </fieldset>    

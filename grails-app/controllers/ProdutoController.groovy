@@ -1,10 +1,11 @@
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class ProdutoController {
+    
+    def cadastroService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
@@ -24,7 +25,8 @@ class ProdutoController {
     def save = {
         def produtoInstance = cadastroService.criarProduto(params)
         if (produtoInstance.hasErrors()) {
-            render(view:'create', model:[produtoInstance: produtoInstance, somenteLeitura: true])
+            def precoInstance = cadastroService.definirPreco(params?.valor)
+            render(view:'create', model:[produtoInstance: produtoInstance, precoInstance: precoInstance])
             return
         }    
         redirect(action: "edit", params: [id: produtoInstance.id])
@@ -80,4 +82,46 @@ class ProdutoController {
             '*'{ render status: NOT_FOUND }
         }
     }
+    
+    def loadPreco = {
+        def precoInstance = null
+        if (params.idPreco == null) {
+            def produtoInstance = Produto.get(params.idProduto)
+            if (produtoInstance == null) {
+                response.setStatus(500)
+                render("Produto não cadastrado!!!") as JSON
+                return 
+            }
+            precoInstance = new Preco(produto: Produto.get(params.idProduto))
+        } else {
+            precoInstance = Preco.get(params.idPreco)
+        }
+        render(view: '/preco/create', model: [precoInstance: precoInstance])        
+    }
+    
+    def updatePreco = {
+        def produtoInstance = Produto.get(params["produto.id"])
+        def precoInstance = Preco.get(params.id) 
+        if (!precoInstance) {
+           precoInstance = new Preco()
+        }
+        precoInstance.properties = params
+        if (!precoInstance.validate()) {
+            render(view:'/preco/create', model:[precoInstance: precoInstance])
+            response.setStatus(500)
+            return
+        }
+        precoInstance.save flush:true
+        produtoInstance.refresh()
+        render(template:'/preco/list', model:[produtoInstance: produtoInstance])
+    }
+    
+    def deletePreco = {
+        def precoInstance = Preco.get(params.id) 
+        def produtoInstance = precoInstance.produto
+        precoInstance.delete(flush: true)
+        produtoInstance.refresh()
+        render(template:'/preco/list', model:[produtoInstance: produtoInstance])
+    }
+    
 }

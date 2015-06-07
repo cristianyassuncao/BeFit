@@ -33,6 +33,18 @@
                     </div>
                 </div>
             </div>
+            <g:if test="${isCadastroCompleto}">
+                <div class="campos">
+                    <div class="campo">
+                        <div class="nome">
+                            <g:message code="preco.valor.label"/>:
+                        </div>
+                        <div class="valor">
+                            <input type="text" id="valor" name="valor" value="${precoInstance?.valor}"/>
+                        </div>
+                    </div>
+                </div>
+            </g:if>    
         </div>
         <div class="imagemExibicao">
             <div id="moldura">
@@ -49,7 +61,7 @@
                         <g:message code="produto.imagem.label"/>:
                     </div>
                     <div class="valor">
-                        <input type="file" id="imagem" name="imagem" onchange="loadFile(event)"/>
+                        <input type="file" id="imagem" name="imagemFile" onchange="loadFile(event)" value=""/>
                     </div>  
                 </div>    
             </div>
