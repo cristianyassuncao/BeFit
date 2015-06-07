@@ -706,3 +706,7 @@ input.label {
     border: none;
     background-color: transparent;
 }
+
+tr.separador {
+    border-bottom: 1px solid #efefef;
+}

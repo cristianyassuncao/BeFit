@@ -1,5 +1,5 @@
 <script>
-    $("input.telefone").mask("(99) 9999-9999?9"); 
+    $("input.telefone").mask("(99) 99999-999?9"); 
 </script>
 <div class="campos">
     <div class="campo">
