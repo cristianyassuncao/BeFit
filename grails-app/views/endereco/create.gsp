@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pessoa.css')}" />
 <script>
     $(function(){
         $("input.cep").mask("99999-999");            

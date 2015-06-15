@@ -1,3 +1,13 @@
+<link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pessoa.css')}"/>
+<!-- Chosen: plugin JQuery com a habilidade de filtrar itens num campo select -->
+<link rel="stylesheet" href="/BeFit/js/chosen_v1.4.2/chosen.css"/>
+<script src="/BeFit/js/chosen_v1.4.2/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery(".chosen").chosen({width: "200px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
+    });
+</script>
+<!-- Fim do bloco Chosen -->
 <div class="campos">
     <div class="campo">
         <div class="nome">
@@ -37,7 +47,18 @@
             <span class="required-indicator">*</span>
         </div>
         <div class="valor">
-            <g:select id="bairro" name="bairro.id" from="${Bairro.list()}" optionKey="id" optionValue="nome" noSelection="['':'-Escolha o Bairro-']" value="${enderecoInstance?.bairro?.id}"/>
+            <select data-placeholder="Selecione um bairro" class="chosen" id="bairro" name="bairro.id"> 
+                <option value=""></option>
+                <g:each in="${Bairro.list(sort: 'nome')}" var="bairro">
+                    <g:set var="isBairroSelecionado" value="${enderecoInstance?.bairro?.id == bairro?.id}"/>
+                    <g:if test="${isBairroSelecionado}">
+                        <option value="${bairro.id}" selected="selected">${bairro.nome}</option>
+                    </g:if>
+                    <g:if test="${!isBairroSelecionado}">
+                        <option value="${bairro.id}">${bairro.nome}</option>
+                    </g:if>
+                </g:each>
+            </select>
         </div>    
     </div>
 </div>
@@ -67,7 +88,7 @@
             <g:message code="endereco.tipoEndereco.label" default="Tipo" />
         </div>
         <div class="valor">
-            <g:select id="tipoEndereco" name="tipoEndereco.id" from="${TipoEndereco.list()}" optionKey="id" optionValue="descricao" noSelection="['':'-Escolha o Tipo de Endereço-']" value="${enderecoInstance?.tipoEndereco?.id}"/>
+            <g:select id="tipoEndereco" name="tipoEndereco.id" from="${TipoEndereco.list(sort: 'descricao')}" optionKey="id" optionValue="descricao" noSelection="['':'-Escolha o Tipo de Endereço-']" value="${enderecoInstance?.tipoEndereco?.id}"/>
         </div>    
     </div>
 </div>

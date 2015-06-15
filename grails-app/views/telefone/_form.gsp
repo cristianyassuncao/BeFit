@@ -26,7 +26,7 @@
             <g:message code="telefone.tipoTelefone.label" default="Tipo" />
         </div>
         <div class="valor">
-            <g:select id="tipoTelefone" name="tipoTelefone.id" from="${TipoTelefone.list()}" optionKey="id" optionValue="descricao" noSelection="['':'-Escolha o Tipo de Telefone-']" value="${telefoneInstance?.tipoTelefone?.id}"/>
+            <g:select id="tipoTelefone" name="tipoTelefone.id" from="${TipoTelefone.list(sort: 'descricao')}" optionKey="id" optionValue="descricao" noSelection="['':'-Escolha o Tipo de Telefone-']" value="${telefoneInstance?.tipoTelefone?.id}"/>
         </div>    
     </div>
 </div>

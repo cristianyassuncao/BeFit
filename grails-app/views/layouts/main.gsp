@@ -12,12 +12,12 @@
   		<asset:stylesheet src="application.css"/>
 		<asset:javascript src="application.js"/>
                 <asset:javascript src="main.js"/>
-		<g:layoutHead/>
                 <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'menu.css')}" />
                 <link rel="stylesheet" href="${createLinkTo(dir:'js/jquery-ui-1.11.3.custom',file:'jquery-ui.css')}"/>
                 <g:javascript src="jquery-2.1.3.js"/>
                 <g:javascript src="jquery-ui-1.11.3.custom/jquery-ui.js"/>
                 <g:javascript src="jquery.maskedinput.js"/>
+                <g:layoutHead/>
 	</head>
 	<body>
             <div id="systemLogo" role="banner">
