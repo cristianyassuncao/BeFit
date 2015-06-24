@@ -1,3 +1,37 @@
+<link rel="stylesheet" href="/BeFit/js/jsTree/dist/themes/default/style.min.css" />
+<script src="/BeFit/js/jsTree/dist/jstree.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#categoriasTree')
+            .on('changed.jstree', function (e, data) {
+              var i, j, r = [];
+              for(i = 0, j = data.selected.length; i < j; i++) {
+                r.push(data.instance.get_node(data.selected[i]).id);
+              }
+              if (r != []) {
+                if (r[0] == $("#id").val()) {
+                    alert("Uma categoria não pode ser pai de si mesma!");
+                } else {
+                    $("#categoriaPai").val(r[0]);
+                }    
+              }
+            })
+            .jstree({
+                "core" : {
+                    "multiple": false,
+                    "themes" : {
+                        "variant" : "large"
+                    },
+                    "data" : ${raw(categorias)}
+                },
+                "checkbox" : {
+                  "keep_selected_style" : false
+                },
+                "plugins" : [ "wholerow", "checkbox"]
+        });
+    });
+</script>
+<g:hiddenField id="id" name="id" value="${categoriaProdutoInstance?.id}" />
 <div class="campos">
     <div class="campo">
 	<div class="nome">
@@ -12,10 +46,11 @@
 <div class="campos">
     <div class="campo">
 	<div class="nome">
-            <g:message code="categoriaProduto.categoriaPai.label" default="Nome" />
+            <g:message code="categoriaProduto.categoriaPai.label"/>
 	</div>
         <div class="valor">
-            <g:select id="categoriaPai" name="categoriaPai.id" from="${CategoriaProduto.list()}" optionKey="id" optionValue="nome" value="${categoriaProdutoInstance?.categoriaPai?.id}" class="many-to-one" noSelection="['':'-Escolha a Categoria-']"/>
+            <input type="hidden" id="categoriaPai" name="categoriaPai.id"/>
+            <div id="categoriasTree"></div>
         </div>    
     </div>
 </div>

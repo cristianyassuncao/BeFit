@@ -20,7 +20,15 @@ class CategoriaProduto implements Comparable {
         if (resultado == 0) {
            resultado = nome.compareTo(categoria?.nome) 
         }
+        if (resultado == 0) {
+            resultado = id.compareTo(categoria?.id)
+        }
         return resultado
+    }
+    
+    boolean equals(Object obj) {
+        CategoriaProduto c = (CategoriaProduto) obj
+        return this.id.equals(c.id)
     }
     
 }

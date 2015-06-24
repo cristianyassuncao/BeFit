@@ -1,3 +1,6 @@
+import groovy.json.*
+import grails.converters.JSON
+import grails.web.JSONBuilder
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -7,16 +10,30 @@ class CategoriaProdutoController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond CategoriaProduto.list(params), model:[categoriaProdutoInstanceCount: CategoriaProduto.count()]
+        return render(view: 'index', model: [categorias: getTodasCategorias()])
     }
-
+    
+    String getTodasCategorias(CategoriaProduto categoriaSelecionada) {
+        def categoriasList = CategoriaProduto.findAll("FROM CategoriaProduto")
+        String categoriasJSON = categoriasList.collect {
+                                    [id: it?.id,
+                                     parent: (it?.categoriaPai?.id == null) ? '#' : it?.categoriaPai?.id,
+                                     text: it?.nome,
+                                     state: [
+                                        disabled : (categoriaSelecionada == null) ? false : it?.equals(categoriaSelecionada),
+                                        selected : (categoriaSelecionada?.categoriaPai == null) ? false : it?.equals(categoriaSelecionada?.categoriaPai)
+                                     ]
+                                    ]
+                            } as JSON
+        return categoriasJSON
+    }
+    
     def show(CategoriaProduto categoriaProdutoInstance) {
         respond categoriaProdutoInstance
     }
 
     def create() {
-        respond new CategoriaProduto(params)
+        return render(view: 'create', model: [categorias: getTodasCategorias()])
     }
 
     @Transactional
@@ -43,7 +60,7 @@ class CategoriaProdutoController {
     }
 
     def edit(CategoriaProduto categoriaProdutoInstance) {
-        respond categoriaProdutoInstance
+        return render(view: 'edit', model: [categoriaProdutoInstance: categoriaProdutoInstance, categorias: getTodasCategorias(categoriaProdutoInstance)])
     }
 
     @Transactional

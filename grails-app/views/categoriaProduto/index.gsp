@@ -4,6 +4,26 @@
         <meta name="layout" content="main">
         <g:set var="entityName" value="${message(code: 'categoriaProduto.label', default: 'CategoriaProduto')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <link rel="stylesheet" href="/BeFit/js/jsTree/dist/themes/default/style.min.css" />
+        <script src="/BeFit/js/jsTree/dist/jstree.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#categoriasTree')
+                    .on('dblclick.jstree', function (e, data) {
+                            var node = $(e.target).closest("li");
+                            window.open("/BeFit/categoriaProduto/show/" + node[0].id, "_self");
+                    })
+                    .jstree({
+                        "core" : {
+                            "themes" : {
+                                "variant" : "large"
+                            },
+                            "data" : ${raw(categorias)}
+                        },
+                        "plugins" : [ "wholerow"]
+                });
+            });
+        </script>    
     </head>
     <body>
         <a href="#list-categoriaProduto" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -18,27 +38,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <table>
-                <thead>
-                    <tr>
-			<g:sortableColumn property="id" title="${message(code: 'categoriaProduto.id.label')}" />
-                        <g:sortableColumn property="nome" title="${message(code: 'categoriaProduto.nome.label', default: 'Nome')}" />
-                        <th><g:message code="categoriaProduto.categoriaPai.label" default="Categoria Pai" /></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <g:each in="${categoriaProdutoInstanceList}" status="i" var="categoriaProdutoInstance">
-                        <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-                            <td><g:link action="show" id="${categoriaProdutoInstance.id}">${fieldValue(bean: categoriaProdutoInstance, field: "id")}</g:link></td>
-                            <td>${fieldValue(bean: categoriaProdutoInstance, field: "nome")}</td>
-                            <td>${categoriaProdutoInstance?.categoriaPai?.nome}</td>
-                        </tr>
-                    </g:each>
-                </tbody>
-            </table>
-            <div class="pagination">
-                <g:paginate total="${categoriaProdutoInstanceCount ?: 0}" />
-            </div>
+            <div id="categoriasTree"></div>
         </div>
     </body>
 </html>
