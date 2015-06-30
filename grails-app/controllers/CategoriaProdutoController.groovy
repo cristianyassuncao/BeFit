@@ -14,13 +14,12 @@ class CategoriaProdutoController {
     }
     
     String getTodasCategorias(CategoriaProduto categoriaSelecionada) {
-        def categoriasList = CategoriaProduto.findAll("FROM CategoriaProduto")
+        def categoriasList = CategoriaProduto.findAll("FROM CategoriaProduto ORDER BY categoriaPai, nome")
         String categoriasJSON = categoriasList.collect {
                                     [id: it?.id,
                                      parent: (it?.categoriaPai?.id == null) ? '#' : it?.categoriaPai?.id,
                                      text: it?.nome,
                                      state: [
-                                        disabled : (categoriaSelecionada == null) ? false : it?.equals(categoriaSelecionada),
                                         selected : (categoriaSelecionada?.categoriaPai == null) ? false : it?.equals(categoriaSelecionada?.categoriaPai)
                                      ]
                                     ]
@@ -94,7 +93,12 @@ class CategoriaProdutoController {
             return
         }
 
-        categoriaProdutoInstance.delete flush:true
+        try {
+            categoriaProdutoInstance.delete flush:true
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            flash.message = "Não é possível excluir essa categoria porque existem outras categorias e/ou produtos dependentes dela!"
+            return render(view: 'show', model: [categoriaProdutoInstance: categoriaProdutoInstance])
+        }    
 
         request.withFormat {
             form multipartForm {

@@ -16,6 +16,8 @@
                     .jstree({
                         "core" : {
                             "themes" : {
+                                "dots": false,
+                                "icons": false,
                                 "variant" : "large"
                             },
                             "data" : ${raw(categorias)}
@@ -38,7 +40,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <div id="categoriasTree"></div>
+            <div id="categoriasTree" title="Duplo clique para edição"></div>
         </div>
     </body>
 </html>

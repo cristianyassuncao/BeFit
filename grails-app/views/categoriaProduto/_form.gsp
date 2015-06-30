@@ -2,30 +2,47 @@
 <script src="/BeFit/js/jsTree/dist/jstree.min.js"></script>
 <script type="text/javascript">
     $(function () {
+        function getAllChildren(treeObj, nodeId, result) {
+            if (nodeId == "") return;
+            var node = treeObj.get_node(nodeId);
+            result.push(node);
+            if (node.children) {
+                for (var i = 0; i < node.children.length; i++) {
+                    getAllChildren(treeObj, node.children[i], result);
+                }
+            }
+        }
+    
         $('#categoriasTree')
+            .on('ready.jstree', function (e, data) {
+               var children = []
+               getAllChildren($('#categoriasTree').jstree(), $("#id").val(), children);
+               jQuery.each( children, function( i, val ) {
+                    $('#categoriasTree').jstree().disable_node(val);
+               });
+            })
             .on('changed.jstree', function (e, data) {
-              var i, j, r = [];
-              for(i = 0, j = data.selected.length; i < j; i++) {
-                r.push(data.instance.get_node(data.selected[i]).id);
-              }
-              if (r != []) {
-                if (r[0] == $("#id").val()) {
-                    alert("Uma categoria não pode ser pai de si mesma!");
-                } else {
+                var i, j, r = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+                  r.push(data.instance.get_node(data.selected[i]).id);
+                }
+                if (r != []) {
                     $("#categoriaPai").val(r[0]);
-                }    
-              }
+                }
             })
             .jstree({
                 "core" : {
                     "multiple": false,
                     "themes" : {
+                        "dots": false,
+                        "icons": false,
                         "variant" : "large"
                     },
                     "data" : ${raw(categorias)}
                 },
                 "checkbox" : {
-                  "keep_selected_style" : false
+                  "keep_selected_style": false,
+                  "three_state": false
                 },
                 "plugins" : [ "wholerow", "checkbox"]
         });
