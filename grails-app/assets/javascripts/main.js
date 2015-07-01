@@ -50,4 +50,5 @@ $(function(){
       });
       $("input.cep").mask("99999-999");            
       $("input.telefone").mask("(99) 99999-999?9");
+      $("input.hora").mask("99:99");
 }); 
