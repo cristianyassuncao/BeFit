@@ -1,7 +1,8 @@
-class Entregador {
+class Entregador implements Comparable {
     
     Pessoa pessoa
     String nome
+    Date dataContratacao
     
     static transients=['nome']
     
@@ -23,6 +24,16 @@ class Entregador {
         version false
         id column: 'SEQ_ENTREGADOR', generator: 'sequence', params:[sequence:'SEQ_ENTREGADOR']
         pessoa column: 'SEQ_PESSOA'
+        dataContratacao column: 'DAT_CONTRATACAO'
+    }
+    
+    int compareTo(Object obj) {
+        def entregador = (Entregador) obj
+        def resultado = getNome().compareTo(entregador?.nome)
+        if (resultado == 0) {
+            resultado = getId().compareTo(entregador?.id)
+        }
+        return resultado
     }
     
 }

@@ -5,6 +5,8 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class PedidoController {
+    
+    def cadastroService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -20,34 +22,32 @@ class PedidoController {
     def create() {
         def listaClientes = Cliente.list()
         Collections.sort(listaClientes)
-        return render(view: 'create', model: [clientes: listaClientes])
+        def listaEntregadores = Entregador.list()
+        Collections.sort(listaEntregadores)
+        def pedido = new Pedido()
+        pedido.dataCadastro = new Date()
+        pedido.valorPago = new BigDecimal(0);
+        return render(view: 'create', model: [pedido: pedido, clientes: listaClientes, entregadores: listaEntregadores])
     }
 
-    @Transactional
-    def save(Pedido pedidoInstance) {
-        if (pedidoInstance == null) {
-            notFound()
-            return
-        }
-
+    def save = {
+        def pedidoInstance = cadastroService.criarPedido(params)
         if (pedidoInstance.hasErrors()) {
-            respond pedidoInstance.errors, view:'create'
+            pedidoInstance.errors
+            def listaClientes = Cliente.list()
+            Collections.sort(listaClientes)
+            def listaEntregadores = Entregador.list()
+            Collections.sort(listaEntregadores)
+            def itensPedido = cadastroService.definirItensPedido(params)
+            render(view:'create', model: [pedido: pedidoInstance, clientes: listaClientes, entregadores: listaEntregadores, itensPedido: itensPedido])
             return
         }
-
-        pedidoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'pedido.label', default: 'Pedido'), pedidoInstance.id])
-                redirect pedidoInstance
-            }
-            '*' { respond pedidoInstance, [status: CREATED] }
-        }
+        redirect(action: "edit", params: [id: pedidoInstance.id])
     }
 
-    def edit(Pedido pedidoInstance) {
-        respond pedidoInstance
+    def edit = {
+        def pedidoInstance = Pedido.get(params.id)
+        render(view:'edit', model:[pedido: pedidoInstance])
     }
 
     @Transactional

@@ -4,6 +4,8 @@
         <meta name="layout" content="main">
         <g:set var="entityName" value="${message(code: 'pedido.label', default: 'Pedido')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pedido.css')}" />
+        <g:javascript src="pedido.js"/>
     </head>
     <body>
         <a href="#create-pedido" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -25,10 +27,8 @@
                     </g:eachError>
                 </ul>
             </g:hasErrors>
-            <g:form url="[resource:pedidoInstance, action:'save']" >
-                <fieldset class="form">
-                    <g:render template="form"/>
-                </fieldset>
+            <g:form url="[action:'save']" >
+                <g:render template="form"/>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                 </fieldset>

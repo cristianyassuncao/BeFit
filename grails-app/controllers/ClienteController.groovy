@@ -65,7 +65,7 @@ class ClienteController {
 
     def edit = {
         def clienteInstance = Cliente.get(params.id)
-         render(view:'edit', model:[clienteInstance: clienteInstance])
+        render(view:'edit', model:[clienteInstance: clienteInstance])
     }
 
     def update = {
@@ -104,6 +104,26 @@ class ClienteController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+    
+    def consultarPorTelefone = {
+        if (params.telefone == null || params.telefone == "") {
+            render "[]" as JSON
+        }
+        def clientes = Cliente.createCriteria().list(params) {
+            pessoa {
+                telefones {
+                    eq("numero", Telefone.removerMascara(params.telefone))
+                }
+            }
+        }   
+        Collections.sort(clientes)
+        String clientesJSON = clientes.collect {
+                                    [id: it?.id,
+                                     nome: it?.nome
+                                    ]
+                            } as JSON
+        render clientesJSON
     }
            
 }

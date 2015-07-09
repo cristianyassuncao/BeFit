@@ -30,7 +30,11 @@ class Cliente implements Comparable {
     
     int compareTo(Object obj) {
         def cliente = (Cliente) obj
-        return getNome().compareTo(cliente?.nome)
+        def resultado = getNome().compareTo(cliente?.nome)
+        if (resultado == 0) {
+            resultado = getId().compareTo(cliente?.id)
+        }
+        return resultado
     }
     
 }
