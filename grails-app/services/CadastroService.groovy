@@ -216,10 +216,12 @@ class CadastroService {
         pedidoInstance.observacao = params?.observacao
         pedidoInstance.numeroVolumes = params?.numeroVolumes
         pedidoInstance.entregador = (params?.entregador?.id == null) ? null : Entregador.get(params?.entregador?.id)
-        pedidoInstance.enderecoEntrega = (params?.enderecoEntrega?.id == null) ? null : Endereco.get(params?.enderecoEntrega?.id)
-        pedidoInstance.telefone = (params?.telefone?.id == null) ? null : Telefone.get(params?.telefone?.id)
         pedidoInstance.entregarAPartirDaHora = entregarAPartirDaHora
         pedidoInstance.entregarAteHora = entregarAteHora
+        
+        pedidoInstance.enderecoEntrega = definirEnderecoPedido(params)
+        pedidoInstance.telefone = definirTelefonePedido(params)
+        
         pedidoInstance.validate()
         if (!pedidoInstance.hasErrors()) {
             pedidoInstance.save(flush: true)
@@ -230,6 +232,17 @@ class CadastroService {
     
     def definirItensPedido(params) {
         return []
+    }
+    
+    def definirTelefonePedido(params) {
+        def telefonePedido = new TelefonePedido()
+        telefonePedido.numero = Telefone.removerMascara(params?.numeroTelefone)
+        return telefonePedido
+    }
+    
+    def definirEnderecoPedido(params) {
+        def enderecoPedido = new EnderecoPedido()
+        return enderecoPedido
     }
    
 }

@@ -1,7 +1,6 @@
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class PedidoController {
@@ -101,4 +100,31 @@ class PedidoController {
             '*'{ render status: NOT_FOUND }
         }
     }
-}
+    
+    def consultarClientePorTelefone = {
+        if (params.telefone == null || params.telefone == "") {
+            render "[]" as JSON
+        }
+        def clientes = Cliente.createCriteria().list(params) {
+            pessoa {
+                telefones {
+                    eq("numero", Telefone.removerMascara(params.telefone))
+                }
+            }
+        }   
+        Collections.sort(clientes)
+        String clientesJSON = clientes.collect {
+                                    [id: it?.id,
+                                     nome: it?.nome]
+                            } as JSON
+        render clientesJSON
+    }
+    
+    def carregarDadosComplementares = {
+        def idCliente = new Long(params?.idCliente)
+        def cliente = Cliente.get(idCliente)
+        println cliente
+        render(view: '/cliente/dadosComplementares', model: ['enderecos': cliente?.pessoa?.enderecos, 'telefones': cliente?.pessoa?.telefones])
+    }
+    
+}    

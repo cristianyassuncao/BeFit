@@ -1,3 +1,6 @@
+
+import javax.swing.text.MaskFormatter
+
 class Pedido {
     
     Cliente cliente
@@ -13,14 +16,14 @@ class Pedido {
     String observacao
     BigDecimal numeroVolumes
     Entregador entregador
-    Endereco enderecoEntrega
-    Telefone telefone
+    EnderecoPedido endereco
+    TelefonePedido telefone
     
+    static embedded = ['endereco', 'telefone']
+           
     static hasMany = [itens: ItemPedido]
     
     static constraints = {
-        enderecoEntrega(nullable: true)
-        telefone(nullable: true)
         cliente(nullable: true)
         entregarAPartirDaHora(nullable: true)
         telefone(nullable: true)
@@ -43,9 +46,64 @@ class Pedido {
         observacao column: 'TXT_OBSERVACAO'
         numeroVolumes column: 'NUM_VOLUMES'
         entregador column: 'SEQ_ENTREGADOR'
-        enderecoEntrega column: 'SEQ_ENDERECO'
-        telefone column: 'SEQ_TELEFONE'
         itens joinTable: false, column: 'SEQ_PEDIDO', cascade:"all-delete-orphan"
     }
         
+}
+
+class EnderecoPedido {
+    String rua
+    String numero
+    String complemento
+    Bairro bairro
+    String cep
+    String pontoReferencia
+    String cepComMascara
+    
+    static transients = ["cepComMascara"]
+    
+    static mapping = {
+        columns {
+            rua column: 'TXT_ENDERECO'
+            numero column: 'TXT_NUMERO_ENDERECO'
+            complemento column: 'TXT_COMPLEMENTO'
+            bairro column: 'SEQ_BAIRRO', type: Long
+            cep column: 'TXT_CEP'
+            pontoReferencia column: 'TXT_PONTO_REFERENCIA'
+        }
+    }
+        
+    public String getCepComMascara() {
+        String cepMask= "#####-###";
+        MaskFormatter maskFormatter= new MaskFormatter(cepMask);
+        maskFormatter.setValueContainsLiteralCharacters(false);
+        return maskFormatter.valueToString(cep) ;   
+    }
+   
+}
+
+class TelefonePedido {
+    
+    String numero
+    String numeroComMascara
+    
+    static transients =['numeroComMascara']
+    
+    static constraints = {
+	 numero(nullable: false, blank: false)
+    }
+    
+    static mapping = {
+        columns {
+            numero column: 'TXT_NUMERO_TELEFONE'
+        }
+    }
+        
+    public String getNumeroComMascara() {
+        String phoneMask= "(##) #####-####";
+        MaskFormatter maskFormatter= new MaskFormatter(phoneMask);
+        maskFormatter.setValueContainsLiteralCharacters(false);
+        return maskFormatter.valueToString(numero) ;   
+    }
+    
 }

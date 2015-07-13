@@ -14,6 +14,16 @@ function atualizarSelect(idControle, valor) {
     controle.trigger("chosen:updated");
 }
 
+function carregarDadosComplementares(idCliente) {
+    jQuery.ajax({
+		  url: 'carregarDadosComplementares?idCliente=' + idCliente,
+		  async: false,
+		  success: function(data) {
+			  $("#dadosComplementares").html(data);
+		  }	  
+	});
+}
+
 function exibirDadosCliente(data) {
     var clientes = JSON.parse(data);
     if (clientes.length == 0) {
@@ -25,5 +35,5 @@ function exibirDadosCliente(data) {
         return;
     }
     atualizarSelect('cliente', clientes[0].id);
+    carregarDadosComplementares(clientes[0].id);
 }
-

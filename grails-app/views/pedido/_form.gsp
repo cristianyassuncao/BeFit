@@ -15,7 +15,7 @@
                 <g:message code="telefone.numero.label"/>:
             </div>
             <div class="valor">
-                <input type="text" id="numeroTelefone" name="numeroTelefone" value="${pedido?.telefone}" size="14" class="telefone" onblur="${remoteFunction(controller:'cliente',action:'consultarPorTelefone', method: 'GET', params:'\'telefone=\' + escape(this.value)', before: 'atualizarSelect(\'cliente\',null); if (!isTelefonePreenchido(this.value)) return false;', onSuccess:'exibirDadosCliente(data)')}"/>
+                <input type="text" id="numeroTelefone" name="telefone.numeroTelefone" value="${pedido?.telefone?.numero}" size="14" class="telefone" onblur="${remoteFunction(controller:'pedido',action:'consultarClientePorTelefone', method: 'GET', params:'\'telefone=\' + escape(this.value)', before: 'atualizarSelect(\'cliente\',null); if (!isTelefonePreenchido(this.value)) return false;', onSuccess:'exibirDadosCliente(data)')}"/>
             </div>
         </div>
         <div class="campo">
@@ -23,7 +23,7 @@
                 <g:message code="cliente.nome.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente.id"> 
+                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente.id" onblur="${remoteFunction(controller:'pedido',action:'carregarDadosComplementares', method: 'GET', params:'\'id=\' + escape(this.value)', onSuccess:'exibirDadosCliente(data)')}"> 
                     <option value=""></option>
                     <g:each in="${clientes}" var="cliente">
                         <g:set var="isClienteSelecionado" value="${pedido?.cliente?.id == cliente?.id}"/>
@@ -38,6 +38,7 @@
             </div>
         </div>
     </div>
+    <div id="dadosComplementares"/>
 </fieldset>
 
 <fieldset>
@@ -61,7 +62,7 @@
         </div>
     </div>
     <div id="dadosEntrega" class="campos autoOverflow">
-        <fieldset id="horarioEspecial">
+        <fieldset id="horarioEspecial" class="padrao">
             <legend>Horário Especial de Entrega</legend>
             <div class="campos">
                 <div class="campo">

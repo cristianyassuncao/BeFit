@@ -12,20 +12,23 @@ and open the template in the editor.
     overflow: auto;
 }
 
-#horarioEspecial {
-    float: right;
+fieldset.padrao {
     margin-top: 0px;
     border: 1px solid black;
 }
 
-#horarioEspecial legend {
+fieldset.padrao legend {
   border: none;
   background-color: transparent;
   font-weight: bold;
   position: relative;
   left: 0px;
-  width: 200px;
+  width: auto;
 }  
+
+#horarioEspecial {
+    float: right;
+}    
 
 input.hora {
     width: 80px;
@@ -33,4 +36,12 @@ input.hora {
 
 #dadosEntrega {
     width: 60%;
+}
+
+.inline {
+    display: inline;
+}
+
+#dadosComplementares > * {
+    height: 100px;
 }
