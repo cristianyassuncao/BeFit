@@ -37,6 +37,7 @@
                 </select>
             </div>
         </div>
+        <input class="add" type="button" value="Novo Cliente" onclick="adicionarCliente();">
     </div>
     <div id="dadosComplementares"/>
 </fieldset>

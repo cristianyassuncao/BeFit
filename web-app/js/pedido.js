@@ -37,3 +37,44 @@ function exibirDadosCliente(data) {
     atualizarSelect('cliente', clientes[0].id);
     carregarDadosComplementares(clientes[0].id);
 }
+
+function selecionarEnderecoEntrega(idCliente) {
+    modalForm = $("<div></div>");
+    titulo = 'Selecionar Outro Endereço de Entrega';
+    modalForm.load('/BeFit/pedido/carregarEnderecos?idCliente=' + idCliente, 
+                  function( response, status, xhr ) {
+                    if ( status == "error" ) {
+                        alert(response);
+                        $(this).dialog("close");
+                        $(this).dialog("destroy");
+                    }
+                 })
+             .dialog({
+                    modal: true,
+                    autoOpen: false,
+                    height: 400,
+                    width: 367,
+                    title: titulo,
+                    show: "blind",
+                    hide: "explode",
+                    dialogClass: "system-dialog",
+                    buttons: [
+                        {
+                            text: "Confirmar",
+                            click: function() {
+                                alert('cliquei');
+                            }
+                        },    
+                        {
+                            text: "Cancelar",
+                            click: function() {
+                                $(this).dialog("close");
+                                $(this).dialog("destroy");
+                            }
+                        }
+                    ]
+
+              });	    
+    modalForm.dialog('open');
+    return false;
+}        

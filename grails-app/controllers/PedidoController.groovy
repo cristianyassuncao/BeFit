@@ -123,8 +123,18 @@ class PedidoController {
     def carregarDadosComplementares = {
         def idCliente = new Long(params?.idCliente)
         def cliente = Cliente.get(idCliente)
-        println cliente
-        render(view: '/cliente/dadosComplementares', model: ['enderecos': cliente?.pessoa?.enderecos, 'telefones': cliente?.pessoa?.telefones])
+        def enderecoEntrega = null
+        def enderecos = cliente?.pessoa?.enderecos
+        if (enderecos.size() > 0) {
+            enderecoEntrega = cliente?.pessoa?.enderecos[0]
+        }    
+        render(view: 'dadosComplementares', model: ['cliente': cliente, 'endereco': enderecoEntrega, 'telefones': cliente?.pessoa?.telefones])
     }
     
-}    
+    def carregarEnderecos = {
+        def idCliente = new Long(params?.idCliente)
+        def cliente = Cliente.get(idCliente)
+        render(view: 'selecaoEndereco', model: ['enderecos': cliente?.pessoa?.enderecos])
+    }
+    
+}

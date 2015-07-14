@@ -710,3 +710,7 @@ input.label {
 tr.separador {
     border-bottom: 1px solid #efefef;
 }
+
+div.campos > * {
+    vertical-align: top;
+}

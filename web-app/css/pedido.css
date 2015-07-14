@@ -43,5 +43,26 @@ input.hora {
 }
 
 #dadosComplementares > * {
-    height: 100px;
+    vertical-align: top;
+    margin-left: 0px;
+}
+
+#telefones div.campos {
+    width: 220px;
+}
+
+#buttonSelecionarOutroEndereco {
+    position: relative;
+    left: -10px;
+    margin-top: 10px;
+}
+
+div.enderecoParaSelecao {
+    float: left;
+}
+
+div.botaoSelecaoEndereco {
+    float: left;
+    margin-top: 9px;
+    margin-right: 5px;
 }
