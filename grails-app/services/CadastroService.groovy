@@ -210,7 +210,8 @@ class CadastroService {
         pedidoInstance.dataCadastro = formatoData.parse(params?.dataCadastro)
         pedidoInstance.dataEntrega = formatoData.parse(params?.dataEntrega)
         pedidoInstance.valorAPagar = toBigDecimal(params?.valorAPagar)
-        pedidoInstance.valorTroco = toBigDecimal(params?.trocoPara) - pedidoInstance.valorAPagar
+        pedidoInstance.trocoPara = toBigDecimal(params?.trocoPara)
+        pedidoInstance.valorTroco = toBigDecimal(params?.valorTroco)
         pedidoInstance.valorPago = toBigDecimal(params?.valorPago)
         pedidoInstance.requerTalher = params?.requerTalher
         pedidoInstance.observacao = params?.observacao
@@ -219,7 +220,7 @@ class CadastroService {
         pedidoInstance.entregarAPartirDaHora = entregarAPartirDaHora
         pedidoInstance.entregarAteHora = entregarAteHora
         
-        pedidoInstance.enderecoEntrega = definirEnderecoPedido(params)
+        pedidoInstance.endereco = definirEnderecoPedido(params)
         pedidoInstance.telefone = definirTelefonePedido(params)
         
         pedidoInstance.validate()
@@ -236,12 +237,20 @@ class CadastroService {
     
     def definirTelefonePedido(params) {
         def telefonePedido = new TelefonePedido()
-        telefonePedido.numero = Telefone.removerMascara(params?.numeroTelefone)
+        telefonePedido.numero = Telefone.removerMascara(params["telefone.numeroTelefone"])
         return telefonePedido
     }
     
     def definirEnderecoPedido(params) {
         def enderecoPedido = new EnderecoPedido()
+        enderecoPedido.rua = params["endereco.rua"]
+        enderecoPedido.numero = params["endereco.numero"]
+        enderecoPedido.complemento = params["endereco.complemento"]
+        enderecoPedido.pontoReferencia = params["endereco.pontoReferencia"]
+        def idBairro = params['endereco.bairro.id']
+        if (idBairro != null) {
+            enderecoPedido.bairro = Bairro.get(idBairro)
+        } 
         return enderecoPedido
     }
    

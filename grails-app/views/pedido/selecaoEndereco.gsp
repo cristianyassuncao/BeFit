@@ -1,22 +1,24 @@
 <ul>
     <g:each var="endereco" in="${enderecos}" status="i">
+        <g:set var="idEndereco" value="${endereco.id}"/>
         <li class="detalhe">
             <div class="botaoSelecaoEndereco">
-                <input type="radio" name="enderecoEntrega"/>
+                <input type="radio" name="enderecoEntrega" value="${idEndereco}"/>
             </div>    
-            <div class="enderecoParaSelecao">
+            <div id="endereco${idEndereco}" class="enderecoParaSelecao">
                 <div class="campos">
-                    ${endereco?.rua}
-                    ${endereco?.numero}
+                    <span id="rua${idEndereco}">${endereco?.rua}</span>
+                    <span id="numero${idEndereco}">${endereco?.numero}</span>
                 </div>
                 <div class="campos">
-                    ${endereco?.complemento}
+                    <span id="complemento${idEndereco}">${endereco?.complemento}</span>
                 </div>
                 <div class="campos">
-                    ${endereco?.bairro?.nome}
+                    <input type="hidden" id="idBairro${idEndereco}" value="${endereco?.bairro?.id}"/>
+                    <span id="nomeBairro${idEndereco}">${endereco?.bairro?.nome}</span>
                 </div>
                 <div class="campos">
-                    ${endereco?.pontoReferencia}
+                    <span id="pontoReferencia${idEndereco}">${endereco?.pontoReferencia}</span>
                 </div>     
             </div>
         </li>                

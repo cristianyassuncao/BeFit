@@ -3,20 +3,23 @@
 <input type="hidden" name="endereco.complemento" value="${endereco?.complemento}"/>
 <input type="hidden" name="endereco.bairro.id" value="${endereco?.bairro?.id}"/>
 <input type="hidden" name="endereco.pontoReferencia" value="${endereco?.pontoReferencia}"/>
-<fieldset id="enderecoEntrega" class="padrao inline">
+<fieldset class="padrao inline">
     <legend>Endereço de Entrega</legend>
-    <div class="campos">
-        ${endereco?.rua} ${endereco?.numero}
-    </div>
-    <div class="campos">
-        ${endereco?.complemento}
-    </div>
-    <div class="campos">
-        ${endereco?.bairro?.nome}
-    </div>
-    <div class="campos">
-        ${endereco?.pontoReferencia}
-    </div>
+    <div id="enderecoEntrega">
+        <div class="campos">
+            <span id="ruaEntrega">${endereco?.rua}</span>
+            <span id="numeroEntrega">${endereco?.numero}</span>
+        </div>
+        <div class="campos">
+            <span id="complementoEntrega">${endereco?.complemento}</span>
+        </div>
+        <div class="campos">
+            <span id="bairroEntrega">${endereco?.bairro?.nome}</span>
+        </div>
+        <div class="campos">
+            <span id="pontoReferenciaEntrega">${endereco?.pontoReferencia}</span>
+        </div>
+    </div>    
     <input class="add" type="button" id="buttonSelecionarOutroEndereco" value="Selecionar outro endereço" onclick="selecionarEnderecoEntrega(${cliente?.id});">
 </fieldset>    
 

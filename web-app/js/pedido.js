@@ -62,7 +62,25 @@ function selecionarEnderecoEntrega(idCliente) {
                         {
                             text: "Confirmar",
                             click: function() {
-                                alert('cliquei');
+                                var idEndereco = $("input[name='enderecoEntrega']:checked").val();
+                                var rua = $('#rua' + idEndereco).text();
+                                var numero = $('#numero' + idEndereco).text();
+                                var complemento = $('#complemento' + idEndereco).text();
+                                var idBairro = $('#idBairro' + idEndereco).val();
+                                var nomeBairro = $('#nomeBairro' + idEndereco).text();
+                                var pontoReferencia = $('#pontoReferencia' + idEndereco).text();
+                                $("input[name='endereco.rua']").val(rua);
+                                $("input[name='endereco.numero']").val(numero);
+                                $("input[name='endereco.complemento']").val(complemento);
+                                $("input[name='endereco.bairro.id']").val(idBairro);
+                                $("input[name='endereco.pontoReferencia']").val(pontoReferencia);
+                                $("#ruaEntrega").text(rua);
+                                $("#numeroEntrega").text(numero);
+                                $("#complementoEntrega").text(complemento);
+                                $("#bairroEntrega").text(nomeBairro);
+                                $("#pontoReferenciaEntrega").text(pontoReferencia);
+                                $(this).dialog("close");
+                                $(this).dialog("destroy");
                             }
                         },    
                         {

@@ -27,6 +27,9 @@ class Pedido {
         cliente(nullable: true)
         entregarAPartirDaHora(nullable: true)
         telefone(nullable: true)
+        trocoPara(nullable: true, validator: {val, obj -> return val.compareTo(obj.valorAPagar) > 0})
+        valorTroco(nullable: true)
+        valorPago(nullable: true, validator: {val, obj -> return val.compareTo(obj.valorAPagar) <= 0})
     }
     
     static mapping = {
@@ -56,11 +59,7 @@ class EnderecoPedido {
     String numero
     String complemento
     Bairro bairro
-    String cep
     String pontoReferencia
-    String cepComMascara
-    
-    static transients = ["cepComMascara"]
     
     static mapping = {
         columns {
@@ -68,18 +67,10 @@ class EnderecoPedido {
             numero column: 'TXT_NUMERO_ENDERECO'
             complemento column: 'TXT_COMPLEMENTO'
             bairro column: 'SEQ_BAIRRO', type: Long
-            cep column: 'TXT_CEP'
             pontoReferencia column: 'TXT_PONTO_REFERENCIA'
         }
     }
         
-    public String getCepComMascara() {
-        String cepMask= "#####-###";
-        MaskFormatter maskFormatter= new MaskFormatter(cepMask);
-        maskFormatter.setValueContainsLiteralCharacters(false);
-        return maskFormatter.valueToString(cep) ;   
-    }
-   
 }
 
 class TelefonePedido {
