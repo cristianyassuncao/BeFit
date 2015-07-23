@@ -41,7 +41,7 @@ class PedidoController {
             render(view:'create', model: [pedido: pedidoInstance, clientes: listaClientes, entregadores: listaEntregadores, itensPedido: itensPedido])
             return
         }
-        redirect(action: "edit", params: [id: pedidoInstance.id])
+        redirect(action: "index")
     }
 
     def edit = {
@@ -136,5 +136,11 @@ class PedidoController {
         def cliente = Cliente.get(idCliente)
         render(view: 'selecaoEndereco', model: ['enderecos': cliente?.pessoa?.enderecos])
     }
+	
+	def carregarTelefonePrincipal = {
+		def cliente = Cliente.get(new Long(params?.idCliente))
+		def telefone = Telefone.find("FROM Telefone WHERE pessoa = :pessoa AND whatsapp", [pessoa: cliente.pessoa])
+		return telefone?.numero
+	}
     
 }

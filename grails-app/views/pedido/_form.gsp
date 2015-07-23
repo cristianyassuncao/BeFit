@@ -3,10 +3,25 @@
 <script src="/BeFit/js/chosen_v1.4.2/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery(".chosen").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
+        jQuery(".chosen").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true})
+			        	 .change(function() {
+				        	 carregarDadosComplementares($(this).val());			        		
+			        	 })
     });
 </script>
 <!-- Fim do bloco Chosen -->
+<g:if test="${pedido?.id != null}">
+	<div class="campos">
+		<div class="campo">
+		    <div class="nome">
+		        <g:message code="pedido.id.label"/>:
+		    </div> 
+		    <div class="valor">
+		        <input type="text" id="id" name="id" value="${pedido?.id}"/>
+		    </div>
+		</div>
+	</div>
+</g:if>
 <fieldset>
     <legend>Cliente</legend>
     <div class="campos">
@@ -23,7 +38,7 @@
                 <g:message code="cliente.nome.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente.id" onblur="${remoteFunction(controller:'pedido',action:'carregarDadosComplementares', method: 'GET', params:'\'id=\' + escape(this.value)', onSuccess:'exibirDadosCliente(data)')}"> 
+                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente.id"> 
                     <option value=""></option>
                     <g:each in="${clientes}" var="cliente">
                         <g:set var="isClienteSelecionado" value="${pedido?.cliente?.id == cliente?.id}"/>
@@ -46,26 +61,8 @@
     </div>    
 </fieldset>
 
-<fieldset>
-    <legend>Detalhes do Pedido</legend>
-    <div class="campos">
-        <div class="campo">
-            <div class="nome">
-                <g:message code="pedido.id.label"/>:
-            </div> 
-            <div class="valor">
-                <input type="text" id="id" name="id" value="${pedido?.id}"/>
-            </div>
-        </div>
-        <div class="campo">
-            <div class="nome">
-                <g:message code="pedido.dataCadastro.label"/>:
-            </div>
-            <div class="valor">
-                <input type="text" id="dataCadastro" name="dataCadastro" class="data" value="<g:formatDate date="${pedido?.dataCadastro}" format="dd/MM/yyyy"/>" readonly=""/>
-            </div>    
-        </div>
-    </div>
+<fieldset id="detalhesPedido">
+    <legend id="legendaDetalhesPedido">Detalhes do Pedido</legend>    
     <div id="dadosEntrega" class="campos autoOverflow">
         <fieldset id="horarioEspecial" class="padrao">
             <legend>Horário Especial de Entrega</legend>
@@ -90,6 +87,14 @@
         </fieldset>
         <div class="campo">
             <div class="nome">
+                <g:message code="pedido.dataCadastro.label"/>:
+            </div>
+            <div class="valor">
+                <input type="text" id="dataCadastro" name="dataCadastro" class="data" value="<g:formatDate date="${pedido?.dataCadastro}" format="dd/MM/yyyy"/>" readonly=""/>
+            </div>    
+        </div>
+        <div class="campo">
+            <div class="nome">
                 <g:message code="pedido.dataEntrega.label"/>:
                 <span class="required-indicator">*</span>
             </div>
@@ -99,26 +104,7 @@
         </div>
     </div>
     <div class="campos">
-        <div class="campo">
-            <div class="nome">
-                <g:message code="pedido.requerTalher.label"/>:
-            </div>
-            <div class="valor">
-                <g:checkBox name="requerTalher" value="${pedido?.requerTalher}"/>
-            </div>    
-        </div>
-        <div class="campo">
-            <div class="nome">
-                <g:message code="pedido.numeroVolumes.label" default="Numero Volumes" />:
-                <span class="required-indicator">*</span>
-            </div>
-            <div class="valor">
-                <g:field name="numeroVolumes" value="${fieldValue(bean: pedido, field: 'numeroVolumes')}"/>
-            </div>    
-        </div>
-    </div>
-    <div class="campos">
-        <div class="campo">
+    	<div class="campo">
             <div class="nome">
                 <g:message code="pedido.responsavelEntrega.label"/>:
             </div>
@@ -137,14 +123,31 @@
                 </select>
             </div>    
         </div>
-    </div>    
+        <div class="campo">
+            <div class="nome">
+                <g:message code="pedido.requerTalher.label"/>:
+            </div>
+            <div class="valor">
+                <input type="checkbox" id="requerTalher" name="requerTalher" <g:if test="${pedido?.requerTalher}">checked</g:if> value="true">
+            </div>    
+        </div>
+        <div class="campo">
+            <div class="nome">
+                <g:message code="pedido.numeroVolumes.label" default="Numero Volumes" />:
+                <span class="required-indicator">*</span>
+            </div>
+            <div class="valor">
+            	<input type="text" id="numeroVolumes" name="numeroVolumes" value="${pedido?.numeroVolumes}"/>                 
+            </div>    
+        </div>
+    </div>
     <div class="campos">
         <div class="campo">
             <div class="nome">
                 <g:message code="pedido.observacao.label"/>:
             </div>
             <div class="valor">
-                <textarea id="observacao" name="observacao" rows="3" cols="70">${pedido?.observacao}</textarea>
+                <textarea id="observacao" name="observacao" rows="3">${pedido?.observacao}</textarea>
             </div>    
         </div>
     </div>

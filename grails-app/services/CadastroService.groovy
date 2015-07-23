@@ -213,9 +213,9 @@ class CadastroService {
         pedidoInstance.trocoPara = toBigDecimal(params?.trocoPara)
         pedidoInstance.valorTroco = toBigDecimal(params?.valorTroco)
         pedidoInstance.valorPago = toBigDecimal(params?.valorPago)
-        pedidoInstance.requerTalher = params?.requerTalher
+        pedidoInstance.requerTalher = (params?.requerTalher == null ? false : params?.requerTalher)
         pedidoInstance.observacao = params?.observacao
-        pedidoInstance.numeroVolumes = params?.numeroVolumes
+        pedidoInstance.numeroVolumes = toBigDecimal(params?.numeroVolumes)
         pedidoInstance.entregador = (params?.entregador?.id == null) ? null : Entregador.get(params?.entregador?.id)
         pedidoInstance.entregarAPartirDaHora = entregarAPartirDaHora
         pedidoInstance.entregarAteHora = entregarAteHora
@@ -248,8 +248,10 @@ class CadastroService {
         enderecoPedido.numero = params["endereco.numero"]
         enderecoPedido.complemento = params["endereco.complemento"]
         enderecoPedido.pontoReferencia = params["endereco.pontoReferencia"]
-        enderecoPedido.idBairro = params["endereco.bairro.id"]
-        println enderecoPedido
+		def idBairro = params["endereco.bairro.id"]
+		if (idBairro != null && !idBairro.equals("")) {
+			enderecoPedido.idBairro = new Long(idBairro)
+		}
         return enderecoPedido
     }
    

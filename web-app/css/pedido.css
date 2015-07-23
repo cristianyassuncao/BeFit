@@ -34,10 +34,6 @@ input.hora {
     width: 80px;
 }
 
-#dadosEntrega {
-    width: 60%;
-}
-
 .inline {
     display: inline;
 }
@@ -65,4 +61,21 @@ div.botaoSelecaoEndereco {
     float: left;
     margin-top: 9px;
     margin-right: 5px;
+}
+
+#detalhesPedido > * {
+	width: 1000px;
+}
+
+#observacao {
+	height: 100px;
+	width: 872px;
+}
+
+#legendaDetalhesPedido {
+	width: 101%;
+}
+
+#numeroVolumes {
+	width: 50px;	
 }

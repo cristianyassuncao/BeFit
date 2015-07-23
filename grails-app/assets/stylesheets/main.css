@@ -714,3 +714,7 @@ tr.separador {
 div.campos > * {
     vertical-align: top;
 }
+
+input.data {
+	width: 100px;
+}
