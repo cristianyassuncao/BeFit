@@ -39,7 +39,11 @@
         </div>
         <input class="add" type="button" value="Novo Cliente" onclick="adicionarCliente();">
     </div>
-    <div id="dadosComplementares"/>
+    <div id="dadosComplementares">
+        <g:if test="${pedido?.cliente != null}">
+            <g:render template="dadosComplementares" model="[endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones]"/>
+        </g:if>
+    </div>    
 </fieldset>
 
 <fieldset>
@@ -48,7 +52,7 @@
         <div class="campo">
             <div class="nome">
                 <g:message code="pedido.id.label"/>:
-            </div>
+            </div> 
             <div class="valor">
                 <input type="text" id="id" name="id" value="${pedido?.id}"/>
             </div>
@@ -116,16 +120,6 @@
     <div class="campos">
         <div class="campo">
             <div class="nome">
-                <g:message code="pedido.observacao.label"/>:
-            </div>
-            <div class="valor">
-                <textarea id="observacao" name="observacao" rows="3" cols="70">${pedido?.observacao}</textarea>
-            </div>    
-        </div>
-    </div>
-    <div class="campos">
-        <div class="campo">
-            <div class="nome">
                 <g:message code="pedido.responsavelEntrega.label"/>:
             </div>
             <div class="valor">
@@ -144,6 +138,16 @@
             </div>    
         </div>
     </div>    
+    <div class="campos">
+        <div class="campo">
+            <div class="nome">
+                <g:message code="pedido.observacao.label"/>:
+            </div>
+            <div class="valor">
+                <textarea id="observacao" name="observacao" rows="3" cols="70">${pedido?.observacao}</textarea>
+            </div>    
+        </div>
+    </div>
 </fieldset>
 <fieldset>
     <legend>Itens</legend>

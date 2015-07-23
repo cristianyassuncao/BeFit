@@ -18,6 +18,7 @@ class Pedido {
     Entregador entregador
     EnderecoPedido endereco
     TelefonePedido telefone
+    StatusPedido status
     
     static embedded = ['endereco', 'telefone']
            
@@ -48,6 +49,7 @@ class Pedido {
         entregarAteHora column: 'DTH_ENTREGAR_ATE'
         observacao column: 'TXT_OBSERVACAO'
         numeroVolumes column: 'NUM_VOLUMES'
+        status column: 'TXT_STATUS'
         entregador column: 'SEQ_ENTREGADOR'
         itens joinTable: false, column: 'SEQ_PEDIDO', cascade:"all-delete-orphan"
     }
@@ -58,17 +60,23 @@ class EnderecoPedido {
     String rua
     String numero
     String complemento
-    Bairro bairro
+    Long idBairro
     String pontoReferencia
+    
+    static transients = ["bairro"]
     
     static mapping = {
         columns {
             rua column: 'TXT_ENDERECO'
             numero column: 'TXT_NUMERO_ENDERECO'
             complemento column: 'TXT_COMPLEMENTO'
-            bairro column: 'SEQ_BAIRRO', type: Long
+            idBairro column: 'SEQ_BAIRRO'
             pontoReferencia column: 'TXT_PONTO_REFERENCIA'
         }
+    }
+    
+    public Bairro getBairro() {
+        return Bairro.get(idBairro)
     }
         
 }

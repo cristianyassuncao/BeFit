@@ -219,6 +219,7 @@ class CadastroService {
         pedidoInstance.entregador = (params?.entregador?.id == null) ? null : Entregador.get(params?.entregador?.id)
         pedidoInstance.entregarAPartirDaHora = entregarAPartirDaHora
         pedidoInstance.entregarAteHora = entregarAteHora
+        pedidoInstance.status = StatusPedido.A
         
         pedidoInstance.endereco = definirEnderecoPedido(params)
         pedidoInstance.telefone = definirTelefonePedido(params)
@@ -247,10 +248,8 @@ class CadastroService {
         enderecoPedido.numero = params["endereco.numero"]
         enderecoPedido.complemento = params["endereco.complemento"]
         enderecoPedido.pontoReferencia = params["endereco.pontoReferencia"]
-        def idBairro = params['endereco.bairro.id']
-        if (idBairro != null) {
-            enderecoPedido.bairro = Bairro.get(idBairro)
-        } 
+        enderecoPedido.idBairro = params["endereco.bairro.id"]
+        println enderecoPedido
         return enderecoPedido
     }
    
