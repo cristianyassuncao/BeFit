@@ -253,6 +253,6 @@ class CadastroService {
 			enderecoPedido.idBairro = new Long(idBairro)
 		}
         return enderecoPedido
-    }
+    }	
    
 }

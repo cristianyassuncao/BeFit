@@ -139,8 +139,8 @@ class PedidoController {
 	
 	def carregarTelefonePrincipal = {
 		def cliente = Cliente.get(new Long(params?.idCliente))
-		def telefone = Telefone.find("FROM Telefone WHERE pessoa = :pessoa AND whatsapp", [pessoa: cliente.pessoa])
-		return telefone?.numero
+		def telefones = Telefone.findAll("FROM Telefone WHERE pessoa = :pessoa ORDER BY whatsapp", [pessoa: cliente.pessoa])
+		render ((telefones.size() == 0) ? null : telefones[0].numeroComMascara) as String
 	}
     
 }

@@ -5,7 +5,8 @@
     jQuery(document).ready(function(){
         jQuery(".chosen").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true})
 			        	 .change(function() {
-				        	 carregarDadosComplementares($(this).val());			        		
+				        	 carregarDadosComplementares($(this).val());
+				        	 definirTelefone($(this).val())			        		
 			        	 })
     });
 </script>

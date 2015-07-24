@@ -96,3 +96,13 @@ function selecionarEnderecoEntrega(idCliente) {
     modalForm.dialog('open');
     return false;
 }        
+
+function definirTelefone(idCliente) {
+	jQuery.ajax({
+		  url: 'carregarTelefonePrincipal?idCliente=' + idCliente,
+		  async: false,
+		  success: function(data) {
+			  $("#numeroTelefone").val(data);
+		  }
+	});
+}
