@@ -139,8 +139,9 @@ class PedidoController {
 	
 	def carregarTelefonePrincipal = {
 		def cliente = Cliente.get(new Long(params?.idCliente))
-		def telefones = Telefone.findAll("FROM Telefone WHERE pessoa = :pessoa ORDER BY whatsapp", [pessoa: cliente.pessoa])
-		render ((telefones.size() == 0) ? null : telefones[0].numeroComMascara) as String
+		def telefones = Telefone.findAll("FROM Telefone WHERE pessoa = :pessoa ORDER BY COALESCE(whatsapp, FALSE)", [pessoa: cliente.pessoa])
+		def numeroRegistros = telefones.size()
+		render ((numeroRegistros == 0) ? null : telefones[numeroRegistros - 1].numeroComMascara) as String
 	}
     
 }
