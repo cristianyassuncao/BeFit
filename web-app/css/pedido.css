@@ -79,3 +79,44 @@ div.botaoSelecaoEndereco {
 #numeroVolumes {
 	width: 50px;	
 }
+
+th.produto {
+	width: 30%;
+}
+
+th.quantidade {
+	width: 4%;
+}
+
+th.valorUnitario {
+	width: 12%;	
+}
+
+th.valorTotalItem {
+	width: 10%;	
+}
+
+#itensPedido td > * {
+	width: 90%;
+}
+
+#itensPedido td #produto {
+	width: 100%;
+}
+
+th.alteracaoPrato {
+	width: 28%;	
+}
+
+th.alteracaoMolho {
+	width: 28%;
+}
+
+th.operacoes {
+	width: 3%;
+}
+
+#itensPedido textarea {
+	height: auto;
+	width: 98%;
+}

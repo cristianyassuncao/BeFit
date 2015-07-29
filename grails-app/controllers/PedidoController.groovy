@@ -143,5 +143,9 @@ class PedidoController {
 		def numeroRegistros = telefones.size()
 		render ((numeroRegistros == 0) ? null : telefones[numeroRegistros - 1].numeroComMascara) as String
 	}
+	
+	def incluirNovoProduto = {
+		render(template: 'itemPedido', model: ['produtos': Produto.list()])
+	}
     
 }

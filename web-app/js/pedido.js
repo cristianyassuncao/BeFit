@@ -106,3 +106,13 @@ function definirTelefone(idCliente) {
 		  }
 	});
 }
+
+function incluirProduto() {
+	 jQuery.ajax({
+		  url: 'incluirNovoProduto',
+		  async: false,
+		  success: function(data) {
+			  $("#itensPedido").append(data);
+		  }	  
+	});
+}

@@ -3,11 +3,13 @@
 <script src="/BeFit/js/chosen_v1.4.2/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery(".chosen").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true})
-			        	 .change(function() {
+    	jQuery("#produto").chosen({width: "350px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
+    	jQuery("#entregador").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
+        jQuery("#cliente").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true})
+			        	  .change(function() {
 				        	 carregarDadosComplementares($(this).val());
 				        	 definirTelefone($(this).val())			        		
-			        	 })
+			        	  })
     });
 </script>
 <!-- Fim do bloco Chosen -->
@@ -155,8 +157,51 @@
 </fieldset>
 <fieldset>
     <legend>Itens</legend>
-    <g:each in="${itensPedido?}" var="i">
-    </g:each>
+    <div align="right"><input type="checkbox"> Exibir somente as opções do dia</div>
+    <table id="itensPedido">
+		<tr>
+		    <th class="produto"><g:message code="itemPedido.produto.label"/></th>
+		    <th class="quantidade"><g:message code="itemPedido.quantidade.label"/></th>
+		  	<th class="valorUnitario"><g:message code="itemPedido.valorUnitario.label"/></th>
+		  	<th class="valorTotalItem"><g:message code="itemPedido.valorTotalItem.label"/></th>
+		  	<th class="alteracaoPrato"><g:message code="itemPedido.alteracaoPrato.label"/></th>
+		  	<th class="alteracaoMolho"><g:message code="itemPedido.alteracaoMolho.label"/></th>
+		  	<th class="operacoes">&nbsp;</th>
+		</tr>
+		<tr>
+			<td>
+				<select data-placeholder="Selecione um produto" class="itemPedido" id="produto"> 
+                	<option value=""></option>
+	                <g:each in="${produtos}" var="produto">
+	                   <option value="${produto.id}">${produto.nome}</option>	                   
+	                </g:each>
+           		</select>
+			</td>
+			<td>
+				<input type="text" id="quantidade"/>  	
+			</td>
+			<td>
+				<input type="text" id="valorUnitario"/> 	
+			</td>
+			<td>
+				<input type="text" id="valorTotalItem" readonly="readonly"/> 	
+			</td>
+			<td>
+	            <textarea id="alteracaoPrato" rows="3"></textarea>    
+			</td>
+			<td>
+	        	<textarea id="alteracaoMolho" rows="3"></textarea>	 
+			</td>
+			<td>
+				<div class="adicionar">
+			        <input class="add" type="button" value="Novo Item" onclick="addItem();"/>
+			    </div>
+			</td>
+		</tr>
+		<g:each in="${itensPedido?}" var="i">
+			<g:render template="exibirItemPedido" model="['item': i]"/>
+	    </g:each>
+	</table>      	
 </fieldset>
 <fieldset>
     <legend>Totais</legend>
