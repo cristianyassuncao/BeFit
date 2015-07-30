@@ -13,6 +13,7 @@
 				        	 carregarDadosComplementares($(this).val());
 				        	 definirTelefone($(this).val())			        		
 			        	  });
+        $('#itensPedido').DataTable();
     });
 </script>
 <!-- Fim do bloco Chosen -->
@@ -201,9 +202,8 @@
 			    </div>
 			</td>
 		</tr>
-		<g:each in="${itensPedido?}" var="i">
-			<g:render template="exibirItemPedido" model="['itemPedido': i]"/>
-	    </g:each>
+	</table>
+	<table id="itensPedido">
 	</table>      	
 </fieldset>
 <fieldset>
