@@ -3,13 +3,16 @@
 <script src="/BeFit/js/chosen_v1.4.2/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function(){
-    	jQuery("#produto").chosen({width: "350px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
+    	jQuery("#produto").chosen({width: "350px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true})
+    					  .change(function() {
+				        	 carregarValorUnitario($(this).val(), $('#dataEntrega').val());				        	 			        		
+			        	  });
     	jQuery("#entregador").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
         jQuery("#cliente").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true})
 			        	  .change(function() {
 				        	 carregarDadosComplementares($(this).val());
 				        	 definirTelefone($(this).val())			        		
-			        	  })
+			        	  });
     });
 </script>
 <!-- Fim do bloco Chosen -->
@@ -157,8 +160,8 @@
 </fieldset>
 <fieldset>
     <legend>Itens</legend>
-    <div align="right"><input type="checkbox"> Exibir somente as opções do dia</div>
-    <table id="itensPedido">
+    <div align="right"><input type="checkbox" checked="checked"> Exibir somente as opções do dia</div>
+    <table class="itensPedido">
 		<tr>
 		    <th class="produto"><g:message code="itemPedido.produto.label"/></th>
 		    <th class="quantidade"><g:message code="itemPedido.quantidade.label"/></th>
@@ -178,13 +181,13 @@
            		</select>
 			</td>
 			<td>
-				<input type="text" id="quantidade"/>  	
+				<input type="text" id="quantidade" class="valor"/>  	
 			</td>
 			<td>
-				<input type="text" id="valorUnitario"/> 	
+				<input type="text" id="valorUnitario" class="valor"/> 	
 			</td>
 			<td>
-				<input type="text" id="valorTotalItem" readonly="readonly"/> 	
+				<input type="text" id="valorTotalItem" class="valor" readonly="readonly"/> 	
 			</td>
 			<td>
 	            <textarea id="alteracaoPrato" rows="3"></textarea>    
@@ -199,7 +202,7 @@
 			</td>
 		</tr>
 		<g:each in="${itensPedido?}" var="i">
-			<g:render template="exibirItemPedido" model="['item': i]"/>
+			<g:render template="exibirItemPedido" model="['itemPedido': i]"/>
 	    </g:each>
 	</table>      	
 </fieldset>

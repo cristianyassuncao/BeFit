@@ -116,3 +116,22 @@ function incluirProduto() {
 		  }	  
 	});
 }
+
+function carregarValorUnitario(idProduto, data) {
+	if (data == "") {
+		alert("Para carregar o valor unitário desse produto é necessário definir uma data de entrega para o pedido!")
+		return;
+	}
+	
+    jQuery.ajax({
+		  url: 'carregarValorUnitario?idProduto=' + idProduto + '&' + 'data=' + data,
+		  async: false,
+		  success: function(valor) {
+			  $("#valorUnitario").val(valor);
+		  }	  
+	});
+}
+
+function addItem() {
+	
+}

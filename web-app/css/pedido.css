@@ -96,11 +96,11 @@ th.valorTotalItem {
 	width: 10%;	
 }
 
-#itensPedido td > * {
+table.itensPedido td > * {
 	width: 90%;
 }
 
-#itensPedido td #produto {
+table.itensPedido td #produto {
 	width: 100%;
 }
 
@@ -116,7 +116,11 @@ th.operacoes {
 	width: 3%;
 }
 
-#itensPedido textarea {
+table.itensPedido textarea {
 	height: auto;
 	width: 98%;
+}
+
+input.valor {
+	text-align: right; 
 }

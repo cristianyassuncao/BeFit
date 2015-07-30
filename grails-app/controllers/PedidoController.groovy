@@ -1,4 +1,9 @@
 import static org.springframework.http.HttpStatus.*
+
+import java.text.SimpleDateFormat;
+
+import org.apache.jasper.compiler.Node.ParamsAction;
+
 import grails.transaction.Transactional
 import grails.converters.JSON
 
@@ -6,8 +11,8 @@ import grails.converters.JSON
 class PedidoController {
     
     def cadastroService
-
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -23,10 +28,12 @@ class PedidoController {
         Collections.sort(listaClientes)
         def listaEntregadores = Entregador.list()
         Collections.sort(listaEntregadores)
+		def data = (params?.data != null) ? params?.data : Util.getDataAtual();
+		def listaProdutos = Produto.findAll("from Produto p where p in (select produto from ItemDia i where i.produto = p)")
         def pedido = new Pedido()
         pedido.dataCadastro = new Date()
         pedido.valorPago = new BigDecimal(0);
-        return render(view: 'create', model: [pedido: pedido, clientes: listaClientes, entregadores: listaEntregadores])
+        return render(view: 'create', model: [pedido: pedido, clientes: listaClientes, entregadores: listaEntregadores, produtos: listaProdutos])
     }
 
     def save = {
@@ -144,8 +151,9 @@ class PedidoController {
 		render ((numeroRegistros == 0) ? null : telefones[numeroRegistros - 1].numeroComMascara) as String
 	}
 	
-	def incluirNovoProduto = {
-		render(template: 'itemPedido', model: ['produtos': Produto.list()])
+	def carregarValorUnitario = {
+		def preco = Preco.find("FROM Preco p1 WHERE p1.produto.id = :idProduto AND aPartirDe = (SELECT MAX(aPartirDe) FROM Preco p2 WHERE p2.produto.id = p1.produto.id AND p2.aPartirDe <= :data)", ['idProduto': new Long(params?.idProduto), 'data': Util.parse(params?.data)])
+		render Util.formatCurrency(preco?.valor) as String
 	}
     
 }
