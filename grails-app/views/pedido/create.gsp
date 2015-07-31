@@ -5,9 +5,7 @@
         <g:set var="entityName" value="${message(code: 'pedido.label', default: 'Pedido')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
         <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pedido.css')}" />
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
         <g:javascript src="pedido.js"/>
-        <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     </head>
     <body>
         <a href="#create-pedido" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

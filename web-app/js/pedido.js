@@ -132,6 +132,40 @@ function carregarValorUnitario(idProduto, data) {
 	});
 }
 
+function getItem() {
+	return {produto: $('#produto').val(), 
+			quantidade: $('#quantidade').val(),
+			valorUnitario: $('#valorUnitario').val(),
+			alteracaoPrato: $("#alteracaoPrato").val(),
+			alteracaoMolho: $("#alteracaoMolho").val()
+		   };
+}
+
 function addItem() {
-		
+	var item = getItem();
+	
+	if (!isItemPreenchido(item)) return false; 
+	
+	var produto = item.produto;
+	var quantidade = item.quantidade;
+	var valorUnitario = item.valorUnitario;
+	var alteracaoPrato = item.alteracaoPrato;
+	var alteracaoMolho = item.alteracaoMolho;
+	var valorTotalItem = 0.00;
+	
+	var cell1 = "<td><input type='hidden' name='itemPedido.produto' value='" + produto + "'/>" + produto + "</td>";
+	var cell2 = "<td><input type='hidden' name='itemPedido.quantidade' value='" + quantidade + "'/>" + quantidade + "</td>";
+	var cell3 = "<td><input type='hidden' name='itemPedido.valorUnitario' value='" + valorUnitario + "'/>" + valorUnitario + "</td>";
+	var cell4 = "<td>" + valorTotalItem + "</td>";
+	var cell5 = "<td><textarea class='hidden' name='itemPedido.alteracaoPrato' rows='3'>" + alteracaoPrato + "</textarea>" + alteracaoPrato +"</td>";
+	var cell6 = "<td><textarea class='hidden' name='itemPedido.alteracaoMolho' rows='3'>" + alteracaoMolho + "</textarea>" + alteracaoMolho +"</td>";
+	$("#itensPedido tbody").append("<tr>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + "</tr>");
+}
+
+function isItemPreenchido(item) {
+	var isProdutoPreenchido = (item.produto != null);
+	var isQuantidadePreenchida = (item.quantidade != "");
+	var isValorUnitarioPreenchido = (item.valorUnitario != "");
+	
+	return isProdutoPreenchido && isQuantidadePreenchida && isValorUnitarioPreenchido;
 }

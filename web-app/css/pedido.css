@@ -124,3 +124,7 @@ table.itensPedido textarea {
 input.valor {
 	text-align: right; 
 }
+
+.hidden {
+	display: none;
+}

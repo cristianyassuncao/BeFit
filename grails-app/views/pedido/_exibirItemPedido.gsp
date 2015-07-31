@@ -15,11 +15,11 @@
 	    ${itemPedido?.totalItem}
 	</td>
 	<td>
-	    <textarea hidden="true" name="itemPedido.alteracaoPrato" rows="3">${itemPedido?.alteracaoPrato}</textarea>
+	    <textarea class="hidden" name="itemPedido.alteracaoPrato" rows="3">${itemPedido?.alteracaoPrato}</textarea>
 	    ${itemPedido?.alteracaoPrato}
 	</td>
 	<td>
-	    <textarea hidden="true" name="itemPedido.alteracaoMolho" rows="3">${itemPedido?.alteracaoMolho}</textarea>	
+	    <textarea class="hidden" name="itemPedido.alteracaoMolho" rows="3">${itemPedido?.alteracaoMolho}</textarea>	
 	    ${itemPedido?.alteracaoMolho}
 	</td>
 	<td>

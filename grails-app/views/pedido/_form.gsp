@@ -13,7 +13,6 @@
 				        	 carregarDadosComplementares($(this).val());
 				        	 definirTelefone($(this).val())			        		
 			        	  });
-        $('#itensPedido').DataTable();
     });
 </script>
 <!-- Fim do bloco Chosen -->
@@ -162,7 +161,7 @@
 <fieldset>
     <legend>Itens</legend>
     <div align="right"><input type="checkbox" checked="checked"> Exibir somente as opções do dia</div>
-    <table class="itensPedido">
+    <table id="itensPedido" class="itensPedido">
 		<tr>
 		    <th class="produto"><g:message code="itemPedido.produto.label"/></th>
 		    <th class="quantidade"><g:message code="itemPedido.quantidade.label"/></th>
@@ -202,9 +201,10 @@
 			    </div>
 			</td>
 		</tr>
+		<g:each in="${itensPedido?}" var="i">
+			<g:render template="exibirItemPedido" model="['itemPedido': i]"/>
+	    </g:each>
 	</table>
-	<table id="itensPedido">
-	</table>      	
 </fieldset>
 <fieldset>
     <legend>Totais</legend>
