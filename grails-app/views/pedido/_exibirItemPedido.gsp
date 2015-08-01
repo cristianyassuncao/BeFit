@@ -3,15 +3,15 @@
 	 	<input type="hidden" name="itemPedido.produto" value="${itemPedido?.produto?.id}"/>
 		${itemPedido?.produto?.nome}
 	</td>
-	<td>
+	<td class="valor">
 	    <input type="hidden" name="itemPedido.quantidade" value="${itemPedido?.quantidade}"/>
 		${itemPedido?.quantidade}
 	</td>
-	<td>
+	<td class="valor">
 	 	<input type="hidden" name="itemPedido.valorUnitario" value="${itemPedido?.valorUnitario}"/>
 		${itemPedido?.valorUnitario}
 	</td>
-	<td>
+	<td class="valor">
 	    ${itemPedido?.totalItem}
 	</td>
 	<td>

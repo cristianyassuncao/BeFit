@@ -59,7 +59,7 @@
                                     <g:message code="produto.categorias.label"/>:
                                 </div>
                                 <div class="valor">
-                                    <g:select name="categorias" from="${CategoriaProduto.list()}" multiple="multiple" optionKey="id" optionValue="nome" size="5" value="${produtoInstance?.categorias*.id}" class="many-to-many" readonly="readonly"/>
+                                    <g:select name="categorias" from="${CategoriaProduto.list()}" multiple="multiple" optionKey="id" optionValue="nome" size="5" value="${produtoInstance?.categorias}" class="many-to-many" readonly="readonly"/>
                                 </div>
                             </div>
                         </div>

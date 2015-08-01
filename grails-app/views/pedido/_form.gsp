@@ -164,9 +164,9 @@
     <table id="itensPedido" class="itensPedido">
 		<tr>
 		    <th class="produto"><g:message code="itemPedido.produto.label"/></th>
-		    <th class="quantidade"><g:message code="itemPedido.quantidade.label"/></th>
-		  	<th class="valorUnitario"><g:message code="itemPedido.valorUnitario.label"/></th>
-		  	<th class="valorTotalItem"><g:message code="itemPedido.valorTotalItem.label"/></th>
+		    <th class="quantidade valor"><g:message code="itemPedido.quantidade.label"/></th>
+		  	<th class="valorUnitario valor"><g:message code="itemPedido.valorUnitario.label"/></th>
+		  	<th class="valorTotalItem valor"><g:message code="itemPedido.valorTotalItem.label"/></th>
 		  	<th class="alteracaoPrato"><g:message code="itemPedido.alteracaoPrato.label"/></th>
 		  	<th class="alteracaoMolho"><g:message code="itemPedido.alteracaoMolho.label"/></th>
 		  	<th class="operacoes">&nbsp;</th>
@@ -181,10 +181,10 @@
            		</select>
 			</td>
 			<td>
-				<input type="text" id="quantidade" class="valor"/>  	
+				<input type="text" id="quantidade" class="valor" onchange="atualizarValorTotalItem()"/>  	
 			</td>
 			<td>
-				<input type="text" id="valorUnitario" class="valor"/> 	
+				<input type="text" id="valorUnitario" class="valor" onchange="atualizarValorTotalItem()"/> 	
 			</td>
 			<td>
 				<input type="text" id="valorTotalItem" class="valor" readonly="readonly"/> 	
