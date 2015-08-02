@@ -133,11 +133,13 @@ function carregarValorUnitario(idProduto, data) {
 }
 
 function getItem() {
-	return {produto: $('#produto').val(), 
+	return {idProduto: $('#produto').val(),
+		    nomeProduto: $('#produto option:selected').html(),
 			quantidade: $('#quantidade').val(),
 			valorUnitario: $('#valorUnitario').val(),
 			alteracaoPrato: $("#alteracaoPrato").val(),
-			alteracaoMolho: $("#alteracaoMolho").val()
+			alteracaoMolho: $("#alteracaoMolho").val(),
+			valorTotal: $('#valorTotalItem').val()
 		   };
 }
 
@@ -159,24 +161,47 @@ function addItem() {
 	
 	if (!isItemPreenchido(item)) return false; 
 	
-	var produto = item.produto;
+	var idProduto = item.idProduto;
+	var nomeProduto = item.nomeProduto;
 	var quantidade = item.quantidade;
 	var valorUnitario = item.valorUnitario;
 	var alteracaoPrato = item.alteracaoPrato;
 	var alteracaoMolho = item.alteracaoMolho;
-	var valorTotalItem = calculaValorTotalItem(quantidade, valorUnitario);
+	var valorTotalItem = item.valorTotal;
 	
-	var cell1 = "<td><input type='hidden' name='itemPedido.produto' value='" + produto + "'/>" + produto + "</td>";
+	var cell1 = "<td><input type='hidden' name='itemPedido.produto' value='" + idProduto + "'/>" + nomeProduto + "</td>";
 	var cell2 = "<td class='valor'><input type='hidden' name='itemPedido.quantidade' value='" + quantidade + "'/>" + quantidade + "</td>";
 	var cell3 = "<td class='valor'><input type='hidden' name='itemPedido.valorUnitario' value='" + valorUnitario + "'/>" + valorUnitario + "</td>";
-	var cell4 = "<td class='valor'>" + valorTotalItem + "</td>";
+	var cell4 = "<td class='valor'><input type='hidden' name='itemPedido.valorTotalItem' value='" + valorTotalItem + "'/>" + valorTotalItem + "</td>";
 	var cell5 = "<td><textarea class='hidden' name='itemPedido.alteracaoPrato' rows='3'>" + alteracaoPrato + "</textarea>" + alteracaoPrato +"</td>";
 	var cell6 = "<td><textarea class='hidden' name='itemPedido.alteracaoMolho' rows='3'>" + alteracaoMolho + "</textarea>" + alteracaoMolho +"</td>";
-	$("#itensPedido tbody").append("<tr>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + "</tr>");
+	var cell7 = "<td>&nbsp;</td>"
+	$("#itensPedido tbody").append("<tr class='separador'>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + cell7 + "</tr>");
+	
+	limparItemAdicionado();
+	totalizarPedido();
+}
+
+function totalizarPedido() {
+	var total = 0;
+	$("input[name='itemPedido.valorTotalItem']").each(
+		function(key, value) {
+			$( this ).toggleClass( "example" );
+		}
+	);
+}
+
+function limparItemAdicionado() {
+	$('#produto').val('').trigger("chosen:updated");;
+	$('#quantidade').val('');
+    $('#valorUnitario').val('');
+    $('#valorTotalItem').val('');
+    $('#alteracaoPrato').val('');
+    $('#alteracaoMolho').val('');
 }
 
 function isItemPreenchido(item) {
-	var isProdutoPreenchido = (item.produto != null);
+	var isProdutoPreenchido = (item.idProduto != null);
 	var isQuantidadePreenchida = (item.quantidade != "");
 	var isValorUnitarioPreenchido = (item.valorUnitario != "");
 	

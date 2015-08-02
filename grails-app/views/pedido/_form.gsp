@@ -171,7 +171,7 @@
 		  	<th class="alteracaoMolho"><g:message code="itemPedido.alteracaoMolho.label"/></th>
 		  	<th class="operacoes">&nbsp;</th>
 		</tr>
-		<tr>
+		<tr class="separador">
 			<td>
 				<select data-placeholder="Selecione um produto" class="itemPedido" id="produto"> 
                 	<option value=""></option>
