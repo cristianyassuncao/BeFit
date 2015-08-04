@@ -121,10 +121,29 @@ table.itensPedido textarea {
 	width: 98%;
 }
 
-input.valor, th.valor, td.valor {
+input.valorNumerico, th.valorNumerico, td.valorNumerico {
 	text-align: right;
 }
 
 .hidden {
 	display: none;
+}
+
+.par {
+	background-color: #F0F0F0;
+}
+
+#formaPagamento {
+	margin-left: 0px;
+	margin-top: 7px;
+	padding-top: 10px;
+	width: 50%;
+}
+
+.radioButton {
+	margin-right: 2px;
+}
+
+.radioLabel {
+	margin-right: 7px;
 }

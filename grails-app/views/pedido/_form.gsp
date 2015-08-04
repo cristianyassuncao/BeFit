@@ -164,9 +164,9 @@
     <table id="itensPedido" class="itensPedido">
 		<tr>
 		    <th class="produto"><g:message code="itemPedido.produto.label"/></th>
-		    <th class="quantidade valor"><g:message code="itemPedido.quantidade.label"/></th>
-		  	<th class="valorUnitario valor"><g:message code="itemPedido.valorUnitario.label"/></th>
-		  	<th class="valorTotalItem valor"><g:message code="itemPedido.valorTotalItem.label"/></th>
+		    <th class="quantidade valorNumerico"><g:message code="itemPedido.quantidade.label"/></th>
+		  	<th class="valorUnitario valorNumerico"><g:message code="itemPedido.valorUnitario.label"/></th>
+		  	<th class="valorTotalItem valorNumerico"><g:message code="itemPedido.valorTotalItem.label"/></th>
 		  	<th class="alteracaoPrato"><g:message code="itemPedido.alteracaoPrato.label"/></th>
 		  	<th class="alteracaoMolho"><g:message code="itemPedido.alteracaoMolho.label"/></th>
 		  	<th class="operacoes">&nbsp;</th>
@@ -181,13 +181,13 @@
            		</select>
 			</td>
 			<td>
-				<input type="text" id="quantidade" class="valor" onchange="atualizarValorTotalItem()"/>  	
+				<input type="text" id="quantidade" class="valorNumerico" onchange="atualizarValorTotalItem()"/>  	
 			</td>
 			<td>
-				<input type="text" id="valorUnitario" class="valor" onchange="atualizarValorTotalItem()"/> 	
+				<input type="text" id="valorUnitario" class="valorNumerico" onchange="atualizarValorTotalItem()"/> 	
 			</td>
 			<td>
-				<input type="text" id="valorTotalItem" class="valor" readonly="readonly"/> 	
+				<input type="text" id="valorTotalItem" class="valorNumerico" readonly="readonly"/> 	
 			</td>
 			<td>
 	            <textarea id="alteracaoPrato" rows="3"></textarea>    
@@ -202,12 +202,12 @@
 			</td>
 		</tr>
 		<g:each in="${itensPedido?}" var="i">
-			<g:render template="exibirItemPedido" model="['itemPedido': i]"/>
+			<g:render template="exibirItemPedido" model="['itemPedido': i, 'classe': (i % 2) == 0 ? 'par' : '']"/>
 	    </g:each>
 	</table>
 </fieldset>
 <fieldset>
-    <legend>Totais</legend>
+    <legend>Pagamento</legend>
     <div class="campos">
         <div class="campo">
             <div class="nome">
@@ -215,7 +215,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="valorAPagar" name="valorAPagar" value="<g:formatNumber number="${pedido?.valorAPagar}" format="###,##0.00"/>" size="13">
+                <input type="text" id="valorAPagar" class="valorNumerico" name="valorAPagar" value="<g:formatNumber number="${pedido?.valorAPagar}" format="###,##0.00"/>" size="13" readonly="readonly">
             </div>    
         </div>
         <div class="campo">
@@ -224,7 +224,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="trocoPara" name="trocoPara" value="<g:formatNumber number="${pedido?.trocoPara}" format="###,##0.00"/>" size="13">
+                <input type="text" id="trocoPara" class="valorNumerico" name="trocoPara" value="<g:formatNumber number="${pedido?.trocoPara}" format="###,##0.00"/>" size="13" onchange="atualizarValorTroco()">
             </div>    
         </div>
         <div class="campo">
@@ -233,7 +233,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="valorTroco" name="valorTroco" value="<g:formatNumber number="${pedido?.valorTroco}" format="###,##0.00"/>" readonly="" size="13"/>
+                <input type="text" id="valorTroco" class="valorNumerico" name="valorTroco" value="<g:formatNumber number="${pedido?.valorTroco}" format="###,##0.00"/>" readonly="readonly" size="13"/>
             </div>    
         </div>
         <div class="campo">
@@ -242,8 +242,15 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="valorPago" name="valorPago" value="<g:formatNumber number="${pedido?.valorPago}" format="###,##0.00"/>" size="13"/>
+                <input type="text" id="valorPago" class="valorNumerico" name="valorPago" value="<g:formatNumber number="${pedido?.valorPago}" format="###,##0.00"/>" size="13"/>
             </div>    
         </div>
-    </div>    
-</fieldset>    
+    </div>
+  	<fieldset id="formaPagamento" class="padrao">
+       <legend>Forma de Pagamento</legend>
+       <g:radioGroup values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}">
+       	  <span class="radioButton">${it.radio}</span>
+       	  <span class="radioLabel">${it.label}</span>
+       </g:radioGroup>
+   	</fieldset>
+</fieldset>

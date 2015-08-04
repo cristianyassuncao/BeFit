@@ -176,19 +176,56 @@ function addItem() {
 	var cell5 = "<td><textarea class='hidden' name='itemPedido.alteracaoPrato' rows='3'>" + alteracaoPrato + "</textarea>" + alteracaoPrato +"</td>";
 	var cell6 = "<td><textarea class='hidden' name='itemPedido.alteracaoMolho' rows='3'>" + alteracaoMolho + "</textarea>" + alteracaoMolho +"</td>";
 	var cell7 = "<td>&nbsp;</td>"
-	$("#itensPedido tbody").append("<tr class='separador'>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + cell7 + "</tr>");
+	var rowsNumber = $("#itensPedido tr").length;
+	var classe = '';
+	if (rowsNumber % 2 == 0) {
+		classe = 'par';
+	}	
+	 
+	$("#itensPedido tbody").append("<tr class='separador " + classe + "'>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + cell7 + "</tr>");
 	
 	limparItemAdicionado();
 	totalizarPedido();
 }
 
-function totalizarPedido() {
-	var total = 0;
+function atualizarValorTotalPedido() {
+	var totalPedido = 0;
 	$("input[name='itemPedido.valorTotalItem']").each(
-		function(key, value) {
-			$( this ).toggleClass( "example" );
+		function(index, element) {
+			totalPedido = totalPedido + parseFloat(converterValorUsandoPontoSeparadorDecimal(this.value));
 		}
 	);
+	$("#valorAPagar").val(converterValorUsandoVirgulaSeparadorDecimal(totalPedido.toFixed(2).toString()));
+}
+
+function getValorNumerico(idControle) {
+	var texto = $("#" + idControle).val();
+	if (texto != '') {
+		return parseFloat(converterValorUsandoPontoSeparadorDecimal(texto));
+	} else {
+		return null;
+	}
+}
+
+function atualizarValorTroco() {
+	var troco = 0;
+	var valorPedido = getValorNumerico('valorAPagar');
+	var isValorPedidoPreenchido = (valorPedido != null);
+	var trocoPara = getValorNumerico('trocoPara');
+	var isTrocoParaPreenchido = (trocoPara != null);
+	if (isValorPedidoPreenchido && isTrocoParaPreenchido) {
+		troco = trocoPara - valorPedido;
+	}
+	$("#valorTroco").val(converterValorUsandoVirgulaSeparadorDecimal(troco.toFixed(2).toString()));
+}
+
+function totalizarPedido() {
+	atualizarValorTotalPedido();
+	atualizarValorTroco();
+}
+
+function adicionarCliente() {
+	window.open('/BeFit/cliente/create','_blank');
 }
 
 function limparItemAdicionado() {
