@@ -3,14 +3,21 @@ class ItemPedido {
     Produto produto
     BigDecimal quantidade
     BigDecimal valorUnitario
+	BigDecimal valorItem
     Boolean pratoSofreuAlteracao
     String alteracaoPrato
     Boolean molhoSofreuAlteracao
     String alteracaoMolho
 
     static belongsTo = [pedido: Pedido]
+	
+	static transients = ["valorItem"]
     
     static constraints = {
+		pratoSofreuAlteracao(nullable: true)
+		alteracaoPrato(nullable: true)
+		molhoSofreuAlteracao(nullable: true)
+		alteracaoMolho(nullable: true)
     }
     
     static mapping = {
@@ -26,5 +33,9 @@ class ItemPedido {
         molhoSofreuAlteracao column: 'IND_MOLHO_SOFREU_ALTERACAO'
         alteracaoMolho column: 'TXT_ALTERACAO_MOLHO'
     }
+	
+	public BigDecimal getValorItem() {
+		return quantidade * valorUnitario
+	}
     
 }

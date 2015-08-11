@@ -202,7 +202,7 @@
 			</td>
 		</tr>
 		<g:each in="${itensPedido?}" var="i">
-			<g:render template="exibirItemPedido" model="['itemPedido': i, 'classe': (i % 2) == 0 ? 'par' : '']"/>
+			<g:render template="exibirItemPedido" model="['itemPedido': i]"/>
 	    </g:each>
 	</table>
 </fieldset>

@@ -1,4 +1,4 @@
-<tr class="separador ${classe}">
+<tr class="separador">
     <td>
 	 	<input type="hidden" name="itemPedido.produto" value="${itemPedido?.produto?.id}"/>
 		${itemPedido?.produto?.nome}
@@ -12,8 +12,8 @@
 		${itemPedido?.valorUnitario}
 	</td>
 	<td class="valor">
-		<input type="hidden" name="itemPedido.valorTotalItem" value="${itemPedido?.valorTotal}"/>
-	    ${itemPedido?.valorTotal}
+		<input type="hidden" name="itemPedido.valorTotalItem" value="${itemPedido?.valorItem}"/>
+	    ${itemPedido?.valorItem}
 	</td>
 	<td>
 	    <textarea class="hidden" name="itemPedido.alteracaoPrato" rows="3">${itemPedido?.alteracaoPrato}</textarea>

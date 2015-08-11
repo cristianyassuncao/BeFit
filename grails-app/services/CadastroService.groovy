@@ -5,7 +5,7 @@ import java.sql.Time
 
 @Transactional
 class CadastroService {
-   
+
     SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy")
     
     def messageSource
@@ -220,21 +220,64 @@ class CadastroService {
         pedidoInstance.entregarAPartirDaHora = entregarAPartirDaHora
         pedidoInstance.entregarAteHora = entregarAteHora
         pedidoInstance.status = StatusPedido.A
-        
+		pedidoInstance.formaPagamento = (params?.formaPagamento == null) ? null : FormaPagamento.get(params?.formaPagamento)
         pedidoInstance.endereco = definirEnderecoPedido(params)
         pedidoInstance.telefone = definirTelefonePedido(params)
-        
         pedidoInstance.validate()
-        if (!pedidoInstance.hasErrors()) {
-            pedidoInstance.save(flush: true)
+        def itensPedido = definirItensPedido(params)
+		validarItensDoPedido(itensPedido, pedidoInstance)
+	    if (!pedidoInstance.hasErrors()) {
+        	pedidoInstance.save(flush: true)
+			if (itensPedido.size() > 0) {
+				itensPedido.each {
+					pedidoInstance.addToItens(it)
+				}
+			}
         }
         println pedidoInstance.errors
         return pedidoInstance
     }
+
+	private validarItensDoPedido(itensPedido, Pedido pedidoInstance) {
+		if (itensPedido.size() > 0) {
+			itensPedido.each {i ->
+				i.validate();
+				i.errors.getAllErrors().each {e ->
+					if (!e.getField().equals("pedido")) {
+						pedidoInstance.errors.rejectValue('itens', 'itemError', messageSource.getMessage(e, null))
+					}
+				}
+			}
+		}
+	}
     
     def definirItensPedido(params) {
-        return []
+		def produto = params["itemPedido.produto"]
+		def quantidade = params["itemPedido.quantidade"]
+		def valorUnitario = params["itemPedido.valorUnitario"]
+		def valorTotalItem = params["itemPedido.valorTotalItem"]
+		def alteracaoPrato = params["itemPedido.alteracaoPrato"]
+		def alteracaoMolho = params["itemPedido.alteracaoMolho"]
+		
+		def numeroItens = produto.size()
+		def itens = []
+		for (int i = 0; i < numeroItens; i++) {
+			itens << definirItemPedido(produto[i], quantidade[i], valorUnitario[i], valorTotalItem[i], alteracaoPrato[i], alteracaoMolho[i])
+		}	
+        return itens
     }
+	
+	def definirItemPedido(produto, quantidade, valorUnitario, valorTotalItem, alteracaoPrato, alteracaoMolho) {
+		def itemPedido = new ItemPedido()
+		if (produto != null) {
+			itemPedido.produto = Produto.get(produto)
+		}
+		itemPedido.quantidade = toBigDecimal(quantidade)
+		itemPedido.valorUnitario = toBigDecimal(valorUnitario)
+		itemPedido.alteracaoPrato = alteracaoPrato
+		itemPedido.alteracaoMolho = alteracaoMolho
+		return itemPedido
+	}
     
     def definirTelefonePedido(params) {
         def telefonePedido = new TelefonePedido()
@@ -254,5 +297,5 @@ class CadastroService {
 		}
         return enderecoPedido
     }	
-   
+	
 }

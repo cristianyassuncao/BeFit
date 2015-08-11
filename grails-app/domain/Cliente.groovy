@@ -3,6 +3,7 @@ class Cliente implements Comparable {
     Pessoa pessoa
     Date dataInclusao
     String nome
+	String observacoes
     
     static transients=['nome']
  
@@ -16,6 +17,7 @@ class Cliente implements Comparable {
         id column: 'SEQ_CLIENTE', generator: 'sequence', params:[sequence:'SEQ_CLIENTE']
         pessoa column: 'SEQ_PESSOA'
         dataInclusao column: 'DAT_INCLUSAO'
+		observacoes column: 'TXT_OBSERVACOES'
     }
     
     String getNome() {

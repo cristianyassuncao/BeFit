@@ -40,7 +40,10 @@
                     </li>
                     <li class="submenu">
                         <a href="${createLinkTo(dir:'cliente')}">Clientes</a>
-                    </li>    
+                    </li>
+                    <li class="submenu">
+                        <a href="${createLinkTo(dir:'pedido')}">Pedidos</a>
+                    </li>
                 </ul>
             </div>    
             <g:layoutBody/>
