@@ -39,7 +39,6 @@ class PedidoController {
     def save = {
         def pedidoInstance = cadastroService.criarPedido(params)
         if (pedidoInstance.hasErrors()) {
-            pedidoInstance.errors
             def listaClientes = Cliente.list()
             Collections.sort(listaClientes)
             def listaEntregadores = Entregador.list()

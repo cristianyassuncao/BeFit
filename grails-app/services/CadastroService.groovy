@@ -227,14 +227,13 @@ class CadastroService {
         def itensPedido = definirItensPedido(params)
 		validarItensDoPedido(itensPedido, pedidoInstance)
 	    if (!pedidoInstance.hasErrors()) {
-        	pedidoInstance.save(flush: true)
 			if (itensPedido.size() > 0) {
-				itensPedido.each {
-					pedidoInstance.addToItens(it)
+				itensPedido.each {i ->
+					pedidoInstance.addToItens(i)
 				}
 			}
+			pedidoInstance.save(flush: true)
         }
-        println pedidoInstance.errors
         return pedidoInstance
     }
 

@@ -36,7 +36,7 @@
                 <g:message code="telefone.numero.label"/>:
             </div>
             <div class="valor">
-                <input type="text" id="numeroTelefone" name="telefone.numeroTelefone" value="${pedido?.telefone?.numero}" size="14" class="telefone" onblur="${remoteFunction(controller:'pedido',action:'consultarClientePorTelefone', method: 'GET', params:'\'telefone=\' + escape(this.value)', before: 'atualizarSelect(\'cliente\',null); if (!isTelefonePreenchido(this.value)) return false;', onSuccess:'exibirDadosCliente(data)')}"/>
+                <input type="text" id="numeroTelefone" name="telefone.numeroTelefone" readonly="${readOnly}" value="${pedido?.telefone?.numero}" size="14" class="telefone" onblur="${remoteFunction(controller:'pedido',action:'consultarClientePorTelefone', method: 'GET', params:'\'telefone=\' + escape(this.value)', before: 'atualizarSelect(\'cliente\',null); if (!isTelefonePreenchido(this.value)) return false;', onSuccess:'exibirDadosCliente(data)')}"/>
             </div>
         </div>
         <div class="campo">
@@ -201,8 +201,9 @@
 			    </div>
 			</td>
 		</tr>
-		<g:each in="${itensPedido?}" var="i">
-			<g:render template="exibirItemPedido" model="['itemPedido': i]"/>
+		<g:each in="${itensPedido?}" var="i" status="j">
+			<g:set var="classe" value="${(j % 2) == 0 ? 'par' : ''}"/>
+			<g:render template="exibirItemPedido" model="['itemPedido': i, 'classe': classe]"/>
 	    </g:each>
 	</table>
 </fieldset>
