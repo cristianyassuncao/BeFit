@@ -21,10 +21,10 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:form url="[resource:pedidoInstance, action:'delete']" method="DELETE">
-				<g:render template="form" model="['pedido': pedidoInstance, 'readOnly': readonly]"/>
+			<g:form url="[resource:pedido, action:'delete']" method="DELETE">
+				<g:render template="form" model="[readOnly: true]"/>
 	            <fieldset class="buttons">
-	                <g:link class="edit" action="edit" resource="${pedidoInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+	                <g:link class="edit" action="edit" id="${pedido?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 	            </fieldset>
 			</g:form>

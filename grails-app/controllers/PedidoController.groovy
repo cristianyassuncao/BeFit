@@ -19,32 +19,50 @@ class PedidoController {
         respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
     }
 
-    def show(Pedido pedidoInstance) {
-        respond pedidoInstance
+    def show = {
+        def pedidoInstance = Pedido.get(new Long(params.id))
+		def objetosInicializados = inicializarObjetosFormulario()
+        return render(view: 'show', model:[pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: pedidoInstance.itens])
     }
+	
+	private inicializarObjetosFormulario() {
+		def objetos = [:]
+		objetos['clientes'] = inicializarClientes()
+		objetos['entregadores'] = inicializarEntregadores()
+		objetos['produtos'] = inicializarProdutos()
+		return objetos
+	}
+
+	private List<Produto> inicializarProdutos() {
+		return Produto.findAll("from Produto p where p in (select produto from ItemDia i where i.produto = p) order by nome")
+	}
+
+	private List<Entregador> inicializarEntregadores() {
+		def listaEntregadores = Entregador.list()
+		Collections.sort(listaEntregadores)
+		return listaEntregadores
+	}
+
+	private List<Cliente> inicializarClientes() {
+		def listaClientes = Cliente.list()
+		Collections.sort(listaClientes)
+		return listaClientes
+	}
 
     def create() {
-        def listaClientes = Cliente.list()
-        Collections.sort(listaClientes)
-        def listaEntregadores = Entregador.list()
-        Collections.sort(listaEntregadores)
-		def data = (params?.data != null) ? params?.data : Util.getDataAtual();
-		def listaProdutos = Produto.findAll("from Produto p where p in (select produto from ItemDia i where i.produto = p)")
+		def objetosInicializados = inicializarObjetosFormulario()
         def pedido = new Pedido()
         pedido.dataCadastro = new Date()
         pedido.valorPago = new BigDecimal(0);
-        return render(view: 'create', model: [pedido: pedido, clientes: listaClientes, entregadores: listaEntregadores, produtos: listaProdutos])
+        return render(view: 'create', model: [pedido: pedido, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos']])
     }
 
     def save = {
         def pedidoInstance = cadastroService.criarPedido(params)
         if (pedidoInstance.hasErrors()) {
-            def listaClientes = Cliente.list()
-            Collections.sort(listaClientes)
-            def listaEntregadores = Entregador.list()
-            Collections.sort(listaEntregadores)
+			def objetosInicializados = inicializarObjetosFormulario()
             def itensPedido = cadastroService.definirItensPedido(params)
-            render(view:'create', model: [pedido: pedidoInstance, clientes: listaClientes, entregadores: listaEntregadores, itensPedido: itensPedido])
+            render(view:'create', model: [pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: itensPedido])
             return
         }
         redirect(action: "index")
@@ -52,7 +70,8 @@ class PedidoController {
 
     def edit = {
         def pedidoInstance = Pedido.get(params.id)
-        render(view:'edit', model:[pedido: pedidoInstance])
+		def objetosInicializados = inicializarObjetosFormulario()
+        render(view:'edit', model:[pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: pedidoInstance.itens])
     }
 
     @Transactional

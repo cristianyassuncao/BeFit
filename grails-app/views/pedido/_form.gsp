@@ -23,7 +23,7 @@
 		        <g:message code="pedido.id.label"/>:
 		    </div> 
 		    <div class="valor">
-		        <input type="text" id="id" name="id" value="${pedido?.id}"/>
+		        <input type="text" id="id" name="id" value="${pedido?.id}" readonly="readonly"/>
 		    </div>
 		</div>
 	</div>
@@ -36,7 +36,7 @@
                 <g:message code="telefone.numero.label"/>:
             </div>
             <div class="valor">
-                <input type="text" id="numeroTelefone" name="telefone.numeroTelefone" readonly="${readOnly}" value="${pedido?.telefone?.numero}" size="14" class="telefone" onblur="${remoteFunction(controller:'pedido',action:'consultarClientePorTelefone', method: 'GET', params:'\'telefone=\' + escape(this.value)', before: 'atualizarSelect(\'cliente\',null); if (!isTelefonePreenchido(this.value)) return false;', onSuccess:'exibirDadosCliente(data)')}"/>
+                <input type="text" id="numeroTelefone" name="telefone.numeroTelefone" <g:if test="${readOnly}">readonly="readonly"</g:if> value="${pedido?.telefone?.numero}" size="14" class="telefone" onchange="${remoteFunction(controller:'pedido',action:'consultarClientePorTelefone', method: 'GET', params:'\'telefone=\' + escape(this.value)', before: 'atualizarSelect(\'cliente\',null); if (!isTelefonePreenchido(this.value)) return false;', onSuccess:'exibirDadosCliente(data)')}"/>
             </div>
         </div>
         <div class="campo">
@@ -44,7 +44,7 @@
                 <g:message code="cliente.nome.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente.id"> 
+                <select data-placeholder="Selecione um cliente" disabled="${readOnly}" class="chosen" id="cliente" name="cliente.id" <g:if test="${readOnly}">readonly="readonly"</g:if>> 
                     <option value=""></option>
                     <g:each in="${clientes}" var="cliente">
                         <g:set var="isClienteSelecionado" value="${pedido?.cliente?.id == cliente?.id}"/>
@@ -62,7 +62,7 @@
     </div>
     <div id="dadosComplementares">
         <g:if test="${pedido?.cliente != null}">
-            <g:render template="dadosComplementares" model="[endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones]"/>
+            <g:render template="dadosComplementares" model="[endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones, readOnly: readOnly]"/>
         </g:if>
     </div>    
 </fieldset>
@@ -78,7 +78,7 @@
                         <g:message code="pedido.entregarAPartirDaHora.label"/>:
                     </div>
                     <div class="valor">
-                        <input type="text" class="hora" name="entregarAPartirDaHora" value="${pedido?.entregarAPartirDaHora}"/>
+                        <input type="text" class="hora" name="entregarAPartirDaHora" value="${pedido?.entregarAPartirDaHora}" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
                     </div>    
                 </div>
                 <div class="campo">
@@ -86,7 +86,7 @@
                         <g:message code="pedido.entregarAteHora.label"/>:
                     </div>
                     <div class="valor">
-                        <input type="text" class="hora" name="entregarAteHora" value="${pedido?.entregarAteHora}"/>
+                        <input type="text" class="hora" name="entregarAteHora" value="${pedido?.entregarAteHora}" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
                     </div>    
                 </div>
             </div>    
@@ -96,7 +96,7 @@
                 <g:message code="pedido.dataCadastro.label"/>:
             </div>
             <div class="valor">
-                <input type="text" id="dataCadastro" name="dataCadastro" class="data" value="<g:formatDate date="${pedido?.dataCadastro}" format="dd/MM/yyyy"/>" readonly=""/>
+                <input type="text" id="dataCadastro" name="dataCadastro" class="data" value="<g:formatDate date="${pedido?.dataCadastro}" format="dd/MM/yyyy"/>" readonly="readonly"/>
             </div>    
         </div>
         <div class="campo">
@@ -105,7 +105,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="dataEntrega" name="dataEntrega" class="data" value="<g:formatDate date="${pedido?.dataEntrega}" format="dd/MM/yyyy"/>"/>
+                <input type="text" id="dataEntrega" name="dataEntrega" class="data" value="<g:formatDate date="${pedido?.dataEntrega}" format="dd/MM/yyyy"/>" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
             </div>    
         </div>
     </div>
@@ -115,7 +115,7 @@
                 <g:message code="pedido.responsavelEntrega.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um entregador" class="chosen" id="entregador" name="entregador.id"> 
+                <select data-placeholder="Selecione um entregador" class="chosen" id="entregador" name="entregador.id" disabled="${readOnly}"> 
                     <option value=""></option>
                     <g:each in="${entregadores}" var="entregador">
                         <g:set var="isEntregadorSelecionado" value="${pedido?.entregador?.id == entregador?.id}"/>
@@ -134,7 +134,7 @@
                 <g:message code="pedido.requerTalher.label"/>:
             </div>
             <div class="valor">
-                <input type="checkbox" id="requerTalher" name="requerTalher" <g:if test="${pedido?.requerTalher}">checked</g:if> value="true">
+                <input type="checkbox" id="requerTalher" name="requerTalher" <g:if test="${pedido?.requerTalher}">checked</g:if> value="true" <g:if test="${readOnly}">readonly="readonly"</g:if>>
             </div>    
         </div>
         <div class="campo">
@@ -143,7 +143,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-            	<input type="text" id="numeroVolumes" name="numeroVolumes" value="${pedido?.numeroVolumes}"/>                 
+            	<input type="text" id="numeroVolumes" name="numeroVolumes" value="${pedido?.numeroVolumes}" <g:if test="${readOnly}">readonly="readonly"</g:if>/>                 
             </div>    
         </div>
     </div>
@@ -153,7 +153,7 @@
                 <g:message code="pedido.observacao.label"/>:
             </div>
             <div class="valor">
-                <textarea id="observacao" name="observacao" rows="3">${pedido?.observacao}</textarea>
+                <textarea id="observacao" name="observacao" rows="3" <g:if test="${readOnly}">readonly="readonly"</g:if>>${pedido?.observacao}</textarea>
             </div>    
         </div>
     </div>
@@ -171,39 +171,41 @@
 		  	<th class="alteracaoMolho"><g:message code="itemPedido.alteracaoMolho.label"/></th>
 		  	<th class="operacoes">&nbsp;</th>
 		</tr>
-		<tr class="separador">
-			<td>
-				<select data-placeholder="Selecione um produto" class="itemPedido" id="produto"> 
-                	<option value=""></option>
-	                <g:each in="${produtos}" var="produto">
-	                   <option value="${produto.id}">${produto.nome}</option>	                   
-	                </g:each>
-           		</select>
-			</td>
-			<td>
-				<input type="text" id="quantidade" class="valorNumerico" onchange="atualizarValorTotalItem()"/>  	
-			</td>
-			<td>
-				<input type="text" id="valorUnitario" class="valorNumerico" onchange="atualizarValorTotalItem()"/> 	
-			</td>
-			<td>
-				<input type="text" id="valorTotalItem" class="valorNumerico" readonly="readonly"/> 	
-			</td>
-			<td>
-	            <textarea id="alteracaoPrato" rows="3"></textarea>    
-			</td>
-			<td>
-	        	<textarea id="alteracaoMolho" rows="3"></textarea>	 
-			</td>
-			<td>
-				<div class="adicionar">
-			        <input class="add" type="button" value="Novo Item" onclick="addItem();"/>
-			    </div>
-			</td>
-		</tr>
+		<g:if test="${!readOnly}">
+			<tr class="separador">
+				<td>
+					<select data-placeholder="Selecione um produto" class="itemPedido" id="produto"> 
+	                	<option value=""></option>
+		                <g:each in="${produtos}" var="produto">
+		                   <option value="${produto.id}">${produto.nome}</option>	                   
+		                </g:each>
+	           		</select>
+				</td>
+				<td>
+					<input type="text" id="quantidade" class="valorNumerico" onchange="atualizarValorTotalItem()"/>  	
+				</td>
+				<td>
+					<input type="text" id="valorUnitario" class="valorNumerico" onchange="atualizarValorTotalItem()"/> 	
+				</td>
+				<td>
+					<input type="text" id="valorTotalItem" class="valorNumerico" readonly="readonly"/> 	
+				</td>
+				<td>
+		            <textarea id="alteracaoPrato" rows="3"></textarea>    
+				</td>
+				<td>
+		        	<textarea id="alteracaoMolho" rows="3"></textarea>	 
+				</td>
+				<td>
+					<div class="adicionar">
+				        <input class="add" type="button" value="Novo Item" onclick="addItem();"/>
+				    </div>
+				</td>
+			</tr>
+		</g:if>
 		<g:each in="${itensPedido?}" var="i" status="j">
 			<g:set var="classe" value="${(j % 2) == 0 ? 'par' : ''}"/>
-			<g:render template="exibirItemPedido" model="['itemPedido': i, 'classe': classe]"/>
+			<g:render template="exibirItemPedido" model="['itemPedido': i, 'classe': classe, 'readOnly': readOnly]"/>
 	    </g:each>
 	</table>
 </fieldset>
@@ -225,7 +227,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="trocoPara" class="valorNumerico" name="trocoPara" value="<g:formatNumber number="${pedido?.trocoPara}" format="###,##0.00"/>" size="13" onchange="atualizarValorTroco()">
+                <input type="text" id="trocoPara" class="valorNumerico" name="trocoPara" value="<g:formatNumber number="${pedido?.trocoPara}" format="###,##0.00"/>" size="13" onchange="atualizarValorTroco()" <g:if test="${readOnly}">readonly="readonly"</g:if>>
             </div>    
         </div>
         <div class="campo">
@@ -234,7 +236,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="valorTroco" class="valorNumerico" name="valorTroco" value="<g:formatNumber number="${pedido?.valorTroco}" format="###,##0.00"/>" readonly="readonly" size="13"/>
+                 <input type="text" id="valorTroco" class="valorNumerico" name="valorTroco" value="<g:formatNumber number="${pedido?.valorTroco}" format="###,##0.00"/>" readonly="readonly" size="13"/>
             </div>    
         </div>
         <div class="campo">
@@ -243,13 +245,13 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="valorPago" class="valorNumerico" name="valorPago" value="<g:formatNumber number="${pedido?.valorPago}" format="###,##0.00"/>" size="13"/>
+                <input type="text" id="valorPago" class="valorNumerico" name="valorPago" value="<g:formatNumber number="${pedido?.valorPago}" format="###,##0.00"/>" size="13" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
             </div>    
         </div>
     </div>
   	<fieldset id="formaPagamento" class="padrao">
        <legend>Forma de Pagamento</legend>
-       <g:radioGroup values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}">
+       <g:radioGroup disabled="${readOnly}"  values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}">
        	  <span class="radioButton">${it.radio}</span>
        	  <span class="radioLabel">${it.label}</span>
        </g:radioGroup>
