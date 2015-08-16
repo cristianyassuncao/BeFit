@@ -21,16 +21,28 @@
 			<table>
 				<thead>
 					<tr>
-						<g:sortableColumn property="id" title="${message(code: 'pedido.id.label')}" />
+						<g:sortableColumn property="id" title="Nº" />
 						
-						<g:sortableColumn property="cliente.nome" title="${message(code: 'pedido.cliente.label')}"/>
+						<g:sortableColumn property="cliente" title="${message(code: 'pedido.cliente.label')}"/>
 					
 						<g:sortableColumn property="dataEntrega" title="${message(code: 'pedido.dataEntrega.label', default: 'Data Entrega')}" />
 					
+						<g:sortableColumn property="entregador" title="${message(code: 'pedido.responsavelEntrega.label')}"/>
+
+						<g:sortableColumn property="endereco" title="${message(code: 'endereco.bairro.label')}"/>
+						
 						<g:sortableColumn property="entregarAPartirDaHora" title="${message(code: 'pedido.entregarAPartirDaHora.label', default: 'Entregar AP artir Da Hora')}" />
 					
 						<g:sortableColumn property="entregarAteHora" title="${message(code: 'pedido.entregarAteHora.label', default: 'Entregar Ate Hora')}" />
 					
+						<g:sortableColumn property="Valor A Pagar" title="${message(code: 'pedido.valorAPagar.label')}" />
+						
+						<g:sortableColumn property="Troco Para" title="${message(code: 'pedido.trocoPara.label')}" />
+						
+						<g:sortableColumn property="Valor Troco" title="${message(code: 'pedido.valorTroco.label')}" />
+						
+						<g:sortableColumn property="Valor Pago" title="${message(code: 'pedido.valorPago.label')}" />
+						
 						<g:sortableColumn property="numeroVolumes" title="${message(code: 'pedido.numeroVolumes.label', default: 'Numero Volumes')}" />
 					</tr>
 				</thead>
@@ -44,9 +56,21 @@
 						
 							<td><g:formatDate date="${pedidoInstance.dataEntrega}" format="dd/MM/yyyy"/></td>
 						
-							<td><g:formatDate date="${pedidoInstance.entregarAPartirDaHora}" format="HH:mm"/></td>
+							<td>${pedidoInstance?.entregador?.nome}</td>
 						
-							<td><g:formatDate date="${pedidoInstance.entregarAteHora}" format="HH:mm"/></td>
+							<td>${pedidoInstance?.endereco?.bairro?.nome}</td>						
+							
+							<td><g:formatDate date="${pedidoInstance?.entregarAPartirDaHora}" format="HH:mm"/></td>
+						
+							<td><g:formatDate date="${pedidoInstance?.entregarAteHora}" format="HH:mm"/></td>
+						
+							<td><g:formatNumber number="${pedidoInstance?.valorAPagar}" format="###,##0.00"/></td>
+							
+							<td><g:formatNumber number="${pedidoInstance?.trocoPara}" format="###,##0.00"/></td>
+							
+							<td><g:formatNumber number="${pedidoInstance?.valorTroco}" format="###,##0.00"/></td>
+							
+							<td><g:formatNumber number="${pedidoInstance?.valorPago}" format="###,##0.00"/></td>
 						
 							<td>${fieldValue(bean: pedidoInstance, field: "numeroVolumes")}</td>
 						

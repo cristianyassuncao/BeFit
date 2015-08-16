@@ -57,7 +57,7 @@ class Pedido {
         
 }
 
-class EnderecoPedido {
+class EnderecoPedido implements Comparable {
     String rua
     String numero
     String complemento
@@ -79,6 +79,12 @@ class EnderecoPedido {
     public Bairro getBairro() {
         return Bairro.get(idBairro)
     }
+
+	@Override
+	public int compareTo(Object obj) {
+		def endereco = (EnderecoPedido) obj
+        return getBairro().compareTo(endereco?.getBairro())
+	}
         
 }
 

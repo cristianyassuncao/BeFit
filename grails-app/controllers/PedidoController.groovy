@@ -14,9 +14,14 @@ class PedidoController {
 	
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Pedido.list(params), model:[pedidoInstanceCount: Pedido.count()]
+    def index = {
+        params?.max = Math.min( params.max ? params.max.toInteger() : 10, 100)
+        params?.offset = params.offset ?: 0 
+        def result = Pedido.createCriteria().list(params) {
+			
+		}   
+        def totalRegistros = result.totalCount
+        return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros])
     }
 
     def show = {
