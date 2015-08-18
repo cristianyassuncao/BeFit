@@ -1,6 +1,7 @@
 import static org.springframework.http.HttpStatus.*
 
 import java.text.SimpleDateFormat;
+import java.util.Collections.ReverseComparator
 
 import org.apache.jasper.compiler.Node.ParamsAction;
 
@@ -17,37 +18,40 @@ class PedidoController {
     def index = {
 		def max = Math.min( params.max ? params.max.toInteger() : 10, 100)
 		def offset = params.offset ?: 0
-		def sort = params?.sort 
-		def order = params?.order == null ? 'ASC' : params?.order
-		def query = "SELECT p " + 
-                    "FROM Pedido as p inner join p.cliente as c " +
-					" inner join c.pessoa as PC " +
-					" inner join p.entregador as e " +
-					" inner join e.pessoa as PE, " +
-					" Bairro as b " + 
-					"WHERE p.endereco.idBairro = b.id " +
-					"ORDER BY " + ordenarPor(sort) + " "  + order
-		
-		def result = Pedido.executeQuery(query); 
-		def totalRegistros = result.size()
+		def sort = params.sort
+		def order = params.order
+		params?.max = null
+		params?.offset = null
+		if (params?.sort in ['cliente']) {
+			params?.sort = null
+			params?.order = null
+		}
+		def result = Pedido.createCriteria().list(params) {
+		}
+		def totalRegistros = result.totalCount
+		def comparator = null
+		if (sort.equals('cliente')) {
+			comparator = new Comparator<Pedido>() {
+				public int compare(Pedido p1, Pedido p2) {
+					return p1.cliente.compareTo(p2.cliente)
+				}
+			}
+			if (order.equals("desc")) {
+				comparator = Collections.reverseOrder(comparator)
+			}
+		}
+		if (comparator != null) {
+			Collections.sort(result, comparator)
+		}
 		result = ((max as Integer) <= 0 || (offset as Integer) < 0) ? [] : result.subList( Math.min( offset as Integer, totalRegistros), Math.min((offset as Integer) + (max as Integer), totalRegistros))
+		params?.max = max
+		params?.offset = offset
+		params?.sort = sort
+		params?.order = order
 		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros])
 	}
 	
-	private String ordenarPor(String parametroOrdenacao) {
-		switch (parametroOrdenacao) {
-			case 'id':
-				return 'p.id'
-				break
-			case 'cliente':
-				return "DECODE(PC.class, 'PessoaFisica', PC.nome, PC.razaoSocial)"
-				break	
-			default:
-				return 'p.dataEntrega'
-		 }
-	}
-
-    def show = {
+	def show = {
         def pedidoInstance = Pedido.get(new Long(params.id))
 		def objetosInicializados = inicializarObjetosFormulario()
         return render(view: 'show', model:[pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: pedidoInstance.itens])

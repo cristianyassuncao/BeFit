@@ -35,13 +35,13 @@
 					
 						<g:sortableColumn property="entregarAteHora" title="${message(code: 'pedido.entregarAteHora.label', default: 'Entregar Ate Hora')}" />
 					
-						<g:sortableColumn property="Valor A Pagar" title="${message(code: 'pedido.valorAPagar.label')}" />
+						<g:sortableColumn property="valorAPagar" title="${message(code: 'pedido.valorAPagar.label')}" />
 						
-						<g:sortableColumn property="Troco Para" title="${message(code: 'pedido.trocoPara.label')}" />
+						<g:sortableColumn property="trocoPara" title="${message(code: 'pedido.trocoPara.label')}" />
 						
-						<g:sortableColumn property="Valor Troco" title="${message(code: 'pedido.valorTroco.label')}" />
+						<g:sortableColumn property="valorTroco" title="${message(code: 'pedido.valorTroco.label')}" />
 						
-						<g:sortableColumn property="Valor Pago" title="${message(code: 'pedido.valorPago.label')}" />
+						<g:sortableColumn property="valorPago" title="${message(code: 'pedido.valorPago.label')}" />
 						
 						<g:sortableColumn property="numeroVolumes" title="${message(code: 'pedido.numeroVolumes.label', default: 'Numero Volumes')}" />
 					</tr>
