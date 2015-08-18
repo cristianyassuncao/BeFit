@@ -15,14 +15,37 @@ class PedidoController {
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index = {
-        params?.max = Math.min( params.max ? params.max.toInteger() : 10, 100)
-        params?.offset = params.offset ?: 0 
-        def result = Pedido.createCriteria().list(params) {
-			
-		}   
-        def totalRegistros = result.totalCount
-        return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros])
-    }
+		def max = Math.min( params.max ? params.max.toInteger() : 10, 100)
+		def offset = params.offset ?: 0
+		def sort = params?.sort 
+		def order = params?.order == null ? 'ASC' : params?.order
+		def query = "SELECT p " + 
+                    "FROM Pedido as p inner join p.cliente as c " +
+					" inner join c.pessoa as PC " +
+					" inner join p.entregador as e " +
+					" inner join e.pessoa as PE, " +
+					" Bairro as b " + 
+					"WHERE p.endereco.idBairro = b.id " +
+					"ORDER BY " + ordenarPor(sort) + " "  + order
+		
+		def result = Pedido.executeQuery(query); 
+		def totalRegistros = result.size()
+		result = ((max as Integer) <= 0 || (offset as Integer) < 0) ? [] : result.subList( Math.min( offset as Integer, totalRegistros), Math.min((offset as Integer) + (max as Integer), totalRegistros))
+		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros])
+	}
+	
+	private String ordenarPor(String parametroOrdenacao) {
+		switch (parametroOrdenacao) {
+			case 'id':
+				return 'p.id'
+				break
+			case 'cliente':
+				return "DECODE(PC.class, 'PessoaFisica', PC.nome, PC.razaoSocial)"
+				break	
+			default:
+				return 'p.dataEntrega'
+		 }
+	}
 
     def show = {
         def pedidoInstance = Pedido.get(new Long(params.id))
