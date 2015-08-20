@@ -79,7 +79,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${pedidoInstanceCount ?: 0}" />
+				<g:paginate total="${pedidoInstanceCount ?: 0}" max="10"/>
 			</div>
 		</div>
 	</body>

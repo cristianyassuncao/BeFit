@@ -16,30 +16,20 @@ class PedidoController {
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index = {
-		def max = Math.min( params.max ? params.max.toInteger() : 10, 100)
+		def max = Math.min( params.max ? params.max.toInteger() : 2, 100)
 		def offset = params.offset ?: 0
 		def sort = params.sort
 		def order = params.order
 		params?.max = null
 		params?.offset = null
-		if (params?.sort in ['cliente']) {
+		if (params?.sort in ['cliente', 'entregador', 'bairro']) {
 			params?.sort = null
 			params?.order = null
 		}
 		def result = Pedido.createCriteria().list(params) {
 		}
 		def totalRegistros = result.totalCount
-		def comparator = null
-		if (sort.equals('cliente')) {
-			comparator = new Comparator<Pedido>() {
-				public int compare(Pedido p1, Pedido p2) {
-					return p1.cliente.compareTo(p2.cliente)
-				}
-			}
-			if (order.equals("desc")) {
-				comparator = Collections.reverseOrder(comparator)
-			}
-		}
+		def comparator = definirComparator(sort, order)
 		if (comparator != null) {
 			Collections.sort(result, comparator)
 		}
@@ -50,6 +40,35 @@ class PedidoController {
 		params?.order = order
 		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros])
 	}
+	
+	private Comparator definirComparator(String sort, String order) {
+		def comparator = null
+		if (sort.equals('cliente')) {
+			comparator = new Comparator<Pedido>() {
+				public int compare(Pedido p1, Pedido p2) {
+					return p1?.cliente?.compareTo(p2?.cliente)
+				}
+			}
+		}
+		if (sort.equals('entregador')) {
+			comparator = new Comparator<Pedido>() {
+				public int compare(Pedido p1, Pedido p2) {
+					return p1?.entregador?.compareTo(p2?.entregador)
+				}
+			}
+		}
+		if (sort.equals('bairro')) {
+			comparator = new Comparator<Pedido>() {
+				public int compare(Pedido p1, Pedido p2) {
+					return p1?.endereco?.bairro?.compareTo(p2?.endereco?.bairro)
+				}
+			}
+		}
+		if (order.equals("desc")) {
+			comparator = Collections.reverseOrder(comparator)
+		}
+		return comparator 
+    }
 	
 	def show = {
         def pedidoInstance = Pedido.get(new Long(params.id))
