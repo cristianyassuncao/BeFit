@@ -196,8 +196,11 @@ class CadastroService {
         return decimalFormat.parse(valor)
     }   
     
-    def criarPedido(params) {
-        def pedidoInstance = new Pedido()
+    def atualizarPedido(params) {
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			pedidoInstance = new Pedido()
+		}
         Date entregarAPartirDaHora = null
         Date entregarAteHora = null
         if (!params.entregarAPartirDaHora.equals('')) {
@@ -219,7 +222,7 @@ class CadastroService {
         pedidoInstance.entregador = (params?.entregador?.id == null) ? null : Entregador.get(params?.entregador?.id)
         pedidoInstance.entregarAPartirDaHora = entregarAPartirDaHora
         pedidoInstance.entregarAteHora = entregarAteHora
-        pedidoInstance.status = StatusPedido.A
+        pedidoInstance.status = params?.status
 		pedidoInstance.formaPagamento = (params?.formaPagamento == null) ? null : FormaPagamento.get(params?.formaPagamento)
         pedidoInstance.endereco = definirEnderecoPedido(params)
         pedidoInstance.telefone = definirTelefonePedido(params)

@@ -11,4 +11,9 @@ public enum StatusPedido {
 		this.descricao = descricao
 	}
 	
+	@Override
+	public String toString() {
+		return descricao;
+	}
+	
 }

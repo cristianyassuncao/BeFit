@@ -109,7 +109,7 @@ class PedidoController {
     }
 
     def save = {
-        def pedidoInstance = cadastroService.criarPedido(params)
+        def pedidoInstance = cadastroService.atualizarPedido(params)
         if (pedidoInstance.hasErrors()) {
 			def objetosInicializados = inicializarObjetosFormulario()
             def itensPedido = cadastroService.definirItensPedido(params)
@@ -125,58 +125,17 @@ class PedidoController {
         render(view:'edit', model:[pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: pedidoInstance.itens])
     }
 
-    @Transactional
-    def update(Pedido pedidoInstance) {
-        if (pedidoInstance == null) {
-            notFound()
-            return
-        }
+    def update =  {
+		def pedidoInstance = cadastroService.atualizarPedido(params)
+		if (pedidoInstance.hasErrors()) {
+			def objetosInicializados = inicializarObjetosFormulario()
+			def itensPedido = cadastroService.definirItensPedido(params)
+			render(view:'edit', model: [pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: itensPedido])
+			return
+		}
+		redirect(action: "index")
+	}
 
-        if (pedidoInstance.hasErrors()) {
-            respond pedidoInstance.errors, view:'edit'
-            return
-        }
-
-        pedidoInstance.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Pedido.label', default: 'Pedido'), pedidoInstance.id])
-                redirect pedidoInstance
-            }
-            '*'{ respond pedidoInstance, [status: OK] }
-        }
-    }
-
-    @Transactional
-    def delete(Pedido pedidoInstance) {
-
-        if (pedidoInstance == null) {
-            notFound()
-            return
-        }
-
-        pedidoInstance.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Pedido.label', default: 'Pedido'), pedidoInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
-    
     def consultarClientePorTelefone = {
         if (params.telefone == null || params.telefone == "") {
             render "[]" as JSON

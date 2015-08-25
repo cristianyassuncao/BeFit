@@ -170,12 +170,12 @@ function addItem() {
 	var valorTotalItem = item.valorTotal;
 	
 	var cell1 = "<td><input type='hidden' name='itemPedido.produto' value='" + idProduto + "'/>" + nomeProduto + "</td>";
-	var cell2 = "<td class='valor'><input type='hidden' name='itemPedido.quantidade' value='" + quantidade + "'/>" + quantidade + "</td>";
-	var cell3 = "<td class='valor'><input type='hidden' name='itemPedido.valorUnitario' value='" + valorUnitario + "'/>" + valorUnitario + "</td>";
-	var cell4 = "<td class='valor'><input type='hidden' name='itemPedido.valorTotalItem' value='" + valorTotalItem + "'/>" + valorTotalItem + "</td>";
+	var cell2 = "<td class='valorNumerico'><input type='hidden' name='itemPedido.quantidade' value='" + quantidade + "'/>" + quantidade + "</td>";
+	var cell3 = "<td class='valorNumerico'><input type='hidden' name='itemPedido.valorUnitario' value='" + valorUnitario + "'/>" + valorUnitario + "</td>";
+	var cell4 = "<td class='valorNumerico'><input type='hidden' name='itemPedido.valorTotalItem' value='" + valorTotalItem + "'/>" + valorTotalItem + "</td>";
 	var cell5 = "<td><textarea class='hidden' name='itemPedido.alteracaoPrato' rows='3'>" + alteracaoPrato + "</textarea>" + alteracaoPrato +"</td>";
 	var cell6 = "<td><textarea class='hidden' name='itemPedido.alteracaoMolho' rows='3'>" + alteracaoMolho + "</textarea>" + alteracaoMolho +"</td>";
-	var cell7 = "<td>&nbsp;</td>"
+	var cell7 = "<td><input class='edit' type='button' onclick='editItem(this)'><input class='delete' type='button' onclick='deleteItem(this)'></td>";
 	var rowsNumber = $("#itensPedido tr").length;
 	var classe = '';
 	if (rowsNumber % 2 == 0) {
@@ -259,3 +259,23 @@ function converterValorUsandoVirgulaSeparadorDecimal(valor) {
     return valorConvertido;
 }
 
+function editItem(buttonClicked) {
+	var rowToEdit = buttonClicked.closest("tr");
+	loadItem(rowToEdit);
+	deleteItem(buttonClicked);
+}
+
+function deleteItem(buttonClicked) {
+	var rowToDelete = buttonClicked.closest("tr");
+	rowToDelete.remove();
+}
+
+function loadItem(selectedRow) {
+	$('#produto').val($("input[name='itemPedido.produto']", selectedRow).val());
+	$('#produto').trigger("chosen:updated");
+	$('#quantidade').val($("input[name='itemPedido.quantidade']", selectedRow).val());
+	$('#valorUnitario').val($("input[name='itemPedido.valorUnitario']", selectedRow).val());
+	$("#alteracaoPrato").val($("textarea[name='itemPedido.alteracaoPrato']", selectedRow).val());
+	$("#alteracaoMolho").val($("textarea[name='itemPedido.alteracaoMolho']", selectedRow).val());
+	$('#valorTotalItem').val($("input[name='itemPedido.valorTotalItem']", selectedRow).val());
+}

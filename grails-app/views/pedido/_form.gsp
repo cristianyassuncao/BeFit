@@ -16,8 +16,8 @@
     });
 </script>
 <!-- Fim do bloco Chosen -->
-<g:if test="${pedido?.id != null}">
-	<div class="campos">
+<div class="campos">
+	<g:if test="${pedido?.id != null}">
 		<div class="campo">
 		    <div class="nome">
 		        <g:message code="pedido.id.label"/>:
@@ -26,8 +26,15 @@
 		        <input type="text" id="id" name="id" value="${pedido?.id}" readonly="readonly"/>
 		    </div>
 		</div>
-	</div>
-</g:if>
+	</g:if>
+	<fieldset id="statusPedido" class="padrao">
+       <legend>Status</legend>
+       <g:radioGroup disabled="${readOnly}"  values="${StatusPedido.values()}" labels="${StatusPedido.values().toString()}" name="status" value="${pedido?.status}">
+       	  <span class="radioButton">${it.radio}</span>
+       	  <span class="radioLabel">${it.label}</span>
+       </g:radioGroup>
+   	</fieldset>
+</div>
 <fieldset>
     <legend>Cliente</legend>
     <div class="campos">
@@ -198,7 +205,7 @@
 				</td>
 				<td>
 					<div class="adicionar">
-				        <input class="add" type="button" value="Novo Item" onclick="addItem();"/>
+				        <input class="add" type="button" value="Incluir" onclick="addItem();"/>
 				    </div>
 				</td>
 			</tr>
@@ -251,7 +258,7 @@
     </div>
   	<fieldset id="formaPagamento" class="padrao">
        <legend>Forma de Pagamento</legend>
-       <g:radioGroup disabled="${readOnly}"  values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}">
+       <g:radioGroup disabled="${readOnly}" values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}">
        	  <span class="radioButton">${it.radio}</span>
        	  <span class="radioLabel">${it.label}</span>
        </g:radioGroup>

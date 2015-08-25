@@ -24,7 +24,7 @@
 	    ${itemPedido?.alteracaoMolho}
 	</td>
 	<td>
-    	<input class="edit" type="button" onclick="editItem()">
-        <input class="delete" type="button" onclick="deleteItem()">
+    	<input class="edit" type="button" onclick="editItem(this)">
+        <input class="delete" type="button" onclick="deleteItem(this)">
 	</td>
 </tr>
