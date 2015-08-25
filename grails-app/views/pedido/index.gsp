@@ -29,7 +29,7 @@
 					
 						<g:sortableColumn property="entregador" title="${message(code: 'pedido.responsavelEntrega.label')}"/>
 
-						<g:sortableColumn property="endereco" title="${message(code: 'endereco.bairro.label')}"/>
+						<g:sortableColumn property="bairro" title="${message(code: 'endereco.bairro.label')}"/>
 						
 						<g:sortableColumn property="entregarAPartirDaHora" title="${message(code: 'pedido.entregarAPartirDaHora.label', default: 'Entregar AP artir Da Hora')}" />
 					
@@ -79,7 +79,7 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${pedidoInstanceCount ?: 0}" max="10"/>
+				<g:paginate total="${pedidoInstanceTotal ?: 0}" max="30"/>
 			</div>
 		</div>
 	</body>

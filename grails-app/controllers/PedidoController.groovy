@@ -16,7 +16,7 @@ class PedidoController {
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index = {
-		def max = Math.min( params.max ? params.max.toInteger() : 2, 100)
+		def max = Math.min( params.max ? params.max.toInteger() : 30, 100)
 		def offset = params.offset ?: 0
 		def sort = params.sort
 		def order = params.order
@@ -64,7 +64,7 @@ class PedidoController {
 				}
 			}
 		}
-		if (order.equals("desc")) {
+		if (comparator != null && order.equals("desc")) {
 			comparator = Collections.reverseOrder(comparator)
 		}
 		return comparator 

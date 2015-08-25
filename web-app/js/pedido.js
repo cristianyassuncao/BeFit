@@ -258,3 +258,4 @@ function converterValorUsandoVirgulaSeparadorDecimal(valor) {
     valorConvertido = valorConvertido.replace(/\./g, ',');
     return valorConvertido;
 }
+

@@ -81,7 +81,7 @@ div.botaoSelecaoEndereco {
 }
 
 th.produto {
-	width: 30%;
+	width: 22%;
 }
 
 th.quantidade {
@@ -89,7 +89,7 @@ th.quantidade {
 }
 
 th.valorUnitario {
-	width: 12%;	
+	width: 10%;	
 }
 
 th.valorTotalItem {
@@ -105,15 +105,15 @@ table.itensPedido td #produto {
 }
 
 th.alteracaoPrato {
-	width: 28%;	
+	width: 20%;	
 }
 
 th.alteracaoMolho {
-	width: 28%;
+	width: 20%;
 }
 
 th.operacoes {
-	width: 3%;
+	width: 8%;
 }
 
 table.itensPedido textarea {
@@ -146,4 +146,9 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
 
 .radioLabel {
 	margin-right: 7px;
+}
+
+#itensPedido input.edit, #itensPedido input.delete {
+	margin: 0px;
+	width: auto;
 }
