@@ -33,7 +33,7 @@
                             <td><g:link action="show" id="${produtoInstance.id}">${fieldValue(bean: produtoInstance, field: "id")}</g:link></td>
                             <td>${fieldValue(bean: produtoInstance, field: "nome")}</td>
                             <td>${fieldValue(bean: produtoInstance, field: "descricao")}</td>
-                            <td><img src="/BeFit/produto/exibirImagem?id=${produtoInstance?.id}" width='40' height="40"/></td>
+                            <td><g:if test="${produtoInstance?.imagem != null}"><img src="/BeFit/produto/exibirImagem?id=${produtoInstance?.id}" width='40' height="40"/></g:if></td>
                         </tr>
                     </g:each>
                 </tbody>

@@ -85,7 +85,7 @@ class PedidoController {
 	}
 
 	private List<Produto> inicializarProdutos() {
-		return Produto.findAll("from Produto p where p in (select produto from ItemDia i where i.produto = p) order by nome")
+		return Produto.findAll("from Produto p order by nome")
 	}
 
 	private List<Entregador> inicializarEntregadores() {
@@ -181,7 +181,11 @@ class PedidoController {
 	
 	def carregarValorUnitario = {
 		def preco = Preco.find("FROM Preco p1 WHERE p1.produto.id = :idProduto AND aPartirDe = (SELECT MAX(aPartirDe) FROM Preco p2 WHERE p2.produto.id = p1.produto.id AND p2.aPartirDe <= :data)", ['idProduto': new Long(params?.idProduto), 'data': Util.parse(params?.data)])
-		render Util.formatCurrency(preco?.valor) as String
+		if (preco == null) {
+			render "" as String
+		} else {
+			render Util.formatCurrency(preco?.valor) as String
+		}	
 	}
     
 }

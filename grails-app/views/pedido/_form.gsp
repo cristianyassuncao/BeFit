@@ -16,25 +16,27 @@
     });
 </script>
 <!-- Fim do bloco Chosen -->
-<div class="campos">
-	<g:if test="${pedido?.id != null}">
-		<div class="campo">
-		    <div class="nome">
-		        <g:message code="pedido.id.label"/>:
-		    </div> 
-		    <div class="valor">
-		        <input type="text" id="id" name="id" value="${pedido?.id}" readonly="readonly"/>
-		    </div>
-		</div>
-	</g:if>
-	<fieldset id="statusPedido" class="padrao">
-       <legend>Status</legend>
-       <g:radioGroup disabled="${readOnly}"  values="${StatusPedido.values()}" labels="${StatusPedido.values().toString()}" name="status" value="${pedido?.status}">
-       	  <span class="radioButton">${it.radio}</span>
-       	  <span class="radioLabel">${it.label}</span>
-       </g:radioGroup>
-   	</fieldset>
-</div>
+<fieldset class="numeroPedido">
+	<div class="campos">
+		<fieldset id="statusPedido" class="padrao">
+	       <legend>Status</legend>
+	       <g:radioGroup disabled="${readOnly}"  values="${StatusPedido.values()}" labels="${StatusPedido.values()*.toString()}" name="status" value="${pedido?.status}">
+	       	  <span class="radioButton">${it.radio}</span>
+	       	  <span class="radioLabel">${it.label}</span>
+	       </g:radioGroup>
+	   	</fieldset>
+		<g:if test="${pedido?.id != null}">
+			<div class="campo">
+			    <div class="nome">
+			        <g:message code="pedido.id.label"/>:
+			    </div> 
+			    <div class="valor">
+			        <input type="text" id="id" name="id" value="${pedido?.id}" readonly="readonly"/>
+			    </div>
+			</div>
+		</g:if>
+	</div>
+</fieldset>
 <fieldset>
     <legend>Cliente</legend>
     <div class="campos">
