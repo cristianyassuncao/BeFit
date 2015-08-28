@@ -29,9 +29,7 @@
                 </ul>
             </g:hasErrors>
             <g:form url="[action:'update']">
-                <fieldset class="form">
-                    <g:render template="form"/>
-                </fieldset>
+                <g:render template="form"/>
                 <fieldset class="buttons">
                     <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                 </fieldset>

@@ -18,13 +18,6 @@
 <!-- Fim do bloco Chosen -->
 <fieldset class="numeroPedido">
 	<div class="campos">
-		<fieldset id="statusPedido" class="padrao">
-	       <legend>Status</legend>
-	       <g:radioGroup disabled="${readOnly}"  values="${StatusPedido.values()}" labels="${StatusPedido.values()*.toString()}" name="status" value="${pedido?.status}">
-	       	  <span class="radioButton">${it.radio}</span>
-	       	  <span class="radioLabel">${it.label}</span>
-	       </g:radioGroup>
-	   	</fieldset>
 		<g:if test="${pedido?.id != null}">
 			<div class="campo">
 			    <div class="nome">
@@ -35,6 +28,13 @@
 			    </div>
 			</div>
 		</g:if>
+		<fieldset id="statusPedido" class="padrao">
+	       <legend>Status</legend>
+	       <g:radioGroup disabled="${readOnly}"  values="${StatusPedido.values()}" labels="${StatusPedido.values()*.toString()}" name="status" value="${pedido?.status}">
+	       	  <span class="radioButton">${it.radio}</span>
+	       	  <span class="radioLabel">${it.label}</span>
+	       </g:radioGroup>
+	   	</fieldset>
 	</div>
 </fieldset>
 <fieldset>

@@ -154,11 +154,8 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
 }
 
 #statusPedido {
-	margin-left: 5px;
-	float: right;
-	top: -6px;
-}
-
-fieldset.numeroPedido {
-	width: 700px;
+    width: 400px;
+    display: inline;
+    top: -6px;
+    margin-left: 5px;
 }

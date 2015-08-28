@@ -17,7 +17,7 @@ function atualizarSelect(idControle, valor) {
 
 function carregarDadosComplementares(idCliente) {
     jQuery.ajax({
-		  url: 'carregarDadosComplementares?idCliente=' + idCliente,
+		  url: '/BeFit/pedido/carregarDadosComplementares?idCliente=' + idCliente,
 		  async: false,
 		  success: function(data) {
 			  $("#dadosComplementares").html(data);
@@ -100,21 +100,11 @@ function selecionarEnderecoEntrega(idCliente) {
 
 function definirTelefone(idCliente) {
 	jQuery.ajax({
-		  url: 'carregarTelefonePrincipal?idCliente=' + idCliente,
+		  url: '/BeFit/pedido/carregarTelefonePrincipal?idCliente=' + idCliente,
 		  async: false,
 		  success: function(data) {
 			  $("#numeroTelefone").val(data);
 		  }
-	});
-}
-
-function incluirProduto() {
-	 jQuery.ajax({
-		  url: 'incluirNovoProduto',
-		  async: false,
-		  success: function(data) {
-			  $("#itensPedido").append(data);
-		  }	  
 	});
 }
 
@@ -125,7 +115,7 @@ function carregarValorUnitario(idProduto, data) {
 	}
 	
     jQuery.ajax({
-		  url: 'carregarValorUnitario?idProduto=' + idProduto + '&' + 'data=' + data,
+		  url: '/BeFit/pedido/carregarValorUnitario?idProduto=' + idProduto + '&' + 'data=' + data,
 		  async: false,
 		  success: function(valor) {
 			  $("#valorUnitario").val(valor);

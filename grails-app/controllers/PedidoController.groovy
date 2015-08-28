@@ -100,11 +100,12 @@ class PedidoController {
 		return listaClientes
 	}
 
-    def create() {
+    def create = {
 		def objetosInicializados = inicializarObjetosFormulario()
         def pedido = new Pedido()
         pedido.dataCadastro = new Date()
-        pedido.valorPago = new BigDecimal(0);
+        pedido.valorPago = new BigDecimal(0)
+		pedido.status = StatusPedido.A
         return render(view: 'create', model: [pedido: pedido, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos']])
     }
 
