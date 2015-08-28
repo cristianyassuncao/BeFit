@@ -28,7 +28,7 @@
                 </ul>
             </g:hasErrors>
             <g:form url="[action:'save']" >
-                <g:render template="form"/>
+                <g:render template="form" model="[readOnly: false]"/>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="Finalizar Pedido"/>
                 </fieldset>

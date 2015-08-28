@@ -30,7 +30,7 @@
 		</g:if>
 		<fieldset id="statusPedido" class="padrao">
 	       <legend>Status</legend>
-	       <g:radioGroup disabled="${readOnly}"  values="${StatusPedido.values()}" labels="${StatusPedido.values()*.toString()}" name="status" value="${pedido?.status}">
+	       <g:radioGroup values="${StatusPedido.values()}" labels="${StatusPedido.values()*.toString()}" name="status" value="${pedido?.status}" disabled="${readOnly}">
 	       	  <span class="radioButton">${it.radio}</span>
 	       	  <span class="radioLabel">${it.label}</span>
 	       </g:radioGroup>
@@ -53,7 +53,7 @@
                 <g:message code="cliente.nome.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um cliente" disabled="${readOnly}" class="chosen" id="cliente" name="cliente.id" <g:if test="${readOnly}">readonly="readonly"</g:if>> 
+                <select data-placeholder="Selecione um cliente" <g:if test="${readOnly}">disabled="disabled"</g:if> class="chosen" id="cliente" name="cliente.id" <g:if test="${readOnly}">readonly="readonly"</g:if>> 
                     <option value=""></option>
                     <g:each in="${clientes}" var="cliente">
                         <g:set var="isClienteSelecionado" value="${pedido?.cliente?.id == cliente?.id}"/>
@@ -124,7 +124,7 @@
                 <g:message code="pedido.responsavelEntrega.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um entregador" class="chosen" id="entregador" name="entregador.id" disabled="${readOnly}"> 
+                <select data-placeholder="Selecione um entregador" class="chosen" id="entregador" name="entregador.id" <g:if test="${readOnly}">disabled="disabled"</g:if>> 
                     <option value=""></option>
                     <g:each in="${entregadores}" var="entregador">
                         <g:set var="isEntregadorSelecionado" value="${pedido?.entregador?.id == entregador?.id}"/>
@@ -143,7 +143,7 @@
                 <g:message code="pedido.requerTalher.label"/>:
             </div>
             <div class="valor">
-                <input type="checkbox" id="requerTalher" name="requerTalher" <g:if test="${pedido?.requerTalher}">checked</g:if> value="true" <g:if test="${readOnly}">readonly="readonly"</g:if>>
+                <input type="checkbox" id="requerTalher" name="requerTalher" <g:if test="${pedido?.requerTalher}">checked</g:if> value="true" <g:if test="${readOnly}">disabled="disabled"</g:if>>
             </div>    
         </div>
         <div class="campo">
@@ -260,7 +260,7 @@
     </div>
   	<fieldset id="formaPagamento" class="padrao">
        <legend>Forma de Pagamento</legend>
-       <g:radioGroup disabled="${readOnly}" values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}">
+       <g:radioGroup values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}" disabled="${readOnly}">
        	  <span class="radioButton">${it.radio}</span>
        	  <span class="radioLabel">${it.label}</span>
        </g:radioGroup>

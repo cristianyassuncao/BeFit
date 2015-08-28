@@ -13,7 +13,7 @@ class PedidoController {
     
     def cadastroService
 	
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index = {
 		def max = Math.min( params.max ? params.max.toInteger() : 30, 100)
