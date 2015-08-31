@@ -30,10 +30,16 @@
 		</g:if>
 		<fieldset id="statusPedido" class="padrao">
 	       <legend>Status</legend>
-	       <g:radioGroup values="${StatusPedido.values()}" labels="${StatusPedido.values()*.toString()}" name="status" value="${pedido?.status}" disabled="${readOnly}">
-	       	  <span class="radioButton">${it.radio}</span>
-	       	  <span class="radioLabel">${it.label}</span>
-	       </g:radioGroup>
+	       <g:each in="${StatusPedido.values()}" var="s">
+	       		<g:set var="isSelecionado" value="${pedido?.status?.equals(s)}"></g:set>
+	       		<g:if test="${isSelecionado}">
+		       		<input type="radio" name="status" value="${s}" checked="checked" <g:if test="${readOnly}">disabled="disabled"</g:if>/>
+	       		</g:if>
+	       		<g:if test="${!isSelecionado}">
+		       		<input type="radio" name="status" value="${s}" <g:if test="${readOnly}">disabled="disabled"</g:if>/>
+	       		</g:if>
+	       		<span class="opcaoStatus">${s.descricao}</span>
+	       </g:each>	       
 	   	</fieldset>
 	</div>
 </fieldset>
@@ -87,7 +93,7 @@
                         <g:message code="pedido.entregarAPartirDaHora.label"/>:
                     </div>
                     <div class="valor">
-                        <input type="text" class="hora" name="entregarAPartirDaHora" value="${pedido?.entregarAPartirDaHora}" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
+                        <input type="text" class="hora" name="entregarAPartirDaHora" value="<g:formatDate date="${pedido?.entregarAPartirDaHora}" format="HH:mm"/>" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
                     </div>    
                 </div>
                 <div class="campo">
@@ -95,7 +101,7 @@
                         <g:message code="pedido.entregarAteHora.label"/>:
                     </div>
                     <div class="valor">
-                        <input type="text" class="hora" name="entregarAteHora" value="${pedido?.entregarAteHora}" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
+                        <input type="text" class="hora" name="entregarAteHora" value="<g:formatDate date="${pedido?.entregarAteHora}" format="HH:mm"/>" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
                     </div>    
                 </div>
             </div>    
@@ -206,9 +212,8 @@
 		        	<textarea id="alteracaoMolho" rows="3"></textarea>	 
 				</td>
 				<td>
-					<div class="adicionar">
-				        <input class="add" type="button" value="Incluir" onclick="addItem();"/>
-				    </div>
+			        <input class="add" type="button" value="Incluir" onclick="addItem();"/>
+			        <input class="clear" type="button" value="Limpar" onclick="limparFormularioItens();"/>
 				</td>
 			</tr>
 		</g:if>

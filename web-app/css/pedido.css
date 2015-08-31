@@ -159,3 +159,7 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
     top: -6px;
     margin-left: 5px;
 }
+
+span.opcaoStatus {
+	margin-right: 5px;
+}

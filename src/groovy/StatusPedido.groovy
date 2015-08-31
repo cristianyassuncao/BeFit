@@ -1,4 +1,4 @@
-public enum StatusPedido {
+public enum StatusPedido implements Comparable {
 
 	A('Aberto'),
 	C('Cancelado'),
@@ -9,11 +9,6 @@ public enum StatusPedido {
 	
 	public StatusPedido(String descricao) {
 		this.descricao = descricao
-	}
-	
-	@Override
-	public String toString() {
-		return descricao;
 	}
 	
 }

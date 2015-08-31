@@ -44,6 +44,8 @@
 						<g:sortableColumn property="valorPago" title="${message(code: 'pedido.valorPago.label')}" />
 						
 						<g:sortableColumn property="numeroVolumes" title="${message(code: 'pedido.numeroVolumes.label', default: 'Numero Volumes')}" />
+					
+						<g:sortableColumn property="status" title="${message(code: 'pedido.status.label')}"/>
 					</tr>
 				</thead>
 				<tbody>
@@ -73,6 +75,8 @@
 							<td><g:formatNumber number="${pedidoInstance?.valorPago}" format="###,##0.00"/></td>
 						
 							<td>${fieldValue(bean: pedidoInstance, field: "numeroVolumes")}</td>
+							
+							<td>${pedidoInstance?.status?.descricao}</td>
 						
 						</tr>
 					</g:each>

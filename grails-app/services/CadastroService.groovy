@@ -227,18 +227,27 @@ class CadastroService {
         pedidoInstance.endereco = definirEnderecoPedido(params)
         pedidoInstance.telefone = definirTelefonePedido(params)
         pedidoInstance.validate()
-        def itensPedido = definirItensPedido(params)
-		validarItensDoPedido(itensPedido, pedidoInstance)
-	    if (!pedidoInstance.hasErrors()) {
-			if (itensPedido.size() > 0) {
-				itensPedido.each {i ->
-					pedidoInstance.addToItens(i)
-				}
-			}
+		incluirItensPedido(pedidoInstance, params)
+        if (!pedidoInstance.hasErrors()) {
 			pedidoInstance.save(flush: true)
         }
         return pedidoInstance
     }
+	
+	private incluirItensPedido(pedidoInstance, params) {
+		removerItensPedido(pedidoInstance)
+		def itensPedido = definirItensPedido(params)
+		validarItensDoPedido(itensPedido, pedidoInstance)
+		if (!pedidoInstance.hasErrors()) {
+			itensPedido?.each {i ->
+				pedidoInstance.addToItens(i)
+			}
+		}	
+	}
+	
+	private removerItensPedido(Pedido pedidoInstance) {
+		pedidoInstance.itens.clear()
+	}
 
 	private validarItensDoPedido(itensPedido, Pedido pedidoInstance) {
 		if (itensPedido.size() > 0) {
@@ -254,14 +263,14 @@ class CadastroService {
 	}
     
     def definirItensPedido(params) {
-		def produto = params["itemPedido.produto"]
-		def quantidade = params["itemPedido.quantidade"]
-		def valorUnitario = params["itemPedido.valorUnitario"]
-		def valorTotalItem = params["itemPedido.valorTotalItem"]
-		def alteracaoPrato = params["itemPedido.alteracaoPrato"]
-		def alteracaoMolho = params["itemPedido.alteracaoMolho"]
-		
-		def numeroItens = produto.size()
+		def produto = params.list("itemPedido.produto")
+		def quantidade = params.list("itemPedido.quantidade")
+		def valorUnitario = params.list("itemPedido.valorUnitario")
+		def valorTotalItem = params.list("itemPedido.valorTotalItem")
+		def alteracaoPrato = params.list("itemPedido.alteracaoPrato")
+		def alteracaoMolho = params.list("itemPedido.alteracaoMolho")
+				
+		def numeroItens = produto?.size()
 		def itens = []
 		for (int i = 0; i < numeroItens; i++) {
 			itens << definirItemPedido(produto[i], quantidade[i], valorUnitario[i], valorTotalItem[i], alteracaoPrato[i], alteracaoMolho[i])
