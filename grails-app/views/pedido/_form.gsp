@@ -175,7 +175,9 @@
 </fieldset>
 <fieldset>
     <legend>Itens</legend>
-    <div align="right"><input type="checkbox" checked="checked"> Exibir somente as opções do dia</div>
+    <g:if test="${!readOnly}">
+    	<div align="right"><input type="checkbox" checked="checked"> Exibir somente as opções do dia</div>
+    </g:if>
     <table id="itensPedido" class="itensPedido">
 		<tr>
 		    <th class="produto"><g:message code="itemPedido.produto.label"/></th>
@@ -212,8 +214,9 @@
 		        	<textarea id="alteracaoMolho" rows="3"></textarea>	 
 				</td>
 				<td>
-			        <input class="add" type="button" value="Incluir" onclick="addItem();"/>
-			        <input class="clear" type="button" value="Limpar" onclick="limparFormularioItens();"/>
+					<input type="hidden" id="novoItem">
+			        <input class="add" type="button" onclick="addItem();"/>
+			        <input class="clear" type="button" onclick="cancelarEdicao();"/>
 				</td>
 			</tr>
 		</g:if>

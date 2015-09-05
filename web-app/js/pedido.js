@@ -5,6 +5,8 @@
 
  */
 
+var itemEditado = null;
+
 function isTelefonePreenchido(valor) {
     return (valor != '(__) _____-____');
 }
@@ -149,9 +151,13 @@ function atualizarValorTotalItem() {
 
 function addItem() {
 	var item = getItem();
-	
 	if (!isItemPreenchido(item)) return false; 
-	
+	inserirLinhaTabelaItens(item);
+	limparFormularioAdicaoItens();
+	totalizarPedido();
+}
+
+function inserirLinhaTabelaItens(item) {
 	var idProduto = item.idProduto;
 	var nomeProduto = item.nomeProduto;
 	var quantidade = item.quantidade;
@@ -167,16 +173,8 @@ function addItem() {
 	var cell5 = "<td><textarea class='hidden' name='itemPedido.alteracaoPrato' rows='3'>" + alteracaoPrato + "</textarea>" + alteracaoPrato +"</td>";
 	var cell6 = "<td><textarea class='hidden' name='itemPedido.alteracaoMolho' rows='3'>" + alteracaoMolho + "</textarea>" + alteracaoMolho +"</td>";
 	var cell7 = "<td><input class='edit' type='button' onclick='editItem(this)'><input class='delete' type='button' onclick='deleteItem(this)'></td>";
-	var rowsNumber = $("#itensPedido tr").length;
-	var classe = '';
-	if (rowsNumber % 2 == 0) {
-		classe = 'par';
-	}	
 	 
-	$("#itensPedido tbody").append("<tr class='separador " + classe + "'>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + cell7 + "</tr>");
-	
-	limparItemAdicionado();
-	totalizarPedido();
+	$("#itensPedido tbody").append("<tr class='separador'>" + cell1 + cell2 + cell3 + cell4 + cell5 + cell6 + cell7 + "</tr>");
 }
 
 function atualizarValorTotalPedido() {
@@ -219,7 +217,7 @@ function adicionarCliente() {
 	window.open('/BeFit/cliente/create','_blank');
 }
 
-function limparItemAdicionado() {
+function limparFormularioAdicaoItens() {
 	$('#produto').val('').trigger("chosen:updated");;
 	$('#quantidade').val('');
     $('#valorUnitario').val('');
@@ -269,4 +267,22 @@ function loadItem(selectedRow) {
 	$("#alteracaoPrato").val($("textarea[name='itemPedido.alteracaoPrato']", selectedRow).val());
 	$("#alteracaoMolho").val($("textarea[name='itemPedido.alteracaoMolho']", selectedRow).val());
 	$('#valorTotalItem').val($("input[name='itemPedido.valorTotalItem']", selectedRow).val());
+	
+	itemEditado = {idProduto: $('#produto').val(),
+				   nomeProduto: $('#produto option:selected').html(),
+				   quantidade: $('#quantidade').val(),
+				   valorUnitario: $('#valorUnitario').val(),
+				   alteracaoPrato: $("#alteracaoPrato").val(),
+				   alteracaoMolho: $("#alteracaoMolho").val(),
+				   valorTotal: $('#valorTotalItem').val()
+				  };
+}
+
+function cancelarEdicao() {
+	if (itemEditado != null) {
+		inserirLinhaTabelaItens(itemEditado);
+		itemEditado = null;
+	}
+	limparFormularioAdicaoItens();
+	totalizarPedido();
 }

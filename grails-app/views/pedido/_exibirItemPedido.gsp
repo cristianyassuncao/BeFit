@@ -24,7 +24,9 @@
 	    ${itemPedido?.alteracaoMolho}
 	</td>
 	<td>
-    	<input class="edit" type="button" onclick="editItem(this)">
-        <input class="delete" type="button" onclick="deleteItem(this)">
+		<g:if test="${!readOnly}">
+	    	<input class="edit" type="button" onclick="editItem(this)">
+	        <input class="delete" type="button" onclick="deleteItem(this)">
+        </g:if>
 	</td>
 </tr>

@@ -129,10 +129,6 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
 	display: none;
 }
 
-.par {
-	background-color: #F0F0F0;
-}
-
 #formaPagamento {
 	margin-left: 0px;
 	margin-top: 7px;
@@ -148,7 +144,7 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
 	margin-right: 7px;
 }
 
-#itensPedido input.edit, #itensPedido input.delete {
+#itensPedido input.edit, #itensPedido input.delete, #itensPedido input.clear, #itensPedido input.add {
 	margin: 0px;
 	width: auto;
 }
