@@ -6,11 +6,13 @@ import java.util.Collections.ReverseComparator
 import org.apache.jasper.compiler.Node.ParamsAction;
 
 import grails.transaction.Transactional
-import grails.converters.JSON
+import grails.converters.*;
 
 @Transactional(readOnly = true)
 class PedidoController {
     
+	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy")
+	
     def cadastroService
 	
 	static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
@@ -72,20 +74,30 @@ class PedidoController {
 	
 	def show = {
         def pedidoInstance = Pedido.get(new Long(params.id))
-		def objetosInicializados = inicializarObjetosFormulario()
-        return render(view: 'show', model:[pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: pedidoInstance.itens])
+        return render(view: 'show', model:[pedido: pedidoInstance, clientes: [pedidoInstance.cliente], entregadores: [pedidoInstance.entregador], itensPedido: pedidoInstance.itens])
     }
 	
-	private inicializarObjetosFormulario() {
+	private inicializarObjetosFormulario(Date data) {
 		def objetos = [:]
 		objetos['clientes'] = inicializarClientes()
 		objetos['entregadores'] = inicializarEntregadores()
-		objetos['produtos'] = inicializarProdutos()
+		objetos['produtos'] = inicializarProdutos(data)
 		return objetos
 	}
 
-	private List<Produto> inicializarProdutos() {
+	private List<Produto> inicializarProdutos(Date data) {
+		if (data == null) {
+			return carregarTodosProdutos();
+		}
+		return carregarItemsDoDia(data);
+	}
+	
+	private List<Produto> carregarTodosProdutos() {
 		return Produto.findAll("from Produto p order by nome")
+	}
+	
+	private List<Produto> carregarItemsDoDia(Date data) {
+		return Produto.findAll("from Produto as p where p in (select produto from ItemDia as i where i.data = :data) order by nome", ['data': data])
 	}
 
 	private List<Entregador> inicializarEntregadores() {
@@ -101,19 +113,24 @@ class PedidoController {
 	}
 
     def create = {
-		def objetosInicializados = inicializarObjetosFormulario()
         def pedido = new Pedido()
         pedido.dataCadastro = new Date()
         pedido.valorPago = new BigDecimal(0)
 		pedido.status = StatusPedido.A
+		def objetosInicializados = inicializarObjetosFormulario(pedido.dataCadastro)
         return render(view: 'create', model: [pedido: pedido, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos']])
     }
 
     def save = {
         def pedidoInstance = cadastroService.atualizarPedido(params)
         if (pedidoInstance.hasErrors()) {
-			def objetosInicializados = inicializarObjetosFormulario()
-            def itensPedido = cadastroService.definirItensPedido(params)
+			def objetosInicializados
+			if (params.exibirSomenteOpcoesDia) {
+				objetosInicializados = inicializarObjetosFormulario(pedidoInstance?.dataEntrega)
+			} else { 
+				objetosInicializados = inicializarObjetosFormulario()
+			}
+			def itensPedido = cadastroService.definirItensPedido(params)
             render(view:'create', model: [pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: itensPedido])
             return
         }
@@ -122,14 +139,19 @@ class PedidoController {
 
     def edit = {
         def pedidoInstance = Pedido.get(params.id)
-		def objetosInicializados = inicializarObjetosFormulario()
+		def objetosInicializados = inicializarObjetosFormulario(pedidoInstance?.dataEntrega)
         render(view:'edit', model:[pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: pedidoInstance.itens])
     }
 
     def update =  {
 		def pedidoInstance = cadastroService.atualizarPedido(params)
 		if (pedidoInstance.hasErrors()) {
-			def objetosInicializados = inicializarObjetosFormulario()
+			def objetosInicializados
+			if (params.exibirSomenteOpcoesDia) {
+				objetosInicializados = inicializarObjetosFormulario(pedidoInstance?.dataEntrega)
+			} else {
+				objetosInicializados = inicializarObjetosFormulario()
+			}
 			def itensPedido = cadastroService.definirItensPedido(params)
 			render(view:'edit', model: [pedido: pedidoInstance, clientes: objetosInicializados['clientes'], entregadores: objetosInicializados['entregadores'], produtos: objetosInicializados['produtos'], itensPedido: itensPedido])
 			return
@@ -187,6 +209,21 @@ class PedidoController {
 		} else {
 			render Util.formatCurrency(preco?.valor) as String
 		}	
+	}
+	
+	def recarregarListaProdutos = {
+		def resultado = []
+		if (params.data == null) {
+			resultado = carregarTodosProdutos()
+		} else {
+			resultado = carregarItemsDoDia(formatoData.parse(params.data))
+		}
+		String produtosJSON = resultado.collect {
+			[codigo: it?.id,
+			 nome: it?.nome
+			]
+		} as JSON
+		render produtosJSON
 	}
     
 }

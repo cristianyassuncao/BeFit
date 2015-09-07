@@ -1,6 +1,7 @@
 <tr class="separador ${classe}">
     <td>
 	 	<input type="hidden" name="itemPedido.produto" value="${itemPedido?.produto?.id}"/>
+	 	<input type="hidden" name="itemPedido.nomeProduto" value="${itemPedido?.produto?.nome}"/>
 		${itemPedido?.produto?.nome}
 	</td>
 	<td class="valorNumerico">

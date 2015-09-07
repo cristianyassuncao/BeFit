@@ -120,7 +120,7 @@
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="dataEntrega" name="dataEntrega" class="data" value="<g:formatDate date="${pedido?.dataEntrega}" format="dd/MM/yyyy"/>" <g:if test="${readOnly}">readonly="readonly"</g:if>/>
+                <input type="text" id="dataEntrega" name="dataEntrega" class="data" value="<g:formatDate date="${pedido?.dataEntrega}" format="dd/MM/yyyy"/>" <g:if test="${readOnly}">readonly="readonly"</g:if> onchange="if ($('#exibirSomenteOpcoesDia').is(':checked')) {recarregarListaProdutos(true)}"/>
             </div>    
         </div>
     </div>
@@ -176,7 +176,7 @@
 <fieldset>
     <legend>Itens</legend>
     <g:if test="${!readOnly}">
-    	<div align="right"><input type="checkbox" checked="checked"> Exibir somente as opções do dia</div>
+    	<div align="right"><input type="checkbox" name="exibirSomenteOpcoesDia" id="exibirSomenteOpcoesDia" checked="checked" onclick="recarregarListaProdutos(this.checked)"> Exibir somente as opções do dia</div>
     </g:if>
     <table id="itensPedido" class="itensPedido">
 		<tr>

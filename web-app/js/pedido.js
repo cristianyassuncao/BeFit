@@ -166,7 +166,8 @@ function inserirLinhaTabelaItens(item) {
 	var alteracaoMolho = item.alteracaoMolho;
 	var valorTotalItem = item.valorTotal;
 	
-	var cell1 = "<td><input type='hidden' name='itemPedido.produto' value='" + idProduto + "'/>" + nomeProduto + "</td>";
+	var cell1 = "<td><input type='hidden' name='itemPedido.produto' value='" + idProduto + "'/>" +
+				"<input type='hidden' name='itemPedido.nomeProduto' value='" + nomeProduto + "'/>" + nomeProduto + "</td>";
 	var cell2 = "<td class='valorNumerico'><input type='hidden' name='itemPedido.quantidade' value='" + quantidade + "'/>" + quantidade + "</td>";
 	var cell3 = "<td class='valorNumerico'><input type='hidden' name='itemPedido.valorUnitario' value='" + valorUnitario + "'/>" + valorUnitario + "</td>";
 	var cell4 = "<td class='valorNumerico'><input type='hidden' name='itemPedido.valorTotalItem' value='" + valorTotalItem + "'/>" + valorTotalItem + "</td>";
@@ -260,22 +261,25 @@ function deleteItem(buttonClicked) {
 }
 
 function loadItem(selectedRow) {
-	$('#produto').val($("input[name='itemPedido.produto']", selectedRow).val());
-	$('#produto').trigger("chosen:updated");
-	$('#quantidade').val($("input[name='itemPedido.quantidade']", selectedRow).val());
-	$('#valorUnitario').val($("input[name='itemPedido.valorUnitario']", selectedRow).val());
-	$("#alteracaoPrato").val($("textarea[name='itemPedido.alteracaoPrato']", selectedRow).val());
-	$("#alteracaoMolho").val($("textarea[name='itemPedido.alteracaoMolho']", selectedRow).val());
-	$('#valorTotalItem').val($("input[name='itemPedido.valorTotalItem']", selectedRow).val());
+	itemEditado = {idProduto: $("input[name='itemPedido.produto']", selectedRow).val(),
+				   nomeProduto: $("input[name='itemPedido.nomeProduto']", selectedRow).val(),
+				   quantidade: $("input[name='itemPedido.quantidade']", selectedRow).val(),
+				   valorUnitario: $("input[name='itemPedido.valorUnitario']", selectedRow).val(),
+				   alteracaoPrato: $("textarea[name='itemPedido.alteracaoPrato']", selectedRow).val(),
+				   alteracaoMolho: $("textarea[name='itemPedido.alteracaoMolho']", selectedRow).val(),
+				   valorTotal: $("input[name='itemPedido.valorTotalItem']", selectedRow).val()
+	};
 	
-	itemEditado = {idProduto: $('#produto').val(),
-				   nomeProduto: $('#produto option:selected').html(),
-				   quantidade: $('#quantidade').val(),
-				   valorUnitario: $('#valorUnitario').val(),
-				   alteracaoPrato: $("#alteracaoPrato").val(),
-				   alteracaoMolho: $("#alteracaoMolho").val(),
-				   valorTotal: $('#valorTotalItem').val()
-				  };
+	$('#produto').val(itemEditado.idProduto);
+	
+	
+	
+	$('#produto').trigger("chosen:updated");
+	$('#quantidade').val(itemEditado.quantidade);
+	$('#valorUnitario').val(itemEditado.valorUnitario);
+	$("#alteracaoPrato").val(itemEditado.alteracaoPrato);
+	$("#alteracaoMolho").val(itemEditado.alteracaoMolho);
+	$('#valorTotalItem').val(itemEditado.valorTotal);
 }
 
 function cancelarEdicao() {
@@ -285,4 +289,34 @@ function cancelarEdicao() {
 	}
 	limparFormularioAdicaoItens();
 	totalizarPedido();
+}
+
+function recarregarListaProdutos(somenteItensDoDia) {
+	var url = '/BeFit/pedido/recarregarListaProdutos';
+	if (somenteItensDoDia) {
+		var dataEntrega = $("#dataEntrega").val();
+		if (dataEntrega == "") {
+			alert('Informe uma data de entrega antes de restringir os produtos disponíveis no dia!');
+			return
+		}
+		url = url + '?data=' + dataEntrega;
+	}
+	jQuery.ajax({
+		  url: url,
+		  async: false,
+		  success: function(listaProdutos) {
+			  var selectOptions = JSON.parse(listaProdutos);
+			  var selectProdutos = $("#produto");
+			  selectProdutos.empty();
+			  addOptionToSelect(selectProdutos, "", "");
+			  $.each(selectOptions, function(i, produto) {
+				  addOptionToSelect(selectProdutos, produto.codigo, produto.nome);
+			  });
+			  $("#produto").trigger("chosen:updated");
+		  }
+	});
+}
+
+function addOptionToSelect(select, value, text) {
+	select.append($("<option></option>").attr("value", value).text(text));
 }
