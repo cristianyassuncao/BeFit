@@ -722,3 +722,7 @@ input.data {
 input:read-only, textarea:read-only, select:read-only {
     opacity: 0.7 !important;
 }
+
+table.parametros label {
+	font-weight: bold;
+}

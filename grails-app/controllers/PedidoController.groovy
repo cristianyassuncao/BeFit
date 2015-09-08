@@ -40,7 +40,8 @@ class PedidoController {
 		params?.offset = offset
 		params?.sort = sort
 		params?.order = order
-		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros])
+		
+		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros, clientes: inicializarClientes(), entregadores: inicializarEntregadores()])
 	}
 	
 	private Comparator definirComparator(String sort, String order) {

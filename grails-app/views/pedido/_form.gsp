@@ -59,7 +59,7 @@
                 <g:message code="cliente.nome.label"/>:
             </div>
             <div class="valor">
-                <select data-placeholder="Selecione um cliente" <g:if test="${readOnly}">disabled="disabled"</g:if> class="chosen" id="cliente" name="cliente.id" <g:if test="${readOnly}">readonly="readonly"</g:if>> 
+                <select data-placeholder="Selecione um cliente" <g:if test="${readOnly}">disabled="disabled"</g:if> class="chosen" id="cliente" name="cliente.id"> 
                     <option value=""></option>
                     <g:each in="${clientes}" var="cliente">
                         <g:set var="isClienteSelecionado" value="${pedido?.cliente?.id == cliente?.id}"/>
