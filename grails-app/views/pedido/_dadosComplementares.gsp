@@ -22,16 +22,22 @@
     </div>    
     <input class="add" type="button" id="buttonSelecionarOutroEndereco" value="Selecionar outro endereço" onclick="selecionarEnderecoEntrega(${cliente?.id});">
 </fieldset>    
-
 <fieldset class="padrao inline" id="telefones">
     <legend>Telefones Adicionais</legend>
-        <g:each var="telefone" in="${telefones}" status="i">
-            <div>
-                <div class="campos">
-                    ${telefone?.numeroComMascara}
-                    <g:if test="${telefone?.whatsapp}">(Whatsapp)</g:if>
-                </div>
+    <g:each var="telefone" in="${telefones}" status="i">
+        <div>
+            <div class="campos">
+                ${telefone?.numeroComMascara}
+                <g:if test="${telefone?.whatsapp}">(Whatsapp)</g:if>
             </div>
-        </g:each>
-    </ul>
+        </div>
+    </g:each>
+</fieldset>
+<fieldset class="padrao inline observacoesCliente">
+    <legend>Observações</legend>
+    <div>
+        <div class="campos">
+            <textarea id="observacoesCliente" rows="3" cols="70">${observacoes}</textarea>
+        </div>
+    </div>
 </fieldset>

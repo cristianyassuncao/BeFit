@@ -77,7 +77,7 @@
     </div>
     <div id="dadosComplementares">
         <g:if test="${pedido?.cliente != null}">
-            <g:render template="dadosComplementares" model="[endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones, readOnly: readOnly]"/>
+            <g:render template="dadosComplementares" model="[endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones, observacoes: pedido?.cliente?.observacoes, readOnly: readOnly]"/>
         </g:if>
     </div>    
 </fieldset>

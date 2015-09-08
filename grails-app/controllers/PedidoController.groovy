@@ -186,7 +186,7 @@ class PedidoController {
         if (enderecos.size() > 0) {
             enderecoEntrega = cliente?.pessoa?.enderecos[0]
         }    
-        render(template: 'dadosComplementares', model: ['cliente': cliente, 'endereco': enderecoEntrega, 'telefones': cliente?.pessoa?.telefones])
+        render(template: 'dadosComplementares', model: ['cliente': cliente, 'endereco': enderecoEntrega, 'telefones': cliente?.pessoa?.telefones, 'observacoes': cliente?.observacoes])
     }
     
     def carregarEnderecos = {

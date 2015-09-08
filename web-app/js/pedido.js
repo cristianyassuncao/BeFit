@@ -6,6 +6,7 @@
  */
 
 var itemEditado = null;
+var excluirItemSelectAposEdicao = false;
 
 function isTelefonePreenchido(valor) {
     return (valor != '(__) _____-____');
@@ -155,6 +156,11 @@ function addItem() {
 	inserirLinhaTabelaItens(item);
 	limparFormularioAdicaoItens();
 	totalizarPedido();
+	if (excluirItemSelectAposEdicao) {
+		removeOptionFromSelect("produto", itemEditado.idProduto);
+		excluirItemSelectAposEdicao = false;
+	}
+	itemEditado = null;
 }
 
 function inserirLinhaTabelaItens(item) {
@@ -270,11 +276,15 @@ function loadItem(selectedRow) {
 				   valorTotal: $("input[name='itemPedido.valorTotalItem']", selectedRow).val()
 	};
 	
-	$('#produto').val(itemEditado.idProduto);
-	
-	
-	
-	$('#produto').trigger("chosen:updated");
+	var selectProdutos = $('#produto');
+	selectProdutos.val(itemEditado.idProduto);
+	//---Se o item não consta no select, inclua-o
+	if (selectProdutos.val() == null) {
+		addOptionToSelect(selectProdutos, itemEditado.idProduto, itemEditado.nomeProduto);
+		selectProdutos.val(itemEditado.idProduto);
+		excluirItemSelectAposEdicao = true;
+	}
+	selectProdutos.trigger("chosen:updated");
 	$('#quantidade').val(itemEditado.quantidade);
 	$('#valorUnitario').val(itemEditado.valorUnitario);
 	$("#alteracaoPrato").val(itemEditado.alteracaoPrato);
@@ -286,6 +296,10 @@ function cancelarEdicao() {
 	if (itemEditado != null) {
 		inserirLinhaTabelaItens(itemEditado);
 		itemEditado = null;
+		if (excluirItemSelectAposEdicao) {
+			removeOptionFromSelect("produto", itemEditado.idProduto);
+			excluirItemSelectAposEdicao = false;
+		}
 	}
 	limparFormularioAdicaoItens();
 	totalizarPedido();
@@ -315,6 +329,10 @@ function recarregarListaProdutos(somenteItensDoDia) {
 			  $("#produto").trigger("chosen:updated");
 		  }
 	});
+}
+
+function removeOptionFromSelect(id, value) {
+	$("#" + id + " option[value='" + value + "']").remove();
 }
 
 function addOptionToSelect(select, value, text) {

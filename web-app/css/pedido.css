@@ -159,3 +159,15 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
 span.opcaoStatus {
 	margin-right: 5px;
 }
+
+#observacoesCliente {
+	border: none;
+	background-color: #FFFFFF;
+	height: auto;
+	resize: none;
+	line-height: 1.5em;
+}
+
+fieldset.observacoesCliente {
+	padding-top: 0px;
+}
