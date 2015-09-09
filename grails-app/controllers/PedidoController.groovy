@@ -28,7 +28,36 @@ class PedidoController {
 			params?.sort = null
 			params?.order = null
 		}
+		def statusList = definirFiltroPorStatus(params.list('status'))
 		def result = Pedido.createCriteria().list(params) {
+			if (params.numeroTelefone != null && params.numeroTelefone != "") {
+                cliente {
+					pessoa {
+	                    telefones {
+	                        eq("numero", Telefone.removerMascara(params.numeroTelefone))
+	                    }
+					}	
+                }
+            }
+			if (params.cliente != null && params.cliente != "") {
+				cliente {
+					eq("id", new Long(params.cliente))
+				}
+			}
+			if (params.entregador != null && params.entregador != "") {
+				entregador {
+					eq("id", new Long(params.entregador))
+				}
+			}
+			if (params.dataEntrega != null && params.dataEntrega != "") {
+				eq("dataEntrega", formatoData.parse(params.dataEntrega))
+			}
+			if (params.status != null) {
+				inList("status", statusList)
+			}
+			if (params.pago != null) {
+				eq("valorAPagar", "valorPago")
+			}
 		}
 		def totalRegistros = result.totalCount
 		def comparator = definirComparator(sort, order)
@@ -42,6 +71,18 @@ class PedidoController {
 		params?.order = order
 		
 		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros, clientes: inicializarClientes(), entregadores: inicializarEntregadores()])
+	}
+	
+	boolean hasParametrosDefinidos(params) {
+		
+	}
+	
+	private List<StatusPedido> definirFiltroPorStatus(statusSelecionados) {
+		def statusList = []
+		statusSelecionados.each {
+			statusList.add(StatusPedido.valueOf(it))
+		}
+		return statusList
 	}
 	
 	private Comparator definirComparator(String sort, String order) {

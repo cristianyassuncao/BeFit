@@ -19,8 +19,11 @@ class Pedido {
     TelefonePedido telefone
 	FormaPagamento formaPagamento
     StatusPedido status
+	Boolean pago
     
     static embedded = ['endereco', 'telefone']
+	
+	static transients = ['pago']
            
     static hasMany = [itens: ItemPedido]
     
@@ -54,6 +57,10 @@ class Pedido {
 		formaPagamento column: 'SEQ_FORMA_PAGAMENTO'
         itens joinTable: false, column: 'SEQ_PEDIDO', cascade:"all-delete-orphan"
     }
+	
+	Boolean isPago() {
+		return valorAPagar.equals(valorPago)
+	}
         
 }
 

@@ -37,32 +37,34 @@
                                 <label for='numeroTelefone'><g:message code="telefone.numero.label"/>:</label>
                                 <input type="text" id="numeroTelefone" name="numeroTelefone" size="14" class="telefone" value="${telefoneInstance?.numero}"/>
                                 <label for='cliente'><g:message code="pedido.cliente.label"/>:</label>
-                                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente.id"> 
+                                <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente"> 
 				                    <option value=""></option>
 				                    <g:each in="${clientes}" var="cliente">
 				                        <option value="${cliente.id}">${cliente.nome}</option>				                        
+				                    </g:each>
+				                </select>
+				                <label for="entregador"><g:message code="pedido.responsavelEntrega.label"/>:</label>
+				                <select data-placeholder="Selecione um entregador" class="chosen" id="entregador" name="entregador"> 
+				                    <option value=""></option>
+				                    <g:each in="${entregadores}" var="entregador">
+				                        <option value="${entregador.id}">${entregador.nome}</option>
 				                    </g:each>
 				                </select>
                             </td>
                         </tr>
                         <tr>    
                             <td>
-                            	<label for="entregador"><g:message code="pedido.responsavelEntrega.label"/>:</label>
-				                <select data-placeholder="Selecione um entregador" class="chosen" id="entregador" name="entregador.id"> 
-				                    <option value=""></option>
-				                    <g:each in="${entregadores}" var="entregador">
-				                        <option value="${entregador.id}">${entregador.nome}</option>
-				                    </g:each>
-				                </select>
 	                            <label for="dataEntrega"><g:message code="pedido.dataEntrega.label"/>:</label>
 	                			<input type="text" id="dataEntrega" name="dataEntrega" class="data" value="<g:formatDate date="${pedido?.dataEntrega}" format="dd/MM/yyyy"/>"/>
                             	<fieldset id="statusPedido" class="padrao">
 							       <legend>Status do Pedido</legend>
 							       <g:each in="${StatusPedido.values()}" var="s">
-							       		<input type="radio" name="status" value="${s}"/>							       		
+							       		<input type="checkbox" name="status" value="${s}"/>							       		
 							       		<span class="opcaoStatus">${s.descricao}</span>
 							       </g:each>	       
 							   	</fieldset>
+							   	<label for="pedidoPago"><g:message code="pedido.pago.label"/>:</label>
+							   	<input type="checkbox" name="pago" id="pago" value="true"/>
                             </td>
                         </tr>
                     </table>
@@ -99,6 +101,8 @@
 						<g:sortableColumn property="numeroVolumes" title="${message(code: 'pedido.numeroVolumes.label', default: 'Numero Volumes')}" />
 					
 						<g:sortableColumn property="status" title="${message(code: 'pedido.status.label')}"/>
+						
+						<g:sortableColumn property="pago" title="${message(code: 'pedido.pago.label')}"/>
 					</tr>
 				</thead>
 				<tbody>
@@ -130,6 +134,8 @@
 							<td>${fieldValue(bean: pedidoInstance, field: "numeroVolumes")}</td>
 							
 							<td>${pedidoInstance?.status?.descricao}</td>
+							
+							<td>${pedidoInstance?.pago}</td>
 						
 						</tr>
 					</g:each>
