@@ -56,7 +56,7 @@ class PedidoController {
 				inList("status", statusList)
 			}
 			if (params.pago != null) {
-				eq("valorAPagar", "valorPago")
+				eqProperty("valorAPagar", "valorPago")
 			}
 		}
 		def totalRegistros = result.totalCount

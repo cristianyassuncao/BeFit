@@ -72,8 +72,8 @@ class EnderecoPedido {
     String pontoReferencia
     
     static transients = ["bairro"]
-    
-    static mapping = {
+	
+	static mapping = {
         columns {
             rua column: 'TXT_ENDERECO'
             numero column: 'TXT_NUMERO_ENDERECO'
@@ -95,10 +95,6 @@ class TelefonePedido {
     String numeroComMascara
     
     static transients =['numeroComMascara']
-    
-    static constraints = {
-	 numero(nullable: false, blank: false)
-    }
     
     static mapping = {
         columns {

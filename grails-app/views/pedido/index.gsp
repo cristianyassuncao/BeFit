@@ -135,7 +135,7 @@
 							
 							<td>${pedidoInstance?.status?.descricao}</td>
 							
-							<td>${pedidoInstance?.pago}</td>
+							<td><input type="checkbox" <g:if test="${pedidoInstance?.isPago()}">checked="checked"</g:if> disabled="disabled"/></td>
 						
 						</tr>
 					</g:each>

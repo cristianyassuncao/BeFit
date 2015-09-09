@@ -10,11 +10,11 @@
 	</td>
 	<td class="valorNumerico">
 	 	<input type="hidden" name="itemPedido.valorUnitario" value="${itemPedido?.valorUnitario}"/>
-		${itemPedido?.valorUnitario}
+		<g:formatNumber number="${itemPedido?.valorUnitario}" format="###,##0.00"/>
 	</td>
 	<td class="valorNumerico">
 		<input type="hidden" name="itemPedido.valorTotalItem" value="${itemPedido?.valorItem}"/>
-	    ${itemPedido?.valorItem}
+	    <g:formatNumber number="${itemPedido?.valorItem}" format="###,##0.00"/>
 	</td>
 	<td>
 	    <textarea class="hidden" name="itemPedido.alteracaoPrato" rows="3">${itemPedido?.alteracaoPrato}</textarea>
