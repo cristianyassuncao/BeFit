@@ -36,6 +36,9 @@
                             <li>
                                 <a href="${createLinkTo(dir:'produto')}">Produtos</a>
                             </li>
+                            <li>
+                                <a href="${createLinkTo(dir:'itemDia')}">Itens do Dia</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="submenu">

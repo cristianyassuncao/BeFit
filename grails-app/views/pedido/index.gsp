@@ -35,7 +35,7 @@
                         <tr align='left'>
                             <td valign='middle'>
                                 <label for='numeroTelefone'><g:message code="telefone.numero.label"/>:</label>
-                                <input type="text" id="numeroTelefone" name="numeroTelefone" size="14" class="telefone" value="${telefoneInstance?.numero}"/>
+                                <input type="text" id="numeroTelefone" name="numeroTelefone" size="14" class="telefone"/>
                                 <label for='cliente'><g:message code="pedido.cliente.label"/>:</label>
                                 <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente"> 
 				                    <option value=""></option>
@@ -55,7 +55,7 @@
                         <tr>    
                             <td>
 	                            <label for="dataEntrega"><g:message code="pedido.dataEntrega.label"/>:</label>
-	                			<input type="text" id="dataEntrega" name="dataEntrega" class="data" value="<g:formatDate date="${pedido?.dataEntrega}" format="dd/MM/yyyy"/>"/>
+	                			<input type="text" id="dataEntrega" name="dataEntrega" class="data"/>
                             	<fieldset id="statusPedido" class="padrao">
 							       <legend>Status do Pedido</legend>
 							       <g:each in="${StatusPedido.values()}" var="s">

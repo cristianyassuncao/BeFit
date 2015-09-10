@@ -4,6 +4,7 @@ class ItemDia {
 	Date data
     
 	static constraints = {
+		produto unique: 'data'
     }
     
     static mapping = {

@@ -23,6 +23,7 @@ div.menu ul li {
     display:inline;
 	position: relative;
     margin-bottom:0px;
+    z-index: 10;
 }
 
 /* Estilo dos links dos itens do menu */
