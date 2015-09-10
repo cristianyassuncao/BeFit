@@ -3,10 +3,12 @@ class Entregador implements Comparable {
     Pessoa pessoa
     String nome
     Date dataContratacao
+	String observacoes
     
     static transients=['nome']
     
     static constraints = {
+		observacoes(nullable: true, blank: true)
     }
     
     String getNome() {
@@ -25,6 +27,7 @@ class Entregador implements Comparable {
         id column: 'SEQ_ENTREGADOR', generator: 'sequence', params:[sequence:'SEQ_ENTREGADOR']
         pessoa column: 'SEQ_PESSOA'
         dataContratacao column: 'DAT_CONTRATACAO'
+		observacoes column: 'TXT_OBSERVACOES'
     }
     
     int compareTo(Object obj) {

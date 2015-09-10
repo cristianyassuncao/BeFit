@@ -307,6 +307,35 @@ class CadastroService {
 			enderecoPedido.idBairro = new Long(idBairro)
 		}
         return enderecoPedido
-    }	
+    }
+	
+	def criarEntregador(params) {
+		def pessoaInstance = definirCadastroCompletoPessoa(params)
+		return definirEntregador(params, pessoaInstance)
+	}
+	
+	def definirEntregador(params, pessoaInstance) {
+		def entregadorInstance = Entregador.get(params.id)
+		if (!entregadorInstance) {
+			entregadorInstance = new Entregador()
+		}
+		entregadorInstance.properties = params
+		entregadorInstance.pessoa = pessoaInstance
+		entregadorInstance.validate()
+		if (pessoaInstance.hasErrors()) {
+			pessoaInstance.errors.getAllErrors().each {
+				entregadorInstance.errors.rejectValue('pessoa', 'pessoaError', messageSource.getMessage(it, null))
+			}
+		}
+		if (!entregadorInstance.hasErrors()) {
+			entregadorInstance.save(flush: true)
+		}
+		return entregadorInstance
+	}
+	
+	def salvarEntregador(params) {
+		def pessoaInstance = definirCadastroBasicoPessoa(params)
+		return definirEntregador(params, pessoaInstance)
+	}
 	
 }

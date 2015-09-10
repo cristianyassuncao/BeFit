@@ -9,6 +9,7 @@ class Cliente implements Comparable {
  
     static constraints = {
         pessoa(unique: true)
+		observacoes(nullable: true, blank: true)
     }
     
     static mapping = {

@@ -12,7 +12,7 @@
 		    	jQuery("#produto").chosen({width: "350px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
 		    });
 		</script>
-<!-- Fim do bloco Chosen -->
+		<!-- Fim do bloco Chosen -->
 	</head>
 	<body>
 		<a href="#list-itemDia" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

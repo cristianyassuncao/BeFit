@@ -33,11 +33,14 @@
                             <li>
                                 <a href="${createLinkTo(dir:'categoriaProduto')}">Categorias de Produtos</a>
                             </li>
-                            <li>
-                                <a href="${createLinkTo(dir:'produto')}">Produtos</a>
+	                        <li>
+                                <a href="${createLinkTo(dir:'entregador')}">Entregadores</a>
                             </li>
                             <li>
                                 <a href="${createLinkTo(dir:'itemDia')}">Itens do Dia</a>
+                            </li>
+                            <li>
+                                <a href="${createLinkTo(dir:'produto')}">Produtos</a>
                             </li>
                         </ul>
                     </li>

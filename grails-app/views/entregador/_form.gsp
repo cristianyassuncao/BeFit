@@ -3,22 +3,22 @@
     <div class="campos">
         <div class="campo">
             <div class="nome">
-                <g:message code="cliente.dataInclusao.label"/>:
+                <g:message code="entregador.dataContratacao.label"/>:
                 <span class="required-indicator">*</span>
             </div>
             <div class="valor">
-                <input type="text" id="dataInclusao" name="dataInclusao" value="<g:formatDate date="${clienteInstance?.dataInclusao}" format="dd/MM/yyyy"/>" readonly="readonly"/>
+                <input type="text" class="data" id="dataContratacao" name="dataContratacao" value="<g:formatDate date="${entregadorInstance?.dataContratacao}" format="dd/MM/yyyy"/>"/>
             </div>
         </div>
     </div>
     <div class="campos">
         <div class="campo">
             <div class="nome">
-                <g:message code="cliente.observacoes.label"/>:
+                <g:message code="entregador.observacoes.label"/>:
             </div>
             <div class="valor">
-                <textarea id="observacoes" name="observacoes" rows="3" cols="70">${clienteInstance?.observacoes}</textarea>
+                <textarea id="observacoes" name="observacoes" rows="3" cols="70">${entregadorInstance?.observacoes}</textarea>
             </div>
         </div>
     </div>    
-</fieldset>        
+</fieldset>
