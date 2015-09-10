@@ -246,7 +246,7 @@ class CadastroService {
 	}
 	
 	private removerItensPedido(Pedido pedidoInstance) {
-		pedidoInstance.itens.clear()
+		pedidoInstance?.itens?.clear()
 	}
 
 	private validarItensDoPedido(itensPedido, Pedido pedidoInstance) {

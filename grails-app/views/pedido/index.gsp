@@ -35,7 +35,7 @@
                         <tr align='left'>
                             <td valign='middle'>
                                 <label for='numeroTelefone'><g:message code="telefone.numero.label"/>:</label>
-                                <input type="text" id="numeroTelefone" name="numeroTelefone" size="14" class="telefone"/>
+                                <input type="text" id="numeroTelefone" name="numeroTelefone" size="14" class="telefone" value="${params.numeroTelefone}"/>
                                 <label for='cliente'><g:message code="pedido.cliente.label"/>:</label>
                                 <select data-placeholder="Selecione um cliente" class="chosen" id="cliente" name="cliente"> 
 				                    <option value=""></option>
@@ -55,16 +55,16 @@
                         <tr>    
                             <td>
 	                            <label for="dataEntrega"><g:message code="pedido.dataEntrega.label"/>:</label>
-	                			<input type="text" id="dataEntrega" name="dataEntrega" class="data"/>
+	                			<input type="text" id="dataEntrega" name="dataEntrega" class="data" value="${params?.dataEntrega}"/>
                             	<fieldset id="statusPedido" class="padrao">
 							       <legend>Status do Pedido</legend>
 							       <g:each in="${StatusPedido.values()}" var="s">
-							       		<input type="checkbox" name="status" value="${s}"/>							       		
+							       		<input type="checkbox" name="status" value="${s}" <g:if test="${s.toString() in (params?.status)}">checked="checked"</g:if>/>							       		
 							       		<span class="opcaoStatus">${s.descricao}</span>
 							       </g:each>	       
 							   	</fieldset>
 							   	<label for="pedidoPago"><g:message code="pedido.pago.label"/>:</label>
-							   	<input type="checkbox" name="pago" id="pago" value="true"/>
+							   	<input type="checkbox" name="pago" id="pago" value="true" value="${params.pago}"/>
                             </td>
                         </tr>
                     </table>

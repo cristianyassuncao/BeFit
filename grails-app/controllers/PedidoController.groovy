@@ -17,6 +17,9 @@ class PedidoController {
 	
 	static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
+    /**
+     * 
+     */
     def index = {
 		def max = Math.min( params.max ? params.max.toInteger() : 30, 100)
 		def offset = params.offset ?: 0
@@ -24,6 +27,12 @@ class PedidoController {
 		def order = params.order
 		params?.max = null
 		params?.offset = null
+		if (!hasParametrosDefinidos(params)) {
+			params.dataEntrega = formatoData.format(new Date())
+			params.status = [StatusPedido.A.toString(), StatusPedido.D.toString(), StatusPedido.E.toString()]
+			params.sort = 'dataEntrega'
+			params.order = 'desc'
+		}
 		if (params?.sort in ['cliente', 'entregador', 'bairro']) {
 			params?.sort = null
 			params?.order = null
@@ -70,11 +79,29 @@ class PedidoController {
 		params?.sort = sort
 		params?.order = order
 		
-		return render(view: 'index', model: [pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros, clientes: inicializarClientes(), entregadores: inicializarEntregadores()])
+		return render(view: 'index', model: [params: params, pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros, clientes: inicializarClientes(), entregadores: inicializarEntregadores()])
 	}
 	
 	boolean hasParametrosDefinidos(params) {
-		
+		if (params.numeroTelefone != null && params.numeroTelefone != "") {
+			return true
+		}
+		if (params.cliente != null && params.cliente != "") {
+			return true
+		}
+		if (params.entregador != null && params.entregador != "") {
+			return true
+		}
+		if (params.dataEntrega != null && params.dataEntrega != "") {
+			return true
+		}
+		if (params.status != null) {
+			return true
+		}
+		if (params.pago != null) {
+			return true
+		}
+		return false
 	}
 	
 	private List<StatusPedido> definirFiltroPorStatus(statusSelecionados) {
