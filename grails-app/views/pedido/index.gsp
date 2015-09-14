@@ -76,6 +76,8 @@
 			<table>
 				<thead>
 					<tr>
+						<th>&nbsp;</th>
+						
 						<g:sortableColumn property="id" title="Nº" />
 						
 						<g:sortableColumn property="cliente" title="${message(code: 'pedido.cliente.label')}"/>
@@ -108,6 +110,8 @@
 				<tbody>
 					<g:each in="${pedidoInstanceList}" status="i" var="pedidoInstance">
 						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+						
+							<th><input type="checkbox" name="selecionado"/></th>
 						
 							<td><g:link action="show" id="${pedidoInstance.id}">${pedidoInstance?.id}</g:link></td>
 							
