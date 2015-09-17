@@ -23,7 +23,7 @@ class ItemPedido {
     static mapping = {
         table 'TB_ITEM_PEDIDO'
         version false
-        id column: 'SEQ_ITEM_PEDIDO', generator: 'sequence', params:[sequence:'SEQ_ITEM_PEDIDO']
+        id column: 'SEQ_ITEM_PEDIDO', generator: 'increment'
         pedido column: 'SEQ_PEDIDO'
         produto column: 'SEQ_PRODUTO'
         quantidade column: 'NUM_QUANTIDADE'

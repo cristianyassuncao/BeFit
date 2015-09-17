@@ -13,7 +13,7 @@ class Pessoa {
     static mapping = {
         table 'TB_PESSOA'
         version false
-        id column: 'SEQ_PESSOA', generator: 'sequence', params:[sequence:'SEQ_PESSOA']
+        id column: 'SEQ_PESSOA', generator: 'increment'
         discriminator column: 'TIP_PESSOA'
         dataInclusao column: 'DAT_INCLUSAO'
         email column: 'TXT_EMAIL'

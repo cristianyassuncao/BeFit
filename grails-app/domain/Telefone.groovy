@@ -20,7 +20,7 @@ class Telefone {
     static mapping = {
         table 'TB_TELEFONE'
         version false
-        id column: 'SEQ_TELEFONE', generator: 'sequence', params:[sequence:'SEQ_TELEFONE']
+        id column: 'SEQ_TELEFONE', generator: 'increment'
         tipoTelefone column: 'SEQ_TIPO_TELEFONE'
         numero column: 'TXT_NUMERO'
         whatsapp column: 'IND_WHATSAPP'

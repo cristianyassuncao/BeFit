@@ -18,7 +18,7 @@ class Produto implements Comparable {
     static mapping = {
         table 'TB_PRODUTO'
         version false
-        id column: 'SEQ_PRODUTO', generator: 'sequence', params:[sequence:'SEQ_PRODUTO']
+        id column: 'SEQ_PRODUTO', generator: 'increment'
         nome column: 'NOM_PRODUTO'
         descricao column: 'DSC_PRODUTO'
         imagem column: 'ARQ_IMAGEM'

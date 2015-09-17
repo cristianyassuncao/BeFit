@@ -30,6 +30,7 @@ class Pedido {
     static constraints = {
         cliente(nullable: true)
         entregarAPartirDaHora(nullable: true)
+		entregarAteHora(nullable: true)
         telefone(nullable: true)
         trocoPara(nullable: true, validator: {val, obj -> return (val == null) ? null : val.compareTo(obj.valorAPagar) > 0})
         valorTroco(nullable: true)
@@ -39,7 +40,7 @@ class Pedido {
     static mapping = {
         table 'TB_PEDIDO'
         version false
-        id column: 'SEQ_PEDIDO', generator: 'sequence', params:[sequence:'SEQ_PEDIDO']
+        id column: 'SEQ_PEDIDO', generator: 'increment'
         cliente column: 'SEQ_CLIENTE'
         dataCadastro column: 'DTH_CADASTRO'
         dataEntrega column: 'DTH_ENTREGA'

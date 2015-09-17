@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reciboEntrega" language="groovy" columnCount="3" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="267" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d3ab795-d871-40a5-89c9-c7b6fd0a575a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pedidos" class="java.util.List">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SEQ_PEDIDO NUMEROPEDIDO,
+       CASE
+          WHEN PES.TIP_PESSOA = 'PessoaFisica' THEN PES.NOM_PESSOA
+          WHEN PES.TIP_PESSOA = 'PessoaJuridica' THEN PES.NOM_RAZAO_SOCIAL
+       END NOMECLIENTE,
+       PED.TXT_ENDERECO || ' ' || PED.TXT_NUMERO_ENDERECO RUA,
+       PED.TXT_COMPLEMENTO || ' ' || BAI.NOM_BAIRRO COMPLEMENTO,
+       PED.TXT_PONTO_REFERENCIA PONTOREFERENCIA,
+       PED.TXT_NUMERO_TELEFONE TELEFONE,
+       PED.NUM_VOLUMES NUMEROVOLUMES,
+       PED.VAL_PAGAR VALORPEDIDO,
+       PED.VAL_TROCO_PARA VALORARECEBER,
+       PED.VAL_TROCO VALORTROCO,
+       PED.DTH_ENTREGAR_A_PARTIR_DE APARTIRDE,
+       PED.DTH_ENTREGAR_ATE ATE
+FROM TB_PEDIDO PED,
+     TB_CLIENTE CLI,
+     TB_PESSOA PES,
+     TB_BAIRRO BAI
+WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})
+AND   PED.SEQ_CLIENTE = CLI.SEQ_CLIENTE
+AND   CLI.SEQ_PESSOA = PES.SEQ_PESSOA
+AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
+	</queryString>
+	<field name="numeropedido" class="java.math.BigDecimal"/>
+	<field name="nomecliente" class="java.lang.String"/>
+	<field name="rua" class="java.lang.String"/>
+	<field name="complemento" class="java.lang.String"/>
+	<field name="pontoreferencia" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<field name="numerovolumes" class="java.math.BigDecimal"/>
+	<field name="valorpedido" class="java.math.BigDecimal"/>
+	<field name="valorareceber" class="java.math.BigDecimal"/>
+	<field name="valortroco" class="java.math.BigDecimal"/>
+	<field name="apartirde" class="java.sql.Time"/>
+	<field name="ate" class="java.sql.Time"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="207" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="21" height="20" uuid="363db760-c229-4c42-85da-0e16e4710f46"/>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="0" width="81" height="20" uuid="68a1fb1e-0895-471c-a826-2de823051739"/>
+				<textFieldExpression><![CDATA[$F{numeropedido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="38" height="20" uuid="9aec94ab-9295-4a23-977e-e18fc2c3aef7"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="38" y="20" width="223" height="20" uuid="33e4879b-213a-421f-aff5-d73dbabed514"/>
+				<textFieldExpression><![CDATA[$F{nomecliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="50" height="20" uuid="1654ab6b-88c0-488a-a68b-fbb50f9292be"/>
+				<text><![CDATA[Endereço]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="40" width="211" height="20" uuid="1d7162d7-0f4b-480e-892c-8dda616c11be"/>
+				<textFieldExpression><![CDATA[$F{rua}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="60" width="261" height="20" uuid="1cfafe89-fddf-4a91-8a27-bc187c804747"/>
+				<textFieldExpression><![CDATA[$F{complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="80" width="261" height="20" uuid="bd48d147-773d-4947-88ca-117c2de1ac21"/>
+				<textFieldExpression><![CDATA[$F{pontoreferencia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="121" y="0" width="47" height="20" uuid="685149ef-f085-4347-94c1-3bc89759c4e8"/>
+				<text><![CDATA[telefone]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="168" y="0" width="93" height="20" uuid="ce473fa0-5e8c-497a-aa19-7acd55baa550"/>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="64" height="20" uuid="1149f2b6-b61f-4bfc-9698-0def7bf9fce6"/>
+				<text><![CDATA[Nº Volumes:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="64" y="100" width="38" height="20" uuid="d65accee-c3f1-424a-9d0c-da2c477d70c6"/>
+				<textFieldExpression><![CDATA[$F{numerovolumes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="102" y="100" width="100" height="20" uuid="086cc2a9-ff9f-4a45-bd15-d62110f51f69"/>
+				<text><![CDATA[Entregar a partir de:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="202" y="100" width="59" height="20" uuid="a915994d-039f-4efb-b74a-a11f86d2367e"/>
+				<textFieldExpression><![CDATA[$F{apartirde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="120" width="36" height="20" uuid="df4a64cf-f899-419d-868f-ac958b3aebf5"/>
+				<text><![CDATA[até:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="38" y="120" width="64" height="20" uuid="616fd87c-27c2-4aaa-8257-0919caec02cc"/>
+				<textFieldExpression><![CDATA[$F{ate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="140" width="100" height="20" uuid="74bb0cd3-d0b0-4a40-8d9b-495336029a99"/>
+				<text><![CDATA[Valor Pedido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="140" width="100" height="20" uuid="b269c1b0-da2f-4418-a8e3-2f5d33dfb1a3"/>
+				<textFieldExpression><![CDATA[$F{valorpedido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="160" width="100" height="20" uuid="60d00676-99e4-4f9e-a7fc-cda4d7d90ef7"/>
+				<text><![CDATA[Valor a Receber:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="160" width="100" height="20" uuid="2824227c-37f7-4686-8ab9-bde3d7964305"/>
+				<textFieldExpression><![CDATA[$F{valorareceber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="180" width="100" height="20" uuid="aa6e76f1-2678-485b-abbf-e06896bd834d"/>
+				<text><![CDATA[Troco:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="180" width="100" height="20" uuid="0148b253-7f1a-4b07-80ed-5bdd57e134d9"/>
+				<textFieldExpression><![CDATA[$F{valortroco}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

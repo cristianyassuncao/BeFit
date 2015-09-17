@@ -9,7 +9,7 @@ class CategoriaProduto implements Comparable {
     static mapping = {
         table 'TB_CATEGORIA_PRODUTO'
         version false
-        id column: 'SEQ_CATEGORIA', generator: 'sequence', params:[sequence:'SEQ_CATEGORIA_PRODUTO']
+        id column: 'SEQ_CATEGORIA', generator: 'increment'
         nome column: 'NOM_CATEGORIA'
         categoriaPai column: 'SEQ_CATEGORIA_PAI'
     }
