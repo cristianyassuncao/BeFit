@@ -26,7 +26,7 @@ class Endereco {
     }
     
     static mapping = {
-        table 'TB_ENDERECO'
+        table 'tb_endereco'
         version false
         id column: 'SEQ_ENDERECO', generator: 'increment'
         rua column: 'TXT_ENDERECO'

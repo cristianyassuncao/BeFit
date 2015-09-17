@@ -9,11 +9,11 @@
 		${itemPedido?.quantidade}
 	</td>
 	<td class="valorNumerico">
-	 	<input type="hidden" name="itemPedido.valorUnitario" value="${itemPedido?.valorUnitario}"/>
+	 	<input type="hidden" name="itemPedido.valorUnitario" value="<g:formatNumber number="${itemPedido?.valorUnitario}" format="###,##0.00"/>"/>
 		<g:formatNumber number="${itemPedido?.valorUnitario}" format="###,##0.00"/>
 	</td>
 	<td class="valorNumerico">
-		<input type="hidden" name="itemPedido.valorTotalItem" value="${itemPedido?.valorItem}"/>
+		<input type="hidden" name="itemPedido.valorTotalItem" value="<g:formatNumber number="${itemPedido?.valorItem}" format="###,##0.00"/>"/>
 	    <g:formatNumber number="${itemPedido?.valorItem}" format="###,##0.00"/>
 	</td>
 	<td>

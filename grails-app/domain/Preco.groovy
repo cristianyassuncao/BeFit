@@ -11,7 +11,7 @@ class Preco implements Comparable {
     }
    
     static mapping = {
-        table 'TB_PRECO'
+        table 'tb_preco'
         version false
         id column: 'SEQ_PRECO', generator: 'increment'
         valor column: 'VAL_VALOR'

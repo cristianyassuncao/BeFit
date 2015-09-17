@@ -7,7 +7,7 @@ class FormaPagamento {
     }
     
     static mapping = {
-        table 'TB_FORMA_PAGAMENTO'
+        table 'tb_forma_pagamento'
         version false
         id column: 'SEQ_FORMA_PAGAMENTO', generator: 'increment'
         nome column: 'NOM_FORMA_PAGAMENTO'

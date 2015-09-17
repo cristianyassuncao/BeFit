@@ -11,7 +11,7 @@ class Pessoa {
     }
     
     static mapping = {
-        table 'TB_PESSOA'
+        table 'tb_pessoa'
         version false
         id column: 'SEQ_PESSOA', generator: 'increment'
         discriminator column: 'TIP_PESSOA'

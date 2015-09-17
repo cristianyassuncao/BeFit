@@ -13,7 +13,7 @@ class Cliente implements Comparable {
     }
     
     static mapping = {
-        table 'TB_CLIENTE'
+        table 'tb_cliente'
         version false
         id column: 'SEQ_CLIENTE', generator: 'increment'
         pessoa column: 'SEQ_PESSOA'

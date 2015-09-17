@@ -7,7 +7,7 @@ class UF {
     }
     
     static mapping = {
-        table 'TB_UF'
+        table 'tb_uf'
         version false
         id column: 'SEQ_UF', generator: 'increment'
         descricao column: 'NOM_UF'

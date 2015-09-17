@@ -22,7 +22,7 @@ class Entregador implements Comparable {
     }
     
     static mapping = {
-        table 'TB_ENTREGADOR'
+        table 'tb_entregador'
         version false
         id column: 'SEQ_ENTREGADOR', generator: 'increment'
         pessoa column: 'SEQ_PESSOA'

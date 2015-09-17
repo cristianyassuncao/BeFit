@@ -16,7 +16,7 @@ class Produto implements Comparable {
     }
     
     static mapping = {
-        table 'TB_PRODUTO'
+        table 'tb_produto'
         version false
         id column: 'SEQ_PRODUTO', generator: 'increment'
         nome column: 'NOM_PRODUTO'

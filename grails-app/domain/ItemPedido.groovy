@@ -21,7 +21,7 @@ class ItemPedido {
     }
     
     static mapping = {
-        table 'TB_ITEM_PEDIDO'
+        table 'tb_item_pedido'
         version false
         id column: 'SEQ_ITEM_PEDIDO', generator: 'increment'
         pedido column: 'SEQ_PEDIDO'

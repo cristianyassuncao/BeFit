@@ -17,9 +17,9 @@ environments {
     development {
         dataSource {
             dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
-			url = "jdbc:mysql://127.0.0.1:3306/befit?useUnicode=yes&characterEncoding=UTF-8"
+			url = "jdbc:mysql://befit.mysql.uhserver.com/befit?useUnicode=yes&characterEncoding=UTF-8"
 			username="befit"
-			password="L8Az7%UY"
+			password="L8Az7!UY"
         }
     }
     test {

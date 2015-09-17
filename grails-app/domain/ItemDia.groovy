@@ -8,7 +8,7 @@ class ItemDia {
     }
     
     static mapping = {
-        table 'TB_ITEM_DIA'
+        table 'tb_item_dia'
         version false
         id column: 'SEQ_ITEM_DIA', generator: 'increment'
         produto column: 'SEQ_PRODUTO'

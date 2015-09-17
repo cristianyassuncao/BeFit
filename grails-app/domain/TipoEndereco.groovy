@@ -6,7 +6,7 @@ class TipoEndereco {
     }
     
     static mapping = {
-        table 'TB_TIPO_ENDERECO'
+        table 'tb_tipo_endereco'
         version false
         id column: 'SEQ_TIPO_ENDERECO', generator: 'increment'
         descricao column: 'TXT_DESCRICAO'

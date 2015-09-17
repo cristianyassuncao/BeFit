@@ -7,7 +7,7 @@ class Cidade {
     }
     
     static mapping = {
-        table 'TB_CIDADE'
+        table 'tb_cidade'
         version false
         id column: 'SEQ_CIDADE', generator: 'increment'
         nome column: 'NOM_CIDADE'

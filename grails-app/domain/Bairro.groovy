@@ -7,7 +7,7 @@ class Bairro implements Comparable {
     }
     
     static mapping = {
-        table 'TB_BAIRRO'
+        table 'tb_bairro'
         version false
         id column: 'SEQ_BAIRRO', generator: 'increment'
         nome column: 'NOM_BAIRRO'

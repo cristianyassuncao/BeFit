@@ -6,7 +6,7 @@ class TipoTelefone {
     }
     
     static mapping = {
-        table 'TB_TIPO_TELEFONE'
+        table 'tb_tipo_telefone'
         version false
         id column: 'SEQ_TIPO_TELEFONE', generator: 'increment'
         descricao column: 'TXT_DESCRICAO'
