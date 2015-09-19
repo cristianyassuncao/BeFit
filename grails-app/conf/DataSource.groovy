@@ -31,7 +31,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
+            dbCreate = "none"
 			url = "jdbc:postgresql://ec2-54-204-25-54.compute-1.amazonaws.com:5432/d2opdo92d6ffs4?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"
 			username = "rcrzddldmtioxd"
 			password = "aOU0rlD9xWnpHkouoFpQIcQUB0"
