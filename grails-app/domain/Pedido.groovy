@@ -30,6 +30,7 @@ class Pedido {
     static constraints = {
         cliente(nullable: true)
         entregarAPartirDaHora(nullable: true)
+		entregarAteHora(nullable: true)
         telefone(nullable: true)
         trocoPara(nullable: true, validator: {val, obj -> return (val == null) ? null : val.compareTo(obj.valorAPagar) > 0})
         valorTroco(nullable: true)
