@@ -18,9 +18,9 @@ environments {
     development {
         dataSource {
             dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:postgresql://localhost:5432/BeFit"
-            username="postgres"
-            password="crnilu03"
+			url = "jdbc:postgresql://ec2-50-16-229-89.compute-1.amazonaws.com:5432/d3sgvil5fb7obp?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"
+			username = "tsnbtmjemosvcx"
+			password = "lnvllhGSCnMctRoB8gzT6krPt-"
         }
     }
     test {
