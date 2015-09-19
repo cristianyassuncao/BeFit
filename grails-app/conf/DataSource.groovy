@@ -32,9 +32,9 @@ environments {
     production {
         dataSource {
             dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
-			url = "jdbc:postgresql://ec2-50-16-229-89.compute-1.amazonaws.com:5432/d3sgvil5fb7obp?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"
-			username = "tsnbtmjemosvcx"
-			password = "lnvllhGSCnMctRoB8gzT6krPt-"
+			url = "jdbc:postgresql://ec2-54-204-25-54.compute-1.amazonaws.com:5432/d2opdo92d6ffs4?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory"
+			username = "rcrzddldmtioxd"
+			password = "aOU0rlD9xWnpHkouoFpQIcQUB0"
         }
     }
 }
