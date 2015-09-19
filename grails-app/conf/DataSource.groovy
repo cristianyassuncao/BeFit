@@ -31,9 +31,9 @@ environments {
     production {
         dataSource {
             dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:postgresql://localhost:5432/BeFit"
-            username="postgres"
-            password="crnilu03"
+            url = "jdbc:mysql://befit.mysql.uhserver.com/befit?useUnicode=yes&characterEncoding=UTF-8"
+			username="befit"
+			password="L8Az7!UY"
         }
     }
 }
