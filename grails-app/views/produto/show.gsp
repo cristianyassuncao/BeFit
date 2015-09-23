@@ -66,7 +66,7 @@
                     </div>    
                     <div class="imagemExibicao">
                         <div>
-                            <img src="/BeFit/produto/exibirImagem?id=${produtoInstance?.id}" width='150' height="150"/>
+                            <img src="/befit/produto/exibirImagem?id=${produtoInstance?.id}" width='150' height="150"/>
                         </div>
                     </div>    
                 </div>

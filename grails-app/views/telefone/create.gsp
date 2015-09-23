@@ -6,7 +6,7 @@
         </g:eachError>
     </ul>
 </g:hasErrors>
-<form id="formTelefone" action="/BeFit/pessoa/updateTelefone">
+<form id="formTelefone" action="/befit/pessoa/updateTelefone">
     <input type="hidden" name="id" value="${telefoneInstance?.id}"/>
     <input type="hidden" name="pessoa.id" value="${telefoneInstance?.pessoa?.id}"/>
     <g:render template="/telefone/form" model="['telefoneInstance': telefoneInstance]" />

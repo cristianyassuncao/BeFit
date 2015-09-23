@@ -11,7 +11,7 @@ function loadFile(event) {
 function addPreco(idProduto) {
         modalForm = $("<div></div>");
         titulo = 'Incluir Preço';
-        modalForm.load('/BeFit/produto/loadPreco?idProduto=' + idProduto, 
+        modalForm.load('/befit/produto/loadPreco?idProduto=' + idProduto, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -33,7 +33,7 @@ function addPreco(idProduto) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/produto/updatePreco',
+                                        url     : '/befit/produto/updatePreco',
                                         type    : 'POST',
                                         data    : $("#formPreco").serializeArray(),
                                         context: $(this),
@@ -65,7 +65,7 @@ function addPreco(idProduto) {
     function editPreco(idPreco) {
         modalForm = $("<div></div>");
         titulo = 'Alterar preço';
-        modalForm.load('/BeFit/produto/loadPreco?idPreco=' + idPreco, 
+        modalForm.load('/befit/produto/loadPreco?idPreco=' + idPreco, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -87,7 +87,7 @@ function addPreco(idProduto) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/produto/updatePreco',
+                                        url     : '/befit/produto/updatePreco',
                                         type    : 'POST',
                                         data    : $("#formPreco").serializeArray(),
                                         context: $(this),
@@ -119,7 +119,7 @@ function addPreco(idProduto) {
 function deletePreco(idPreco) {
         modalForm = $("<div></div>");
         titulo = 'Excluir preço';
-        modalForm.load('/BeFit/produto/loadPreco?idPreco=' + idPreco, 
+        modalForm.load('/befit/produto/loadPreco?idPreco=' + idPreco, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -141,7 +141,7 @@ function deletePreco(idPreco) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/produto/deletePreco',
+                                        url     : '/befit/produto/deletePreco',
                                         type    : 'POST',
                                         data    : $("#formPreco").serializeArray(),
                                         context: $(this),

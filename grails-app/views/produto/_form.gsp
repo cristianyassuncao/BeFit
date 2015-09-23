@@ -49,7 +49,7 @@
         <div class="imagemExibicao">
             <div id="moldura">
                 <g:if test="${produtoInstance?.imagem != null}">
-                    <img id="imagemProduto" src="/BeFit/produto/exibirImagem?id=${produtoInstance?.id}" width='150' height="150"/>
+                    <img id="imagemProduto" src="/befit/produto/exibirImagem?id=${produtoInstance?.id}" width='150' height="150"/>
                 </g:if>    
                 <g:if test="${produtoInstance?.imagem == null}">
                     <img id="imagemProduto" width='150' height="150"/>

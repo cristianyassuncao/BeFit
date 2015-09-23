@@ -4,14 +4,14 @@
         <meta name="layout" content="main">
         <g:set var="entityName" value="${message(code: 'categoriaProduto.label', default: 'CategoriaProduto')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
-        <link rel="stylesheet" href="/BeFit/js/jsTree/dist/themes/default/style.min.css" />
-        <script src="/BeFit/js/jsTree/dist/jstree.min.js"></script>
+        <link rel="stylesheet" href="/befit/js/jsTree/dist/themes/default/style.min.css" />
+        <script src="/befit/js/jsTree/dist/jstree.min.js"></script>
         <script type="text/javascript">
             $(function () {
                 $('#categoriasTree')
                     .on('dblclick.jstree', function (e, data) {
                             var node = $(e.target).closest("li");
-                            window.open("/BeFit/categoriaProduto/show/" + node[0].id, "_self");
+                            window.open("/befit/categoriaProduto/show/" + node[0].id, "_self");
                     })
                     .jstree({
                         "core" : {

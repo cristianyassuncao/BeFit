@@ -5,7 +5,7 @@ import org.codehaus.groovy.grails.web.taglib.exceptions.GrailsTagException
 import org.springframework.web.util.*
 import grails.util.GrailsUtil
 
-class gsp_beFit_produtoshow_gsp extends GroovyPage {
+class gsp_befit_produtoshow_gsp extends GroovyPage {
 public String getGroovyPageFileName() { "/WEB-INF/grails-app/views/produto/show.gsp" }
 public Object run() {
 Writer out = getOut()
@@ -98,7 +98,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1438387335612L
+public static final long LAST_MODIFIED = 1442880639177L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

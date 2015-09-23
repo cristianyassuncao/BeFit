@@ -5,7 +5,7 @@ import org.codehaus.groovy.grails.web.taglib.exceptions.GrailsTagException
 import org.springframework.web.util.*
 import grails.util.GrailsUtil
 
-class gsp_beFit_precocreate_gsp extends GroovyPage {
+class gsp_befit_precocreate_gsp extends GroovyPage {
 public String getGroovyPageFileName() { "/WEB-INF/grails-app/views/preco/create.gsp" }
 public Object run() {
 Writer out = getOut()
@@ -41,7 +41,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1437615271023L
+public static final long LAST_MODIFIED = 1442880608501L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

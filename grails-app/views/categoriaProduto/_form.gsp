@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/BeFit/js/jsTree/dist/themes/default/style.min.css" />
-<script src="/BeFit/js/jsTree/dist/jstree.min.js"></script>
+<link rel="stylesheet" href="/befit/js/jsTree/dist/themes/default/style.min.css" />
+<script src="/befit/js/jsTree/dist/jstree.min.js"></script>
 <script type="text/javascript">
     $(function () {
         function getAllChildren(treeObj, nodeId, result) {

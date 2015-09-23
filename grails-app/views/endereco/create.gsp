@@ -10,7 +10,7 @@
         </g:eachError>
     </ul>
 </g:hasErrors>
-<form id="formEndereco" action="/BeFit/pessoa/updateEndereco">
+<form id="formEndereco" action="/befit/pessoa/updateEndereco">
     <input type="hidden" name="id" value="${enderecoInstance?.id}"/>
     <input type="hidden" name="pessoa.id" value="${enderecoInstance?.pessoa?.id}"/>
     <g:render template="/endereco/form" model="['enderecoInstance': enderecoInstance]" />

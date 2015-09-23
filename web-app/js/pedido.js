@@ -20,7 +20,7 @@ function atualizarSelect(idControle, valor) {
 
 function carregarDadosComplementares(idCliente) {
     jQuery.ajax({
-		  url: '/BeFit/pedido/carregarDadosComplementares?idCliente=' + idCliente,
+		  url: '/befit/pedido/carregarDadosComplementares?idCliente=' + idCliente,
 		  async: false,
 		  success: function(data) {
 			  $("#dadosComplementares").html(data);
@@ -45,7 +45,7 @@ function exibirDadosCliente(data) {
 function selecionarEnderecoEntrega(idCliente) {
     modalForm = $("<div></div>");
     titulo = 'Selecionar Outro Endereço de Entrega';
-    modalForm.load('/BeFit/pedido/carregarEnderecos?idCliente=' + idCliente, 
+    modalForm.load('/befit/pedido/carregarEnderecos?idCliente=' + idCliente, 
                   function( response, status, xhr ) {
                     if ( status == "error" ) {
                         alert(response);
@@ -103,7 +103,7 @@ function selecionarEnderecoEntrega(idCliente) {
 
 function definirTelefone(idCliente) {
 	jQuery.ajax({
-		  url: '/BeFit/pedido/carregarTelefonePrincipal?idCliente=' + idCliente,
+		  url: '/befit/pedido/carregarTelefonePrincipal?idCliente=' + idCliente,
 		  async: false,
 		  success: function(data) {
 			  $("#numeroTelefone").val(data);
@@ -118,7 +118,7 @@ function carregarValorUnitario(idProduto, data) {
 	}
 	
     jQuery.ajax({
-		  url: '/BeFit/pedido/carregarValorUnitario?idProduto=' + idProduto + '&' + 'data=' + data,
+		  url: '/befit/pedido/carregarValorUnitario?idProduto=' + idProduto + '&' + 'data=' + data,
 		  async: false,
 		  success: function(valor) {
 			  $("#valorUnitario").val(valor);
@@ -221,7 +221,7 @@ function totalizarPedido() {
 }
 
 function adicionarCliente() {
-	window.open('/BeFit/cliente/create','_blank');
+	window.open('/befit/cliente/create','_blank');
 }
 
 function limparFormularioAdicaoItens() {
@@ -306,7 +306,7 @@ function cancelarEdicao() {
 }
 
 function recarregarListaProdutos(somenteItensDoDia) {
-	var url = '/BeFit/pedido/recarregarListaProdutos';
+	var url = '/befit/pedido/recarregarListaProdutos';
 	if (somenteItensDoDia) {
 		var dataEntrega = $("#dataEntrega").val();
 		if (dataEntrega == "") {

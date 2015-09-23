@@ -2,7 +2,7 @@
     function addEndereco(idPessoa) {
         modalForm = $("<div></div>");
         titulo = 'Incluir endereço';
-        modalForm.load('/BeFit/pessoa/loadEndereco?idPessoa=' + idPessoa, 
+        modalForm.load('/befit/pessoa/loadEndereco?idPessoa=' + idPessoa, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -24,7 +24,7 @@
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/pessoa/updateEndereco',
+                                        url     : '/befit/pessoa/updateEndereco',
                                         type    : 'POST',
                                         data    : $("#formEndereco").serializeArray(),
                                         context: $(this),
@@ -56,7 +56,7 @@
     function editEndereco(idEndereco) {
         modalForm = $("<div></div>");
         titulo = 'Alterar endereço';
-        modalForm.load('/BeFit/pessoa/loadEndereco?idEndereco=' + idEndereco, 
+        modalForm.load('/befit/pessoa/loadEndereco?idEndereco=' + idEndereco, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -78,7 +78,7 @@
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/pessoa/updateEndereco',
+                                        url     : '/befit/pessoa/updateEndereco',
                                         type    : 'POST',
                                         data    : $("#formEndereco").serializeArray(),
                                         context: $(this),
@@ -110,7 +110,7 @@
 function deleteEndereco(idEndereco) {
         modalForm = $("<div></div>");
         titulo = 'Excluir endereço';
-        modalForm.load('/BeFit/pessoa/loadEndereco?idEndereco=' + idEndereco, 
+        modalForm.load('/befit/pessoa/loadEndereco?idEndereco=' + idEndereco, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -132,7 +132,7 @@ function deleteEndereco(idEndereco) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/pessoa/deleteEndereco',
+                                        url     : '/befit/pessoa/deleteEndereco',
                                         type    : 'POST',
                                         data    : $("#formEndereco").serializeArray(),
                                         context: $(this),
@@ -164,7 +164,7 @@ function deleteEndereco(idEndereco) {
 function addTelefone(idPessoa) {
         modalForm = $("<div></div>");
         titulo = 'Incluir telefone';
-        modalForm.load('/BeFit/pessoa/loadTelefone?idPessoa=' + idPessoa, 
+        modalForm.load('/befit/pessoa/loadTelefone?idPessoa=' + idPessoa, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -186,7 +186,7 @@ function addTelefone(idPessoa) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/pessoa/updateTelefone',
+                                        url     : '/befit/pessoa/updateTelefone',
                                         type    : 'POST',
                                         data    : $("#formTelefone").serializeArray(),
                                         context: $(this),
@@ -218,7 +218,7 @@ function addTelefone(idPessoa) {
     function editTelefone(idTelefone) {
         modalForm = $("<div></div>");
         titulo = 'Alterar telefone';
-        modalForm.load('/BeFit/pessoa/loadTelefone?idTelefone=' + idTelefone, 
+        modalForm.load('/befit/pessoa/loadTelefone?idTelefone=' + idTelefone, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -240,7 +240,7 @@ function addTelefone(idPessoa) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/pessoa/updateTelefone',
+                                        url     : '/befit/pessoa/updateTelefone',
                                         type    : 'POST',
                                         data    : $("#formTelefone").serializeArray(),
                                         context: $(this),
@@ -272,7 +272,7 @@ function addTelefone(idPessoa) {
 function deleteTelefone(idTelefone) {
         modalForm = $("<div></div>");
         titulo = 'Excluir telefone';
-        modalForm.load('/BeFit/pessoa/loadTelefone?idTelefone=' + idTelefone, 
+        modalForm.load('/befit/pessoa/loadTelefone?idTelefone=' + idTelefone, 
                       function( response, status, xhr ) {
                         if ( status == "error" ) {
                             alert(response);
@@ -294,7 +294,7 @@ function deleteTelefone(idTelefone) {
                                 text: "Confirmar",
                                 click: function() {
                                     $.ajax({
-                                        url     : '/BeFit/pessoa/deleteTelefone',
+                                        url     : '/befit/pessoa/deleteTelefone',
                                         type    : 'POST',
                                         data    : $("#formTelefone").serializeArray(),
                                         context: $(this),
