@@ -14,9 +14,9 @@ environments {
     development {
         dataSource {
             dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
-			url = "jdbc:postgresql://localhost:5432/BeFit"
-            username="postgres"
-            password="crnilu03"
+			url = "jdbc:mysql://localhost:3306/befit"
+            username="befit"
+            password="L8Az7!UY"
         }
     }
     test {

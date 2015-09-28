@@ -1,130 +1,109 @@
-import org.apache.shiro.authc.AccountException
-import org.apache.shiro.authc.IncorrectCredentialsException
-import org.apache.shiro.authc.UnknownAccountException
-import org.apache.shiro.authc.SimpleAccount
-import org.apache.shiro.authz.permission.WildcardPermission
+import org.apache.shiro.authc.*
+import org.apache.shiro.codec.Hex;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator
+
+import java.sql.*
+import java.util.prefs.Base64;
+
+import org.apache.shiro.util.ByteSource
+import org.apache.shiro.crypto.hash.Sha512Hash
 
 class ShiroDbRealm {
-    static authTokenClass = org.apache.shiro.authc.UsernamePasswordToken
 
-    def credentialMatcher
-    def shiroPermissionResolver
+	static authTokenClass = org.apache.shiro.authc.UsernamePasswordToken
+	
+	def dataSource
 
     def authenticate(authToken) {
-        log.info "Attempting to authenticate ${authToken.username} in DB realm..."
-        def username = authToken.username
-
-        // Null username is invalid
-        if (username == null) {
-            throw new AccountException("Null usernames are not allowed by this realm.")
+        Connection conexao
+        PreparedStatement dbFunction
+        boolean isSenhaValida
+		Statement accountStmt
+		ResultSet accountResultSet
+		
+        conexao = dataSource.getConnection()
+		accountStmt = conexao.createStatement()
+		try {
+			//createUser(authToken)
+			accountResultSet = accountStmt.executeQuery("select txt_passwordHash password, txt_salt salt from tb_usuario where txt_username = '${authToken.getUsername()}'")
+			if (! accountResultSet.next()) {
+				throw new org.apache.shiro.authc.AuthenticationException()
+			}
+			isSenhaValida = passwordsMatch(accountResultSet.getString("password"), accountResultSet.getString("salt"), new String(authToken.getPassword()))
+			accountResultSet.close()
+			if (!isSenhaValida) {
+				throw new org.apache.shiro.authc.AuthenticationException()
+			}
+			return buildAccount(authToken, conexao)
+        } catch (Exception e) {
+            log.error "Erro: "  e.getMessage()
+        } finally {
+            conexao.close()
         }
-
-        // Get the user with the given username. If the user is not
-        // found, then they don't have an account and we throw an
-        // exception.
-        def user = ShiroUser.findByUsername(username)
-        if (!user) {
-            throw new UnknownAccountException("No account found for user [${username}]")
-        }
-
-        log.info "Found user '${user.username}' in DB"
-
-        // Now check the user's password against the hashed value stored
-        // in the database.
-        def account = new SimpleAccount(username, user.passwordHash, "ShiroDbRealm")
-        if (!credentialMatcher.doCredentialsMatch(authToken, account)) {
-            log.info "Invalid password (DB realm)"
-            throw new IncorrectCredentialsException("Invalid password for user '${username}'")
-        }
-
-        return account
     }
 
     def hasRole(principal, roleName) {
-        def roles = ShiroUser.withCriteria {
-            roles {
-                eq("name", roleName)
-            }
-            eq("username", principal)
-        }
-
-        return roles.size() > 0
+        return principal.hasRole(roleName)
     }
 
-    def hasAllRoles(principal, roles) {
-        def r = ShiroUser.withCriteria {
-            roles {
-                'in'("name", roles)
-            }
-            eq("username", principal)
-        }
-
-        return r.size() == roles.size()
+    def isPermitted(principal, permission) {
+        return true
     }
+	
+	private Account buildAccount(UsernamePasswordToken token, Connection conexao) throws AuthenticationException {
+		SimpleAccount account
+		Statement accountStmt
+		ResultSet accountResultSet
+		UsuarioLogado principal
 
-    def isPermitted(principal, requiredPermission) {
-        // Does the user have the given permission directly associated
-        // with himself?
-        //
-        // First find all the permissions that the user has that match
-        // the required permission's type and project code.
-        def user = ShiroUser.findByUsername(principal)
-        def permissions = user.permissions
+		accountStmt = conexao.createStatement()
+		try {
+			accountResultSet = accountStmt.executeQuery("select seq_usuario id, txt_username username from tb_usuario where txt_username = '${token.getUsername()}'")
+			if (!accountResultSet.next()) {
+				throw new org.apache.shiro.authc.AuthenticationException()
+			}
+			principal = new UsuarioLogado(accountResultSet.getLong("id"), accountResultSet.getString("username"))
+			accountResultSet.close()
+			account = new SimpleAccount(principal, null, "shiroDbRealm")
+			accountResultSet = accountStmt.executeQuery("select nom_papel from tb_usuario u, tb_usuario_papel up, tb_papel p where up.seq_papel = p.seq_papel and up.seq_usuario = u.seq_usuario and u.txt_username = '${token.getUsername()}'")
+			while (accountResultSet.next()) {
+				principal.adicionarRole(accountResultSet.getString(1))
+			}
+			accountResultSet.close()
+			return account
+		} catch (Exception e) {
+			log.error e.getMessage()
+		} finally {
+			accountStmt.close()
+		}
+		return account
+	}
+	
+	public boolean passwordsMatch(String dbStoredHashedPassword, String dbStoredSalt, String plainPassword) {
+		ByteSource salt = ByteSource.Util.bytes(Hex.decode(dbStoredSalt));
+		String hashedPassword = hashAndSaltPassword(plainPassword, salt);
+		return hashedPassword.equals(dbStoredHashedPassword);
+	}
+	
+	private String hashAndSaltPassword(String plainPassword, Object salt) {
+		final int SHIRO_CREDENTIAL_HASH_INTERATION = 1024
+		return new Sha512Hash(plainPassword, salt, SHIRO_CREDENTIAL_HASH_INTERATION).toHex()
+	}
+	
+	private ByteSource getSalt() {
+		return new SecureRandomNumberGenerator().nextBytes();
+	}
+	
+	public void createUser(UsernamePasswordToken token) {
+		Object salt = getSalt();
+		String plainPassword = new String(token.getPassword())
+		String hashedPassword = hashAndSaltPassword(plainPassword, salt)
+		
+		Usuario usuario = new Usuario()
+		usuario.username = token.getUsername()
+		usuario.hashedPassword = hashedPassword
+		usuario.salt = salt.toHex()
+		usuario.save(flush: true);
+	}
 
-        // Try each of the permissions found and see whether any of
-        // them confer the required permission.
-        def retval = permissions?.find { permString ->
-            // Create a real permission instance from the database
-            // permission.
-            def perm = shiroPermissionResolver.resolvePermission(permString)
-
-            // Now check whether this permission implies the required
-            // one.
-            if (perm.implies(requiredPermission)) {
-                // User has the permission!
-                return true
-            }
-            else {
-                return false
-            }
-        }
-
-        if (retval != null) {
-            // Found a matching permission!
-            return true
-        }
-
-        // If not, does he gain it through a role?
-        //
-        // Get the permissions from the roles that the user does have.
-        def results = ShiroUser.executeQuery("select distinct p from ShiroUser as user join user.roles as role join role.permissions as p where user.username = '$principal'")
-
-        // There may be some duplicate entries in the results, but
-        // at this stage it is not worth trying to remove them. Now,
-        // create a real permission from each result and check it
-        // against the required one.
-        retval = results.find { permString ->
-            // Create a real permission instance from the database
-            // permission.
-            def perm = shiroPermissionResolver.resolvePermission(permString)
-
-            // Now check whether this permission implies the required
-            // one.
-            if (perm.implies(requiredPermission)) {
-                // User has the permission!
-                return true
-            }
-            else {
-                return false
-            }
-        }
-
-        if (retval != null) {
-            // Found a matching permission!
-            return true
-        }
-        else {
-            return false
-        }
-    }
 }

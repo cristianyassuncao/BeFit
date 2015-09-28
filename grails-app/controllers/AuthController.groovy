@@ -24,21 +24,13 @@ class AuthController {
         // If a controller redirected to this page, redirect back
         // to it. Otherwise redirect to the root URI.
         def targetUri = params.targetUri ?: "/"
-        
-        // Handle requests saved by Shiro filters.
-        SavedRequest savedRequest = WebUtils.getSavedRequest(request)
-        if (savedRequest) {
-            targetUri = savedRequest.requestURI - request.contextPath
-            if (savedRequest.queryString) targetUri = targetUri + '?' + savedRequest.queryString
-        }
-        
         try{
             // Perform the actual login. An AuthenticationException
             // will be thrown if the username is unrecognised or the
             // password is incorrect.
             SecurityUtils.subject.login(authToken)
 
-            log.info "Redirecting to '${targetUri}'."
+			log.info "Redirecting to '${targetUri}'."
             redirect(uri: targetUri)
         }
         catch (AuthenticationException ex){
