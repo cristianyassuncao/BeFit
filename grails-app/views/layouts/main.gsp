@@ -14,9 +14,11 @@
         <asset:javascript src="main.js"/>
         <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'menu.css')}" />
         <link rel="stylesheet" href="${createLinkTo(dir:'js/jquery-ui-1.11.3.custom',file:'jquery-ui.css')}"/>
+        <link rel="stylesheet" href="${createLinkTo(dir:'js/chosen_v1.4.2', file: 'chosen.css')}"/>
         <g:javascript src="jquery-2.1.3.js"/>
         <g:javascript src="jquery-ui-1.11.3.custom/jquery-ui.js"/>
         <g:javascript src="jquery.maskedinput.js"/>
+		<g:javascript src="chosen_v1.4.2/chosen.jquery.js"/>
         <g:layoutHead/>
 	</head>
 	<body>
@@ -24,7 +26,20 @@
             <a href="/befit">
             	<asset:image src="BeFitLogo.png" alt="BeFit"/>
            	</a>
+           	<shiro:authenticated>
+		    	<div id="dadosUsuarioLogado">
+			    	<span id="username">Usuário: <shiro:principal property="username"/></span>
+			        <a class="logout" href="auth/signOut">Sair</a>
+		        </div>
+		    </shiro:authenticated>
         </div>
+        <div id="barraLogin">
+	        <shiro:notAuthenticated>
+	        	<div id="login">
+		        	<a class="login" href="auth/login">Login</a>
+		        </div>	
+		    </shiro:notAuthenticated>
+   	    </div>   
         <shiro:authenticated>
 	        <div class="menu">
 	            <ul id="menuBar">

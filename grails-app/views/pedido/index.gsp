@@ -6,8 +6,6 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 		<link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pedido.css')}" />
 		<!-- Chosen: plugin JQuery com a habilidade de filtrar itens num campo select -->
-		<link rel="stylesheet" href="/beFit/js/chosen_v1.4.2/chosen.css"/>
-		<script src="/beFit/js/chosen_v1.4.2/chosen.jquery.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	jQuery("#entregador").chosen({width: "400px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});

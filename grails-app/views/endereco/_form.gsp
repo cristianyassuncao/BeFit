@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pessoa.css')}"/>
 <!-- Chosen: plugin JQuery com a habilidade de filtrar itens num campo select -->
-<link rel="stylesheet" href="/befit/js/chosen_v1.4.2/chosen.css"/>
-<script src="/befit/js/chosen_v1.4.2/chosen.jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery(".chosen").chosen({width: "200px", no_results_text: "Não há itens que correspondam ao critério especificado", search_contains: true});
