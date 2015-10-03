@@ -29,14 +29,14 @@
            	<shiro:authenticated>
 		    	<div id="dadosUsuarioLogado">
 			    	<span id="username">Usuário: <shiro:principal property="username"/></span>
-			        <a class="logout" href="auth/signOut">Sair</a>
+			        <a class="logout" href="./auth/signOut">Sair</a>
 		        </div>
 		    </shiro:authenticated>
         </div>
         <div id="barraLogin">
 	        <shiro:notAuthenticated>
 	        	<div id="login">
-		        	<a class="login" href="auth/login">Login</a>
+		        	<a class="login" href="./auth/login">Login</a>
 		        </div>	
 		    </shiro:notAuthenticated>
    	    </div>   

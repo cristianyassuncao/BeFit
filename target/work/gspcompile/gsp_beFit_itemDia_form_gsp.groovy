@@ -12,15 +12,15 @@ Writer out = getOut()
 Writer expressionOut = getExpressionOut()
 registerSitemeshPreprocessMode()
 printHtmlPart(0)
-invokeTag('message','g',13,['code':("itemDia.data.label"),'default':("Data")],-1)
+invokeTag('message','g',11,['code':("itemDia.data.label"),'default':("Data")],-1)
 printHtmlPart(1)
-invokeTag('formatDate','g',17,['date':(itemDiaInstance?.data),'format':("dd/MM/yyyy")],-1)
+invokeTag('formatDate','g',15,['date':(itemDiaInstance?.data),'format':("dd/MM/yyyy")],-1)
 printHtmlPart(2)
-invokeTag('message','g',22,['code':("itemDia.produto.label"),'default':("Produto")],-1)
+invokeTag('message','g',20,['code':("itemDia.produto.label"),'default':("Produto")],-1)
 printHtmlPart(3)
 for( produto in (Produto.list(sort: 'nome')) ) {
 printHtmlPart(4)
-invokeTag('set','g',29,['var':("isProdutoSelecionado"),'value':(itemDiaInstance?.produto?.id == produto?.id)],-1)
+invokeTag('set','g',27,['var':("isProdutoSelecionado"),'value':(itemDiaInstance?.produto?.id == produto?.id)],-1)
 printHtmlPart(4)
 if(true && (isProdutoSelecionado)) {
 printHtmlPart(5)
@@ -46,7 +46,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1442880556606L
+public static final long LAST_MODIFIED = 1443620331647L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

@@ -3,6 +3,11 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="layout" content="main" />
   <title>Login</title>
+  <style type="text/css">
+  	#login {
+  		display: none;
+  	}
+  </style>
 </head>
 <body>
   <g:if test="${flash.message}">

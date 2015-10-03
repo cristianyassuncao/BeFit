@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/befit/js/jsTree/dist/themes/default/style.min.css" />
-<script src="/befit/js/jsTree/dist/jstree.min.js"></script>
+<link rel="stylesheet" href="${createLinkTo(dir:'js/jsTree/dist/themes/default', file: 'style.min.css')}"/>
+<g:javascript src="jsTree/dist/jstree.min.js"/>
 <script type="text/javascript">
     $(function () {
         function getAllChildren(treeObj, nodeId, result) {

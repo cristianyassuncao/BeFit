@@ -14,23 +14,23 @@ registerSitemeshPreprocessMode()
 printHtmlPart(0)
 expressionOut.print(createLinkTo(dir:'css',file:'pessoa.css'))
 printHtmlPart(1)
-invokeTag('message','g',14,['code':("endereco.rua.label")],-1)
+invokeTag('message','g',12,['code':("endereco.rua.label")],-1)
 printHtmlPart(2)
 expressionOut.print(enderecoInstance?.rua)
 printHtmlPart(3)
-invokeTag('message','g',25,['code':("endereco.numero.label")],-1)
+invokeTag('message','g',23,['code':("endereco.numero.label")],-1)
 printHtmlPart(4)
 expressionOut.print(enderecoInstance?.numero)
 printHtmlPart(3)
-invokeTag('message','g',36,['code':("endereco.complemento.label")],-1)
+invokeTag('message','g',34,['code':("endereco.complemento.label")],-1)
 printHtmlPart(5)
 expressionOut.print(enderecoInstance?.complemento)
 printHtmlPart(3)
-invokeTag('message','g',46,['code':("endereco.bairro.label"),'default':("Bairro")],-1)
+invokeTag('message','g',44,['code':("endereco.bairro.label"),'default':("Bairro")],-1)
 printHtmlPart(6)
 for( bairro in (Bairro.list(sort: 'nome')) ) {
 printHtmlPart(7)
-invokeTag('set','g',53,['var':("isBairroSelecionado"),'value':(enderecoInstance?.bairro?.id == bairro?.id)],-1)
+invokeTag('set','g',51,['var':("isBairroSelecionado"),'value':(enderecoInstance?.bairro?.id == bairro?.id)],-1)
 printHtmlPart(7)
 if(true && (isBairroSelecionado)) {
 printHtmlPart(8)
@@ -50,17 +50,17 @@ printHtmlPart(10)
 printHtmlPart(12)
 }
 printHtmlPart(13)
-invokeTag('message','g',68,['code':("endereco.cep.label"),'default':("Cep")],-1)
+invokeTag('message','g',66,['code':("endereco.cep.label"),'default':("Cep")],-1)
 printHtmlPart(14)
 expressionOut.print(enderecoInstance?.cep)
 printHtmlPart(3)
-invokeTag('message','g',78,['code':("endereco.pontoReferencia.label")],-1)
+invokeTag('message','g',76,['code':("endereco.pontoReferencia.label")],-1)
 printHtmlPart(15)
 expressionOut.print(enderecoInstance?.pontoReferencia)
 printHtmlPart(16)
-invokeTag('message','g',88,['code':("endereco.tipoEndereco.label"),'default':("Tipo")],-1)
+invokeTag('message','g',86,['code':("endereco.tipoEndereco.label"),'default':("Tipo")],-1)
 printHtmlPart(17)
-invokeTag('select','g',91,['id':("tipoEndereco"),'name':("tipoEndereco.id"),'from':(TipoEndereco.list(sort: 'descricao')),'optionKey':("id"),'optionValue':("descricao"),'noSelection':(['':'-Escolha o Tipo de Endereço-']),'value':(enderecoInstance?.tipoEndereco?.id)],-1)
+invokeTag('select','g',89,['id':("tipoEndereco"),'name':("tipoEndereco.id"),'from':(TipoEndereco.list(sort: 'descricao')),'optionKey':("id"),'optionValue':("descricao"),'noSelection':(['':'-Escolha o Tipo de Endereço-']),'value':(enderecoInstance?.tipoEndereco?.id)],-1)
 printHtmlPart(18)
 }
 public static final Map JSP_TAGS = new HashMap()
@@ -68,7 +68,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1442880468372L
+public static final long LAST_MODIFIED = 1443620503697L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
