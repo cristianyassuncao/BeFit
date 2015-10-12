@@ -5,7 +5,7 @@ import org.codehaus.groovy.grails.web.taglib.exceptions.GrailsTagException
 import org.springframework.web.util.*
 import grails.util.GrailsUtil
 
-class gsp_beFiterror_gsp extends GroovyPage {
+class gsp_befiterror_gsp extends GroovyPage {
 public String getGroovyPageFileName() { "/WEB-INF/grails-app/views/error.gsp" }
 public Object run() {
 Writer out = getOut()

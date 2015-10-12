@@ -5,7 +5,7 @@ import org.codehaus.groovy.grails.web.taglib.exceptions.GrailsTagException
 import org.springframework.web.util.*
 import grails.util.GrailsUtil
 
-class gsp_beFit_pessoa_dadosPrincipaisPFShow_gsp extends GroovyPage {
+class gsp_befit_pessoa_dadosPrincipaisPFShow_gsp extends GroovyPage {
 public String getGroovyPageFileName() { "/WEB-INF/grails-app/views/pessoa/_dadosPrincipaisPFShow.gsp" }
 public Object run() {
 Writer out = getOut()

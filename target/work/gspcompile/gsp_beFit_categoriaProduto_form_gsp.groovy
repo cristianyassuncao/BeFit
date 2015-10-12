@@ -12,23 +12,27 @@ Writer out = getOut()
 Writer expressionOut = getExpressionOut()
 registerSitemeshPreprocessMode()
 printHtmlPart(0)
-expressionOut.print(raw(categorias))
+expressionOut.print(createLinkTo(dir:'js/jsTree/dist/themes/default', file: 'style.min.css'))
 printHtmlPart(1)
-invokeTag('hiddenField','g',51,['id':("id"),'name':("id"),'value':(categoriaProdutoInstance?.id)],-1)
+invokeTag('javascript','g',2,['src':("jsTree/dist/jstree.min.js")],-1)
 printHtmlPart(2)
-invokeTag('message','g',55,['code':("categoriaProduto.nome.label"),'default':("Nome")],-1)
+expressionOut.print(raw(categorias))
 printHtmlPart(3)
-invokeTag('textField','g',59,['name':("nome"),'value':(categoriaProdutoInstance?.nome),'maxlength':("100"),'size':("70")],-1)
+invokeTag('hiddenField','g',51,['id':("id"),'name':("id"),'value':(categoriaProdutoInstance?.id)],-1)
 printHtmlPart(4)
-invokeTag('message','g',66,['code':("categoriaProduto.categoriaPai.label")],-1)
+invokeTag('message','g',55,['code':("categoriaProduto.nome.label"),'default':("Nome")],-1)
 printHtmlPart(5)
+invokeTag('textField','g',59,['name':("nome"),'value':(categoriaProdutoInstance?.nome),'maxlength':("100"),'size':("70")],-1)
+printHtmlPart(6)
+invokeTag('message','g',66,['code':("categoriaProduto.categoriaPai.label")],-1)
+printHtmlPart(7)
 }
 public static final Map JSP_TAGS = new HashMap()
 protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1443006368298L
+public static final long LAST_MODIFIED = 1443835799140L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'

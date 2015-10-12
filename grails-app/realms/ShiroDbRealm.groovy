@@ -21,9 +21,9 @@ class ShiroDbRealm {
 		Statement accountStmt
 		ResultSet accountResultSet
 		
-        conexao = dataSource.getConnection()
-		accountStmt = conexao.createStatement()
 		try {
+			conexao = dataSource.getConnection()
+			accountStmt = conexao.createStatement()
 			//createUser(authToken)
 			accountResultSet = accountStmt.executeQuery("select txt_passwordHash password, txt_salt salt from tb_usuario where txt_username = '${authToken.getUsername()}'")
 			if (! accountResultSet.next()) {
@@ -35,7 +35,8 @@ class ShiroDbRealm {
 				throw new org.apache.shiro.authc.AuthenticationException()
 			}
 			return buildAccount(authToken, conexao)
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
+		    log.error "Própria Exceção: " e
             log.error "Erro: "  e.getMessage()
         } finally {
             conexao.close()

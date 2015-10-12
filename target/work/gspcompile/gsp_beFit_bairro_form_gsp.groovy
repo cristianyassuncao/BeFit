@@ -5,7 +5,7 @@ import org.codehaus.groovy.grails.web.taglib.exceptions.GrailsTagException
 import org.springframework.web.util.*
 import grails.util.GrailsUtil
 
-class gsp_beFit_bairro_form_gsp extends GroovyPage {
+class gsp_befit_bairro_form_gsp extends GroovyPage {
 public String getGroovyPageFileName() { "/WEB-INF/grails-app/views/bairro/_form.gsp" }
 public Object run() {
 Writer out = getOut()
