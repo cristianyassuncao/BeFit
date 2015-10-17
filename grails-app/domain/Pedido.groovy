@@ -29,6 +29,7 @@ class Pedido {
     
     static constraints = {
         cliente(nullable: true)
+		entregador(nullable: true)
         entregarAPartirDaHora(nullable: true)
 		entregarAteHora(nullable: true)
         telefone(nullable: true)

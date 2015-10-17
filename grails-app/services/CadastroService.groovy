@@ -192,8 +192,7 @@ class CadastroService {
         if (valor == "" || valor == null) {
             return null;
         }
-        def decimalFormat = new java.text.DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale ("pt", "BR")));
-        return decimalFormat.parse(valor)
+        return Util.parseCurrency(valor)
     }   
     
     def atualizarPedido(params) {

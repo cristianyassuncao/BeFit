@@ -32,12 +32,12 @@ class AuthController {
 
 			log.info "Redirecting to '${targetUri}'."
             redirect(uri: targetUri)
-        }
-        catch (AuthenticationException ex){
+        } catch (AuthenticationException ex){
             // Authentication failed, so display the appropriate message
             // on the login page.
-            log.info "Authentication failure for user '${params.username}'."
+			log.info "Authentication failure for user '${params.username}'."
             flash.message = message(code: "login.failed")
+			ex.printStackTrace()
 
             // Keep the username and "remember me" setting so that the
             // user doesn't have to enter them again.
@@ -53,7 +53,9 @@ class AuthController {
 
             // Now redirect back to the login page.
             redirect(action: "login", params: m)
-        }
+        } catch (Exception e) {
+        	e.printStackTrace()
+		}
     }
 
     def signOut = {

@@ -35,8 +35,7 @@ class ShiroDbRealm {
 				throw new org.apache.shiro.authc.AuthenticationException()
 			}
 			return buildAccount(authToken, conexao)
-        } catch (AuthenticationException e) {
-		    log.error "Própria Exceção: " e
+        } catch (Exception e) {
             log.error "Erro: "  e.getMessage()
         } finally {
             conexao.close()

@@ -22,5 +22,9 @@ public class Util {
 	public static String formatCurrency(BigDecimal value) {
 		return formatoDecimal.format(value);
 	}
+	
+	public static Number parseCurrency(String value) throws ParseException {
+		return formatoDecimal.parse(value);
+	}
 
 }

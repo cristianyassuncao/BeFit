@@ -10,7 +10,8 @@ dataSource {
 		minEvictableIdleTimeMillis = 60000
 		timeBetweenEvictionRunsMillis = 60000
 		maxWait = 10000
-		validationQuery = "/* ping */"
+		validationQuery="select 1"
+		testWhileIdle=true
 	}
 }
 hibernate {
@@ -38,7 +39,7 @@ environments {
     production {
         dataSource {
             dbCreate = "none" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://befit.mysql.uhserver.com/befit?useUnicode=yes&characterEncoding=UTF-8"
+            url = "jdbc:mysql://befit.mysql.uhserver.com/befit?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true"
 			username="befit"
 			password="L8Az7!UY"
         }
