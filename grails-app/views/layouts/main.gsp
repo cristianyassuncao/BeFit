@@ -9,6 +9,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title><g:layoutTitle default="Grails"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<base href="/befit/">
   		<asset:stylesheet src="application.css"/>
 		<asset:javascript src="application.js"/>
         <asset:javascript src="main.js"/>

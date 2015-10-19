@@ -9,16 +9,6 @@ class ShiroSecurityFilters {
 		auth(controller:'*', action:'*') {
 			before = {
 				if (!controllerName || controllerName == 'assets') return true
-//				if (actionName.equals("login")) {
-//				   def url = "https://befitmcz.sslblindado.com/befit/auth/login"
-//				   redirect(url: url, permanent: true)
-//				   return false
-//				}
-//				if (!actionName.equals("login")) {
-//					def url = "http://www.befitmcz.com.br" + request.forwardURI
-//					redirect(url: url, permanent: true)
-//					return false
-//				}
 				accessControl {
 					role("administrador")
 				}
