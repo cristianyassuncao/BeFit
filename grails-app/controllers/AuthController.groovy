@@ -4,6 +4,9 @@ import org.apache.shiro.authc.UsernamePasswordToken
 import org.apache.shiro.web.util.SavedRequest
 import org.apache.shiro.web.util.WebUtils
 
+import com.bertramlabs.plugins.SSLRequired;
+
+@SSLRequired
 class AuthController {
     def shiroSecurityManager
 

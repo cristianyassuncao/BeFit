@@ -1,9 +1,12 @@
+import com.bertramlabs.plugins.SSLRequired;
+
 import groovy.json.*
 import grails.converters.JSON
 import grails.web.JSONBuilder
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+@SSLRequired
 @Transactional(readOnly = true)
 class CategoriaProdutoController {
 

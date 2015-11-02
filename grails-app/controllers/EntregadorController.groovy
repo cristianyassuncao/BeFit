@@ -2,8 +2,12 @@ import static org.springframework.http.HttpStatus.*
 
 import java.util.List;
 
+import com.bertramlabs.plugins.SSLRequired;
+
 import grails.transaction.Transactional
 
+
+@SSLRequired
 @Transactional(readOnly = true)
 class EntregadorController {
 	def cadastroService

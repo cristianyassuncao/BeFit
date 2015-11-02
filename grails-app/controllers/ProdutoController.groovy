@@ -1,7 +1,11 @@
 import static org.springframework.http.HttpStatus.*
+
+import com.bertramlabs.plugins.SSLRequired;
+
 import grails.transaction.Transactional
 import grails.converters.JSON
 
+@SSLRequired
 @Transactional(readOnly = true)
 class ProdutoController {
     

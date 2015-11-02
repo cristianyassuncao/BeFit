@@ -1,10 +1,12 @@
-
 import static org.springframework.http.HttpStatus.*
 
 import java.text.SimpleDateFormat;
 
+import com.bertramlabs.plugins.SSLRequired;
+
 import grails.transaction.Transactional
 
+@SSLRequired
 @Transactional(readOnly = true)
 class ItemDiaController {
 	

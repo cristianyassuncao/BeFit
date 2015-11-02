@@ -9,6 +9,11 @@ class ShiroSecurityFilters {
 		auth(controller:'*', action:'*') {
 			before = {
 				if (!controllerName || controllerName == 'assets') return true
+				if (!request.getRequestURL().contains("befitmcz.sslblindado.com")) {
+					def url = "https://befitmcz.sslblindado.com" + request.forwardURI
+					redirect(url: url)
+					return false
+				}
 				accessControl {
 					role("administrador")
 				}

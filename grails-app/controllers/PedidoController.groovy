@@ -5,9 +5,12 @@ import java.util.Collections.ReverseComparator
 
 import org.apache.jasper.compiler.Node.ParamsAction;
 
+import com.bertramlabs.plugins.SSLRequired;
+
 import grails.transaction.Transactional
 import grails.converters.*;
 
+@SSLRequired
 @Transactional(readOnly = true)
 class PedidoController {
     

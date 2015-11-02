@@ -1,7 +1,10 @@
-
 import static org.springframework.http.HttpStatus.*
+
+import com.bertramlabs.plugins.SSLRequired;
+
 import grails.transaction.Transactional
 
+@SSLRequired
 @Transactional(readOnly = true)
 class BairroController {
 

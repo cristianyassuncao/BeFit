@@ -91,7 +91,6 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
 
@@ -102,6 +101,8 @@ log4j.main = {
     //appenders {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
+	
+	all "grails.app"
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -117,3 +118,10 @@ log4j.main = {
 }
 
 grails.databinding.dateFormats = ['dd/MM/yyyy', 'dd-MM-yyyy HH:mm:ss.S']
+
+grails.plugin.forceSSL.enabled = { request ->
+	if (request.getRequestURL().contains("befitmcz.com.br")) {
+	  return false
+	}
+	return true
+ }
