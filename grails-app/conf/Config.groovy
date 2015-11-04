@@ -1,3 +1,5 @@
+import grails.util.Environment;
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -120,6 +122,9 @@ log4j.main = {
 grails.databinding.dateFormats = ['dd/MM/yyyy', 'dd-MM-yyyy HH:mm:ss.S']
 
 grails.plugin.forceSSL.enabled = { request ->
+	if (Environment.current == Environment.DEVELOPMENT) {
+		return false
+	}
 	if (request.getRequestURL().contains("befitmcz.com.br")) {
 	  return false
 	}

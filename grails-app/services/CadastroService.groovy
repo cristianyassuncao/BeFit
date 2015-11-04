@@ -337,4 +337,13 @@ class CadastroService {
 		return definirEntregador(params, pessoaInstance)
 	}
 	
+	def excluirPedidos(ids) {
+		ids.each {
+			def pedido = Pedido.get(it)
+			if (pedido != null) {
+				pedido.delete(flush: true);
+			}
+		}
+	}
+	
 }

@@ -81,11 +81,14 @@ class BairroController {
             return
         }
 
-        bairroInstance.delete flush:true
-
+		try {
+			bairroInstance.delete flush:true
+			flash.message = message(code: 'default.deleted.message', args: [message(code: 'bairro.label'), bairroInstance.id])
+		} catch(org.springframework.dao.DataIntegrityViolationException e) {
+			flash.message = "Este bairro não pode ser excluído porque já está sendo utilizado em outros cadastros"
+		}	
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Bairro.label', default: 'Bairro'), bairroInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -95,7 +98,7 @@ class BairroController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'bairro.label', default: 'Bairro'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'bairro.label'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
