@@ -558,10 +558,16 @@ th:hover, tr:hover {
 	text-decoration: underline;
 }
 
-.buttons .delete, .buttons .edit, .buttons .save, .buttons .cancel {
+.buttons .edit, .buttons .save, .buttons .cancel {
 	background-position: 0.7em center;
 	background-repeat: no-repeat;
 	text-indent: 25px;
+}
+
+.buttons .delete {
+	background-position: 0.7em center;
+	background-repeat: no-repeat;
+	text-indent: 10px;
 }
 
 .ie6 .buttons input.delete, .ie6 .buttons input.edit, .ie6 .buttons input.save,
@@ -763,4 +769,18 @@ a.logout {
 	float: right;
 	margin-right: 5px;
 	margin-top: 10px;
+}
+
+input[type=submit].procurar {
+	background-position: 0.7em center;
+	background-repeat: no-repeat;
+	background-image: url(../images/skin/search.png);
+	text-indent: 10px;
+}
+
+input[type=submit] {
+    padding-left: 28px;  
+    border: none;
+    text-align: left;
+    background-color: transparent;
 }

@@ -33,9 +33,9 @@ class Pedido {
         entregarAPartirDaHora(nullable: true)
 		entregarAteHora(nullable: true)
         telefone(nullable: true)
-        trocoPara(nullable: true, validator: {val, obj -> return (val == null) ? null : val.compareTo(obj.valorAPagar) > 0})
+        trocoPara(nullable: true, validator: {val, obj -> return (val == null || obj?.valorAPagar == null) ? null : val?.compareTo(obj?.valorAPagar) > 0})
         valorTroco(nullable: true)
-        valorPago(nullable: true, validator: {val, obj -> return (val == null) ? null : val.compareTo(obj.valorAPagar) <= 0})
+        valorPago(nullable: true, validator: {val, obj -> return (val == null || obj?.valorAPagar == null) ? null : val?.compareTo(obj?.valorAPagar) <= 0})
     }
     
     static mapping = {

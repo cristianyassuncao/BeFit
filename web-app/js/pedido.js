@@ -338,3 +338,12 @@ function removeOptionFromSelect(id, value) {
 function addOptionToSelect(select, value, text) {
 	select.append($("<option></option>").attr("value", value).text(text));
 }
+
+function verificaSelecao() {
+	def selecionados = $("input[name='selecionado]:checked").length;
+	if (selecionados == 0) {
+		alert("Selecione ao menos um pedido antes de prosseguir!")
+		return false;
+	}
+	return true;
+}

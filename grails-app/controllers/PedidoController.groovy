@@ -298,9 +298,16 @@ class PedidoController {
 		render produtosJSON
 	}
     
-	def deleteTodosPedidosNaLista = {
+	def deleteAllInList = {
 		def ids = params.list("idPedido");
-		cadastroService.excluirPedidos(ids);
+		try {
+			cadastroService.excluirPedidos(ids);
+			flash.message = "pedido.deleteAllSuccessful"
+			redirect(action: "index", params: params)
+		} catch (Exception e) {
+			flash.message = "pedido.deleteAllFailed"
+			redirect(action: "index", params: params)
+		}	
 	}
 	
 	def delete = {
@@ -327,6 +334,11 @@ class PedidoController {
 			}
 			'*'{ render status: NOT_FOUND }
 		}
+	}
+	
+	def clear = {
+		params.clear()
+		redirect(action: "index", params: params)
 	}
 		
 }

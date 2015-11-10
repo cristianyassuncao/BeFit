@@ -210,8 +210,10 @@ class CadastroService {
         }
         pedidoInstance.cliente = (params?.cliente?.id == null) ? null : Cliente.get(params?.cliente?.id)
         pedidoInstance.dataCadastro = formatoData.parse(params?.dataCadastro)
-        pedidoInstance.dataEntrega = formatoData.parse(params?.dataEntrega)
-        pedidoInstance.valorAPagar = toBigDecimal(params?.valorAPagar)
+		if (params?.dataEntrega?.length() > 0) {
+			pedidoInstance.dataEntrega = formatoData.parse(params?.dataEntrega)
+		}
+		pedidoInstance.valorAPagar = toBigDecimal(params?.valorAPagar)
         pedidoInstance.trocoPara = toBigDecimal(params?.trocoPara)
         pedidoInstance.valorTroco = toBigDecimal(params?.valorTroco)
         pedidoInstance.valorPago = toBigDecimal(params?.valorPago)
