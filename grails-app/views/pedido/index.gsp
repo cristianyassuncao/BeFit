@@ -5,6 +5,7 @@
 		<g:set var="entityName" value="${message(code: 'pedido.label', default: 'Pedido')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 		<link rel="stylesheet" href="${createLinkTo(dir:'css',file:'pedido.css')}" />
+		<g:javascript src="pedido.js"/>
 		<!-- Chosen: plugin JQuery com a habilidade de filtrar itens num campo select -->
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
@@ -73,7 +74,7 @@
                     <input class="procurar" type="submit" value="Procurar" />
                     <g:actionSubmit class="clear" action="clear" value="Limpar"/>
                     <div class="operacoes">
-	            		<g:actionSubmit class="delete" value="Excluir" action="deleteAllInList" onclick="verificaSelecao()"/>
+	            		<g:actionSubmit class="delete" value="Excluir" action="deleteAllInList" onclick="return beforeDelete();"/>
                     </div>
                 </fieldset>
     			<table>
@@ -115,8 +116,7 @@
 							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 							
 								<td>
-									<input type="hidden" name="idPedido" value="${pedidoInstance.id}"/>
-									<input type="checkbox" name="selecionado"/>
+									<input type="checkbox" name="pedidoSelecionado" value="${pedidoInstance.id}"/>
 								</td>
 							
 								<td><g:link action="show" id="${pedidoInstance.id}">${pedidoInstance?.id}</g:link></td>

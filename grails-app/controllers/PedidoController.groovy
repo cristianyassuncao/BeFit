@@ -299,15 +299,16 @@ class PedidoController {
 	}
     
 	def deleteAllInList = {
-		def ids = params.list("idPedido");
+		def ids = params.list("pedidoSelecionado");
 		try {
 			cadastroService.excluirPedidos(ids);
-			flash.message = "pedido.deleteAllSuccessful"
-			redirect(action: "index", params: params)
+			flash.message = message(code: 'pedido.deleteAllSuccessful')
 		} catch (Exception e) {
-			flash.message = "pedido.deleteAllFailed"
-			redirect(action: "index", params: params)
-		}	
+			flash.message = message(code: 'pedido.deleteAllFailed')
+		}
+		params.remove("_action_deleteAllInList");
+		params.remove("idPedido");
+		redirect(action: "index", params: params)
 	}
 	
 	def delete = {
@@ -339,6 +340,11 @@ class PedidoController {
 	def clear = {
 		params.clear()
 		redirect(action: "index", params: params)
+	}
+	
+	def printAllInList = {
+		def ids = params.list("idPedido");
+		render(view: "resumoPedidos", model: ['pedidos': pedidos])
 	}
 		
 }

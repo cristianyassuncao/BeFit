@@ -2,3 +2,4 @@
 *.war
 *.data
 target/*.*
+/target/

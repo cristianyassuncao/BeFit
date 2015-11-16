@@ -339,10 +339,13 @@ function addOptionToSelect(select, value, text) {
 	select.append($("<option></option>").attr("value", value).text(text));
 }
 
-function verificaSelecao() {
-	def selecionados = $("input[name='selecionado]:checked").length;
+function beforeDelete() {
+	var selecionados = $("input[name='pedidoSelecionado']:checked").length;
 	if (selecionados == 0) {
-		alert("Selecione ao menos um pedido antes de prosseguir!")
+		alert("Selecione ao menos um pedido antes de prosseguir!");
+		return false;
+	}
+	if (!confirm("Confirma a exclusão de todos os pedidos selecionados?")) {
 		return false;
 	}
 	return true;
