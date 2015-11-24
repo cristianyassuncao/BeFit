@@ -656,6 +656,10 @@ input.delete {
     background: transparent url(../images/skin/database_delete.png) 5px 50% no-repeat;
 }
 
+input.print {
+    background: transparent url(../images/skin/print.png) 5px 50% no-repeat;
+}
+
 input[type="button"] {
     margin: 5px 15px 5px 15px;
     padding-left: 28px;  

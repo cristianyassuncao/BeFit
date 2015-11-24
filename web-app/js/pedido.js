@@ -339,14 +339,23 @@ function addOptionToSelect(select, value, text) {
 	select.append($("<option></option>").attr("value", value).text(text));
 }
 
-function beforeDelete() {
+function hasPedidosSolucionados() {
 	var selecionados = $("input[name='pedidoSelecionado']:checked").length;
 	if (selecionados == 0) {
 		alert("Selecione ao menos um pedido antes de prosseguir!");
 		return false;
 	}
+	return true;
+}
+
+function beforeDelete() {
+	if (!hasPedidosSolucionados()) return false;
 	if (!confirm("Confirma a exclusão de todos os pedidos selecionados?")) {
 		return false;
 	}
 	return true;
+}
+
+function beforePrint() {
+	return hasPedidosSolucionados();
 }

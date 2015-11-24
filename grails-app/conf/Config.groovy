@@ -61,7 +61,6 @@ grails {
     }
 }
 
-
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
@@ -89,10 +88,10 @@ grails.hibernate.osiv.readonly = false
 
 environments {
     development {
-        grails.logging.jul.usebridge = true
+        jasper.dir.reports = '/reports'
     }
     production {
-        grails.logging.jul.usebridge = false
+        jasper.dir.reports = '/reports'
     }
 }
 

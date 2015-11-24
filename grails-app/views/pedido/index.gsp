@@ -73,8 +73,10 @@
                 <fieldset class="buttons">
                     <input class="procurar" type="submit" value="Procurar" />
                     <g:actionSubmit class="clear" action="clear" value="Limpar"/>
-                    <div class="operacoes">
+                    <div class="operacoesPedidos">
 	            		<g:actionSubmit class="delete" value="Excluir" action="deleteAllInList" onclick="return beforeDelete();"/>
+						<!--<g:actionSubmit class="define" value="Marcar como" action="defineStatusAllInList" onclick="return beforeDefineStatus();"/>-->	            			            		
+	            		<g:actionSubmit class="print" value="Imprimir" action="printAllInList" onclick="return beforePrint();"/>
                     </div>
                 </fieldset>
     			<table>
@@ -153,7 +155,7 @@
 				</table>
 			</g:form>
 			<div class="pagination">
-				<g:paginate total="${pedidoInstanceTotal ?: 0}" max="30"/>
+				<g:paginate total="${pedidoInstanceTotal ?: 0}" max="30" params="${params}"/>
 			</div>
 		</div>
 	</body>

@@ -1,3 +1,5 @@
+import org.codehaus.groovy.grails.plugins.jasper.JasperExportFormat;
+
 import static org.springframework.http.HttpStatus.*
 
 import java.text.SimpleDateFormat;
@@ -343,8 +345,12 @@ class PedidoController {
 	}
 	
 	def printAllInList = {
-		def ids = params.list("idPedido");
-		render(view: "resumoPedidos", model: ['pedidos': pedidos])
+		def parametros = [:]
+		parametros['pedidos'] = params.list("pedidoSelecionado").toString().replace("[", "").replace("]", "");
+		parametros['_format'] = "PDF"
+		parametros['_inline'] = true
+		parametros['_file'] = 'reciboEntrega'
+		redirect controller: "relatorio", action: "index", params: parametros
 	}
 		
 }
