@@ -153,10 +153,10 @@
 						</g:each>
 					</tbody>
 				</table>
+				<div class="pagination">
+					<g:paginate total="${pedidoInstanceTotal ?: 0}" max="30" params="${['paginate': true]}"/>
+				</div>
 			</g:form>
-			<div class="pagination">
-				<g:paginate total="${pedidoInstanceTotal ?: 0}" max="30" params="${params}"/>
-			</div>
 		</div>
 	</body>
 </html>

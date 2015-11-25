@@ -15,6 +15,8 @@ import grails.converters.*;
 @SSLRequired
 @Transactional(readOnly = true)
 class PedidoController {
+
+	private static final String PARAMETROS_CONSULTA_PEDIDOS = "parametrosConsultaPedidos"
     
 	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy")
 	
@@ -30,29 +32,50 @@ class PedidoController {
 		def offset = params.offset ?: 0
 		def sort = params.sort
 		def order = params.order
-		params?.max = null
-		params?.offset = null
+		Boolean isPagination = params?.paginate
+		if (isPagination) {
+			recuperarParametrosAnteriores(params)
+		}
 		if (!hasParametrosDefinidos(params)) {
-			params.dataEntrega = formatoData.format(new Date())
-			params.status = [StatusPedido.A.toString(), StatusPedido.D.toString(), StatusPedido.E.toString()]
-			params.sort = 'dataEntrega'
-			params.order = 'desc'
+			definirConsultaPadrao(params)
 		}
 		if (params?.sort in ['cliente', 'entregador', 'bairro']) {
 			params?.sort = null
 			params?.order = null
 		}
+		def result = executarFiltro(params)
+		def totalRegistros = result.totalCount
+		def comparator = definirComparator(sort, order)
+		if (comparator != null) {
+			Collections.sort(result, comparator)
+		}
+		result = ((max as Integer) <= 0 || (offset as Integer) < 0) ? [] : result.subList( Math.min( offset as Integer, totalRegistros as Integer), Math.min((offset as Integer) + (max as Integer), totalRegistros as Integer))
+		recuperarParametrosPaginacao(params, max, offset, sort, order)
+		session.setAttribute(PARAMETROS_CONSULTA_PEDIDOS, params)
+		return render(view: 'index', model: [params: params, pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros, clientes: inicializarClientes(), entregadores: inicializarEntregadores()])
+	}
+
+	private recuperarParametrosPaginacao(Map params, double max, offset, Map sort, order) {
+		params?.max = max
+		params?.offset = offset
+		params?.sort = sort
+		params?.order = order
+	}
+
+	private List executarFiltro(Map params) {
+		params?.max = null
+		params?.offset = null
 		def statusList = definirFiltroPorStatus(params.list('status'))
 		def result = Pedido.createCriteria().list(params) {
 			if (params.numeroTelefone != null && params.numeroTelefone != "") {
-                cliente {
+				cliente {
 					pessoa {
-	                    telefones {
-	                        eq("numero", Telefone.removerMascara(params.numeroTelefone))
-	                    }
-					}	
-                }
-            }
+						telefones {
+							eq("numero", Telefone.removerMascara(params.numeroTelefone))
+						}
+					}
+				}
+			}
 			if (params.cliente != null && params.cliente != "") {
 				cliente {
 					eq("id", new Long(params.cliente))
@@ -73,18 +96,22 @@ class PedidoController {
 				eqProperty("valorAPagar", "valorPago")
 			}
 		}
-		def totalRegistros = result.totalCount
-		def comparator = definirComparator(sort, order)
-		if (comparator != null) {
-			Collections.sort(result, comparator)
+		return result
+	}
+
+	private definirConsultaPadrao(Map params) {
+		params.dataEntrega = formatoData.format(new Date())
+		params.status = [StatusPedido.A.toString(), StatusPedido.D.toString(), StatusPedido.E.toString()]
+		params.sort = 'dataEntrega'
+		params.order = 'desc'
+	}
+
+	private void recuperarParametrosAnteriores(Map params) {
+		params.clear()
+		def parametrosAnteriores = session.getAttribute(PARAMETROS_CONSULTA_PEDIDOS) 
+		parametrosAnteriores.each{key, value ->
+			params[key] = value
 		}
-		result = ((max as Integer) <= 0 || (offset as Integer) < 0) ? [] : result.subList( Math.min( offset as Integer, totalRegistros), Math.min((offset as Integer) + (max as Integer), totalRegistros))
-		params?.max = max
-		params?.offset = offset
-		params?.sort = sort
-		params?.order = order
-		
-		return render(view: 'index', model: [params: params, pedidoInstanceList: result, pedidoInstanceTotal: totalRegistros, clientes: inicializarClientes(), entregadores: inicializarEntregadores()])
 	}
 	
 	boolean hasParametrosDefinidos(params) {

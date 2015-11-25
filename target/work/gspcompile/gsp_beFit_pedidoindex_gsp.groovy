@@ -196,10 +196,10 @@ i++
 }
 }
 printHtmlPart(54)
-})
-invokeTag('form','g',156,['name':("searchPedidosForm"),'controller':("pedido"),'action':("index"),'update':([sucess:'message',failure:'error'])],2)
+invokeTag('paginate','g',157,['total':(pedidoInstanceTotal ?: 0),'max':("30"),'params':(['paginate': true])],-1)
 printHtmlPart(55)
-invokeTag('paginate','g',158,['total':(pedidoInstanceTotal ?: 0),'max':("30")],-1)
+})
+invokeTag('form','g',159,['name':("searchPedidosForm"),'controller':("pedido"),'action':("index"),'update':([sucess:'message',failure:'error'])],2)
 printHtmlPart(56)
 })
 invokeTag('captureBody','sitemesh',161,[:],1)
@@ -210,7 +210,7 @@ protected void init() {
 	this.jspTags = JSP_TAGS
 }
 public static final String CONTENT_TYPE = 'text/html;charset=UTF-8'
-public static final long LAST_MODIFIED = 1448286316098L
+public static final long LAST_MODIFIED = 1448415036339L
 public static final String EXPRESSION_CODEC = 'html'
 public static final String STATIC_CODEC = 'none'
 public static final String OUT_CODEC = 'html'
