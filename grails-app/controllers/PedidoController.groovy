@@ -336,7 +336,7 @@ class PedidoController {
 			flash.message = message(code: 'pedido.deleteAllFailed')
 		}
 		params.remove("_action_deleteAllInList");
-		params.remove("idPedido");
+		params.remove("pedidoSelecionado");
 		redirect(action: "index", params: params)
 	}
 	
@@ -378,6 +378,24 @@ class PedidoController {
 		parametros['_inline'] = true
 		parametros['_file'] = 'reciboEntrega'
 		redirect controller: "relatorio", action: "index", params: parametros
+	}
+	
+	def defineStatusAllInList = {
+		def pedidos = params.list("pedidoSelecionado");
+		try {
+			cadastroService.definirStatusPedidos(pedidos, params.status);
+			flash.message = message(code: 'pedido.defineStatusAllSuccessful')
+		} catch (Exception e) {
+			flash.message = message(code: 'pedido.defineStatusAllFailed')
+		}
+		params.remove("_action_defineStatusAllInList");
+		params.remove("pedidoSelecionado");
+		redirect(action: "index", params: params)
+		
+	}
+	
+	def selecionarStatus = {
+		render(view: "definirStatus")
 	}
 		
 }

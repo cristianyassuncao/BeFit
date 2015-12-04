@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reciboEntrega" language="groovy" columnCount="3" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="267" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d3ab795-d871-40a5-89c9-c7b6fd0a575a">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reciboEntrega" language="groovy" columnCount="3" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="263" columnSpacing="6" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d3ab795-d871-40a5-89c9-c7b6fd0a575a">
+	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="pedidos" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT SEQ_PEDIDO NUMEROPEDIDO,
        CASE
@@ -47,9 +48,15 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="231" splitType="Stretch">
+		<band height="228" splitType="Stretch">
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="262" height="225" uuid="c8b84868-1307-42fe-be14-3d448939f229"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
 			<image scaleImage="RetainShape" hAlign="Center" onErrorType="Blank">
-				<reportElement mode="Opaque" x="0" y="77" width="262" height="80" uuid="f6806419-1b85-460d-9f11-d22f002b5ff5"/>
+				<reportElement mode="Opaque" x="2" y="77" width="257" height="80" uuid="f6806419-1b85-460d-9f11-d22f002b5ff5"/>
 				<imageExpression><![CDATA[new URL("http://www.befitmcz.com.br/befit/assets/waterMarkBeFit.jpg")]]></imageExpression>
 			</image>
 			<staticText>
@@ -105,40 +112,40 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				<textFieldExpression><![CDATA[$F{TELEFONE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="103" width="64" height="20" uuid="1149f2b6-b61f-4bfc-9698-0def7bf9fce6"/>
+				<reportElement positionType="Float" x="3" y="103" width="64" height="20" uuid="1149f2b6-b61f-4bfc-9698-0def7bf9fce6"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº Volumes]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="67" y="103" width="38" height="20" uuid="d65accee-c3f1-424a-9d0c-da2c477d70c6"/>
+				<reportElement positionType="Float" x="67" y="103" width="38" height="20" uuid="d65accee-c3f1-424a-9d0c-da2c477d70c6"/>
 				<textFieldExpression><![CDATA[$F{NUMEROVOLUMES}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="123" width="100" height="20" uuid="086cc2a9-ff9f-4a45-bd15-d62110f51f69"/>
+				<reportElement positionType="Float" x="3" y="123" width="100" height="20" uuid="086cc2a9-ff9f-4a45-bd15-d62110f51f69"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Entregar a partir de]]></text>
 			</staticText>
 			<textField pattern="HH:mm" isBlankWhenNull="true">
-				<reportElement x="105" y="123" width="52" height="20" uuid="a915994d-039f-4efb-b74a-a11f86d2367e"/>
+				<reportElement positionType="Float" x="105" y="123" width="52" height="20" uuid="a915994d-039f-4efb-b74a-a11f86d2367e"/>
 				<textFieldExpression><![CDATA[$F{APARTIRDE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="161" y="123" width="36" height="20" uuid="df4a64cf-f899-419d-868f-ac958b3aebf5"/>
+				<reportElement positionType="Float" x="161" y="123" width="36" height="20" uuid="df4a64cf-f899-419d-868f-ac958b3aebf5"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Até]]></text>
 			</staticText>
 			<textField pattern="HH:mm" isBlankWhenNull="true">
-				<reportElement x="199" y="123" width="63" height="20" uuid="616fd87c-27c2-4aaa-8257-0919caec02cc"/>
+				<reportElement positionType="Float" x="199" y="123" width="63" height="20" uuid="616fd87c-27c2-4aaa-8257-0919caec02cc"/>
 				<textFieldExpression><![CDATA[$F{ATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="143" width="98" height="20" isRemoveLineWhenBlank="true" uuid="74bb0cd3-d0b0-4a40-8d9b-495336029a99">
+				<reportElement positionType="Float" x="3" y="162" width="98" height="20" isRemoveLineWhenBlank="true" uuid="74bb0cd3-d0b0-4a40-8d9b-495336029a99">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -147,14 +154,14 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				<text><![CDATA[Valor Pedido]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="108" y="143" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b269c1b0-da2f-4418-a8e3-2f5d33dfb1a3">
+				<reportElement positionType="Float" x="108" y="162" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b269c1b0-da2f-4418-a8e3-2f5d33dfb1a3">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VALORPEDIDO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="163" width="100" height="20" isRemoveLineWhenBlank="true" uuid="60d00676-99e4-4f9e-a7fc-cda4d7d90ef7">
+				<reportElement positionType="Float" x="3" y="182" width="100" height="20" isRemoveLineWhenBlank="true" uuid="60d00676-99e4-4f9e-a7fc-cda4d7d90ef7">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -163,14 +170,14 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				<text><![CDATA[Valor a Receber]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="108" y="163" width="100" height="20" isRemoveLineWhenBlank="true" uuid="2824227c-37f7-4686-8ab9-bde3d7964305">
+				<reportElement positionType="Float" x="108" y="182" width="100" height="20" isRemoveLineWhenBlank="true" uuid="2824227c-37f7-4686-8ab9-bde3d7964305">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VALORARECEBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="3" y="183" width="100" height="20" isRemoveLineWhenBlank="true" uuid="aa6e76f1-2678-485b-abbf-e06896bd834d">
+				<reportElement positionType="Float" x="3" y="202" width="100" height="20" isRemoveLineWhenBlank="true" uuid="aa6e76f1-2678-485b-abbf-e06896bd834d">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -179,17 +186,14 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				<text><![CDATA[Troco]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="108" y="183" width="100" height="20" isRemoveLineWhenBlank="true" uuid="0148b253-7f1a-4b07-80ed-5bdd57e134d9">
+				<reportElement positionType="Float" x="108" y="202" width="100" height="20" isRemoveLineWhenBlank="true" uuid="0148b253-7f1a-4b07-80ed-5bdd57e134d9">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VALORTROCO}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="0" y="226" width="263" height="1" uuid="49fa15ce-0d0c-42c0-9947-95cf843d641e"/>
-			</line>
 			<staticText>
-				<reportElement x="4" y="152" width="258" height="20" isRemoveLineWhenBlank="true" uuid="e26ec377-8715-44e2-b441-e14d171c5e28">
+				<reportElement positionType="Float" x="4" y="171" width="258" height="20" isRemoveLineWhenBlank="true" uuid="e26ec377-8715-44e2-b441-e14d171c5e28">
 					<printWhenExpression><![CDATA[$F{PAGO} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -197,15 +201,14 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				</textElement>
 				<text><![CDATA[Pago]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="0" width="263" height="1" uuid="b1201628-c2d0-4f92-9afc-a83b12ae4284"/>
-			</line>
-			<line>
-				<reportElement x="263" y="0" width="1" height="227" uuid="d021fb94-9592-43fc-8695-3f5635256a66"/>
-			</line>
-			<line>
-				<reportElement x="0" y="0" width="1" height="227" uuid="7dfc873b-9595-4ff2-b808-9483f38791f7"/>
-			</line>
+			<subreport>
+				<reportElement positionType="Float" x="2" y="145" width="259" height="12" isRemoveLineWhenBlank="true" uuid="8bf22313-cbd4-4de4-b684-83c536fe6be0"/>
+				<subreportParameter name="pedido">
+					<subreportParameterExpression><![CDATA[$F{NUMEROPEDIDO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reciboEntregaItensPedido.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 </jasperReport>

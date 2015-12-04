@@ -75,7 +75,7 @@
                     <g:actionSubmit class="clear" action="clear" value="Limpar"/>
                     <div class="operacoesPedidos">
 	            		<g:actionSubmit class="delete" value="Excluir" action="deleteAllInList" onclick="return beforeDelete();"/>
-						<!--<g:actionSubmit class="define" value="Marcar como" action="defineStatusAllInList" onclick="return beforeDefineStatus();"/>-->	            			            		
+            		    <!--<input class="add" type="button" value="Definir Status" onclick="selecionarStatus()"/>-->
 	            		<g:actionSubmit class="print" value="Imprimir" action="printAllInList" onclick="return beforePrint();"/>
                     </div>
                 </fieldset>

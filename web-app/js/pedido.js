@@ -359,3 +359,58 @@ function beforeDelete() {
 function beforePrint() {
 	return hasPedidosSolucionados();
 }
+
+/*function selecionarStatus() {
+    modalForm = $("<div></div>");
+    titulo = 'Selecionar Status';
+    modalForm.load('/befit/pedido/selecionarStatus', 
+                  function( response, status, xhr ) {
+                    if ( status == "error" ) {
+                        alert(response);
+                        $(this).dialog("close");
+                        $(this).dialog("destroy");
+                    }
+                 })
+	     .dialog({
+	        modal: true,
+	        autoOpen: false,
+	        height: 400,
+	        width: 900,
+	        title: titulo,
+	        show: "blind",
+	        hide: "explode",
+                    dialogClass: "system-dialog",
+	        buttons: [
+                        {
+                            text: "Confirmar",
+                            click: function() {
+                                $.ajax({
+                                    url     : '/befit/pedido/defineStatusAllInList',
+                                    type    : 'POST',
+                                    data    : $("#formEndereco").serializeArray(),
+                                    context: $(this),
+                                    success: function(e){
+                                        $("#listaEnderecos").replaceWith(e);
+                                        $(this).dialog("close");
+                                        $(this).dialog("destroy");
+                                    },
+                                    error: function(e){
+                                        modalForm.html(e.responseText);
+                                    }
+                                 });
+                            }
+                        },    
+                        {
+	                text: "Cancelar",
+	                click: function() {
+	                    $(this).dialog("close");
+	                    $(this).dialog("destroy");
+	                }
+                        }
+                    ]
+	        
+	  });	    
+	modalForm.dialog('open');
+	return false;
+};
+*/

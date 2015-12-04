@@ -16,7 +16,8 @@ class Pedido {
     BigDecimal numeroVolumes
     Entregador entregador
     EnderecoPedido endereco
-    TelefonePedido telefone	
+    TelefonePedido telefone
+	FormaPagamento formaPagamento
     StatusPedido status
 	Boolean pago
     
@@ -24,7 +25,7 @@ class Pedido {
 	
 	static transients = ['pago']
            
-    static hasMany = [itens: ItemPedido, pagamentos: PagamentoPedido]
+    static hasMany = [itens: ItemPedido]
     
     static constraints = {
         cliente(nullable: true)
@@ -55,7 +56,7 @@ class Pedido {
         numeroVolumes column: 'NUM_VOLUMES'
         status column: 'TXT_STATUS'
         entregador column: 'SEQ_ENTREGADOR'
-		pagamentos joinTable: false, column: 'SEQ_PEDIDO', cascade:"all-delete-orphan"
+		formaPagamento column: 'SEQ_FORMA_PAGAMENTO'
         itens joinTable: false, column: 'SEQ_PEDIDO', cascade:"all-delete-orphan"
     }
 	
