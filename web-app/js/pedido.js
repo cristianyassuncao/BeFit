@@ -339,7 +339,7 @@ function addOptionToSelect(select, value, text) {
 	select.append($("<option></option>").attr("value", value).text(text));
 }
 
-function hasPedidosSolucionados() {
+function hasPedidosSelecionados() {
 	var selecionados = $("input[name='pedidoSelecionado']:checked").length;
 	if (selecionados == 0) {
 		alert("Selecione ao menos um pedido antes de prosseguir!");
@@ -349,7 +349,7 @@ function hasPedidosSolucionados() {
 }
 
 function beforeDelete() {
-	if (!hasPedidosSolucionados()) return false;
+	if (!hasPedidosSelecionados()) return false;
 	if (!confirm("Confirma a exclusão de todos os pedidos selecionados?")) {
 		return false;
 	}
@@ -357,10 +357,17 @@ function beforeDelete() {
 }
 
 function beforePrint() {
-	return hasPedidosSolucionados();
+	return hasPedidosSelecionados();
 }
 
-/*function selecionarStatus() {
+function beforeChangeStatus() {
+	return hasPedidosSelecionados();
+}
+
+function selecionarStatus() {
+	if (!hasPedidosSelecionados()) {
+		return;
+	}
     modalForm = $("<div></div>");
     titulo = 'Selecionar Status';
     modalForm.load('/befit/pedido/selecionarStatus', 
@@ -374,43 +381,33 @@ function beforePrint() {
 	     .dialog({
 	        modal: true,
 	        autoOpen: false,
-	        height: 400,
-	        width: 900,
+	        height: 210,
+	        width: 470,
 	        title: titulo,
 	        show: "blind",
 	        hide: "explode",
-                    dialogClass: "system-dialog",
+            dialogClass: "system-dialog",
 	        buttons: [
                         {
-                            text: "Confirmar",
-                            click: function() {
-                                $.ajax({
-                                    url     : '/befit/pedido/defineStatusAllInList',
-                                    type    : 'POST',
-                                    data    : $("#formEndereco").serializeArray(),
-                                    context: $(this),
-                                    success: function(e){
-                                        $("#listaEnderecos").replaceWith(e);
-                                        $(this).dialog("close");
-                                        $(this).dialog("destroy");
-                                    },
-                                    error: function(e){
-                                        modalForm.html(e.responseText);
-                                    }
-                                 });
-                            }
+                        text: "Confirmar",
+                        click: function() {
+                        	$("#alterarStatusPara").val($("input[name='statusADefinir']:checked").val());
+                        	$("#changeStatusButton").click();
+                        	$(this).dialog("close");
+    	                    $(this).dialog("destroy");
+    	                    return true;
+                        	}
                         },    
                         {
 	                text: "Cancelar",
 	                click: function() {
 	                    $(this).dialog("close");
 	                    $(this).dialog("destroy");
-	                }
-                        }
+	                    return false;
+	                	}
+                    }
                     ]
 	        
 	  });	    
-	modalForm.dialog('open');
-	return false;
+	modalForm.dialog('open');	
 };
-*/

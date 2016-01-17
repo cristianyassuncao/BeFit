@@ -28,7 +28,7 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<g:form name="searchPedidosForm" controller="pedido" action="index" update="[sucess:'message',failure:'error']">
+			<g:form id="monitorPedidos" name="monitorPedidos" controller="pedido" action="index" update="[sucess:'message',failure:'error']">
                 <div class="detalhes">
                     <table class="parametros">
                         <tr align='left'>
@@ -69,13 +69,15 @@
                             </td>
                         </tr>
                     </table>
+                    <input type="hidden" id="alterarStatusPara" name="alterarStatusPara"/>
                 </div>
                 <fieldset class="buttons">
                     <input class="procurar" type="submit" value="Procurar" />
                     <g:actionSubmit class="clear" action="clear" value="Limpar"/>
                     <div class="operacoesPedidos">
 	            		<g:actionSubmit class="delete" value="Excluir" action="deleteAllInList" onclick="return beforeDelete();"/>
-            		    <!--<input class="add" type="button" value="Definir Status" onclick="selecionarStatus()"/>-->
+            		    <input type="button" class="add" value="Definir Status" onclick="selecionarStatus();"/>
+            		    <g:actionSubmit id="changeStatusButton" action="defineStatusAllInList" value="Definir Status" onclick="return beforeChangeStatus();"/>
 	            		<g:actionSubmit class="print" value="Imprimir" action="printAllInList" onclick="return beforePrint();"/>
                     </div>
                 </fieldset>

@@ -152,7 +152,6 @@ input.valorNumerico, th.valorNumerico, td.valorNumerico {
 #statusPedido {
     width: 400px;
     display: inline;
-    top: -6px;
     margin-left: 5px;
 }
 
@@ -173,6 +172,12 @@ fieldset.observacoesCliente {
 }
 
 div.operacoesPedidos {
-	float: right;
-	
+	float: right;	
+}
+
+#changeStatusButton {
+	visibility: hidden;
+	width: 0px;
+	padding: 0px;
+    margin: 0px;
 }

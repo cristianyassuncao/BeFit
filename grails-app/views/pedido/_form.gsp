@@ -75,13 +75,13 @@
     </div>
     <div id="dadosComplementares">
         <g:if test="${pedido?.cliente != null}">
-            <g:render template="dadosComplementares" model="[endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones, observacoes: pedido?.cliente?.observacoes, readOnly: readOnly]"/>
+            <g:render template="dadosComplementares" model="[cliente: pedido?.cliente, endereco: pedido?.endereco, telefones: pedido?.cliente?.pessoa?.telefones, observacoes: pedido?.cliente?.observacoes, readOnly: readOnly]"/>
         </g:if>
     </div>    
 </fieldset>
 
 <fieldset id="detalhesPedido">
-    <legend id="legendaDetalhesPedido">Detalhes do Pedido</legend>    
+    <legend id="legendaDetalhesPedido">Detalhes do Pedido</legend>
     <div id="dadosEntrega" class="campos autoOverflow">
         <fieldset id="horarioEspecial" class="padrao">
             <legend>Horário Especial de Entrega</legend>

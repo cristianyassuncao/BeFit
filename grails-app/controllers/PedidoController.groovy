@@ -383,8 +383,10 @@ class PedidoController {
 	def defineStatusAllInList = {
 		def pedidos = params.list("pedidoSelecionado");
 		try {
-			cadastroService.definirStatusPedidos(pedidos, params.status);
+			cadastroService.definirStatusPedidos(pedidos, params.alterarStatusPara);
 			flash.message = message(code: 'pedido.defineStatusAllSuccessful')
+		} catch (DefinirStatusPedidoException e) {
+			flash.message = e.getMessage()
 		} catch (Exception e) {
 			flash.message = message(code: 'pedido.defineStatusAllFailed')
 		}

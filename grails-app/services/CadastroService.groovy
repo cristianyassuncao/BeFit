@@ -352,8 +352,13 @@ class CadastroService {
 		pedidos.each {
 			def pedido = Pedido.get(it)
 			if (pedido != null) {
+				if (pedido.status.equals(StatusPedido.C)) {
+					throw new DefinirStatusPedidoException("Operação cancelada pois alguns pedidos estavam cancelados e não podiam ter seus status alterados");
+				}
 				pedido.status = newStatus
-				pedido.save(flush: true);
+				if (!pedido.save(flush: true)) {
+					throw new DefinirStatusPedidoException("Operação cancelada pois não foi possível alterar o status de todos os pedidos");
+				}
 			}
 		}
 	}
