@@ -17,8 +17,7 @@ class Pedido {
     Entregador entregador
     EnderecoPedido endereco
     TelefonePedido telefone
-	FormaPagamento formaPagamento
-    StatusPedido status
+	StatusPedido status
 	Boolean pago
     
     static embedded = ['endereco', 'telefone']
@@ -56,7 +55,6 @@ class Pedido {
         numeroVolumes column: 'NUM_VOLUMES'
         status column: 'TXT_STATUS'
         entregador column: 'SEQ_ENTREGADOR'
-		formaPagamento column: 'SEQ_FORMA_PAGAMENTO'
         itens joinTable: false, column: 'SEQ_PEDIDO', cascade:"all-delete-orphan"
     }
 	

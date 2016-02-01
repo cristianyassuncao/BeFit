@@ -264,11 +264,4 @@
             </div>    
         </div>
     </div>
-  	<fieldset id="formaPagamento" class="padrao">
-       <legend>Forma de Pagamento</legend>
-       <g:radioGroup values="${FormaPagamento.list(order: 'nome').id}" labels="${FormaPagamento.list(order: 'nome').nome}" name="formaPagamento" value="${pedido?.formaPagamento?.id}" disabled="${readOnly}">
-       	  <span class="radioButton">${it.radio}</span>
-       	  <span class="radioLabel">${it.label}</span>
-       </g:radioGroup>
-   	</fieldset>
 </fieldset>

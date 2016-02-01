@@ -1,11 +1,7 @@
-
 class FormaPagamento {
 
     String nome
-    
-    static constraints = {
-    }
-    
+           
     static mapping = {
         table 'tb_forma_pagamento'
         version false
