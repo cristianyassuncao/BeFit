@@ -8,8 +8,8 @@
 	<queryString>
 		<![CDATA[SELECT SEQ_PEDIDO NUMEROPEDIDO,
        CASE
-          WHEN PES.TIP_PESSOA = 'PessoaFisica' THEN PES.NOM_PESSOA
-          WHEN PES.TIP_PESSOA = 'PessoaJuridica' THEN PES.NOM_RAZAO_SOCIAL
+          WHEN PES_C.TIP_PESSOA = 'PessoaFisica' THEN PES_C.NOM_PESSOA
+          WHEN PES_C.TIP_PESSOA = 'PessoaJuridica' THEN PES_C.NOM_RAZAO_SOCIAL
        END NOMECLIENTE,
        CONCAT(TXT_ENDERECO, ', ', PED.TXT_NUMERO_ENDERECO) RUA,
        CONCAT(IF(TXT_COMPLEMENTO IS NULL OR TXT_COMPLEMENTO = '', TXT_COMPLEMENTO, CONCAT(TXT_COMPLEMENTO, ', ')), BAI.NOM_BAIRRO) COMPLEMENTO,
@@ -21,15 +21,14 @@
        PED.VAL_TROCO VALORTROCO,
        PED.DTH_ENTREGAR_A_PARTIR_DE APARTIRDE,
        PED.DTH_ENTREGAR_ATE ATE,
+       PES_E.NOM_PESSOA ENTREGADOR,
        (PED.VAL_PAGAR = PED.VAL_PAGO) PAGO
-FROM tb_pedido PED,
-     tb_cliente CLI,
-     tb_pessoa PES,
-     tb_bairro BAI
-WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})
-AND   PED.SEQ_CLIENTE = CLI.SEQ_CLIENTE
-AND   CLI.SEQ_PESSOA = PES.SEQ_PESSOA
-AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
+FROM tb_pedido PED INNER JOIN tb_cliente CLI ON PED.SEQ_CLIENTE = CLI.SEQ_CLIENTE
+     INNER JOIN tb_pessoa PES_C ON CLI.SEQ_PESSOA = PES_C.SEQ_PESSOA
+     INNER JOIN tb_bairro BAI ON BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO
+     LEFT JOIN tb_entregador ENT ON PED.SEQ_ENTREGADOR = ENT.SEQ_ENTREGADOR
+     LEFT JOIN tb_pessoa PES_E ON ENT.SEQ_PESSOA = PES_E.SEQ_PESSOA
+WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 	</queryString>
 	<field name="NUMEROPEDIDO" class="java.lang.Integer"/>
 	<field name="NOMECLIENTE" class="java.lang.String"/>
@@ -43,6 +42,7 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 	<field name="VALORTROCO" class="java.math.BigDecimal"/>
 	<field name="APARTIRDE" class="java.sql.Time"/>
 	<field name="ATE" class="java.sql.Time"/>
+	<field name="ENTREGADOR" class="java.lang.String"/>
 	<field name="PAGO" class="java.lang.Long"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -193,11 +193,11 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				<textFieldExpression><![CDATA[$F{VALORTROCO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="4" y="171" width="258" height="20" isRemoveLineWhenBlank="true" uuid="e26ec377-8715-44e2-b441-e14d171c5e28">
+				<reportElement positionType="Float" x="4" y="171" width="258" height="31" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="e26ec377-8715-44e2-b441-e14d171c5e28">
 					<printWhenExpression><![CDATA[$F{PAGO} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font size="22" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pago]]></text>
 			</staticText>
@@ -209,6 +209,17 @@ AND   BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reciboEntregaItensPedido.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement positionType="Float" x="172" y="103" width="90" height="20" uuid="9eade42b-99ba-4c79-b065-2d9002b5e7dc"/>
+				<textFieldExpression><![CDATA[$F{ENTREGADOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="108" y="103" width="62" height="20" uuid="80d675b3-4584-47da-8b18-a9d06322cb47"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entregador]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>
