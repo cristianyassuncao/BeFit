@@ -79,6 +79,7 @@
             		    <input type="button" class="add" value="Definir Status" onclick="selecionarStatus();"/>
             		    <g:actionSubmit id="changeStatusButton" action="defineStatusAllInList" value="Definir Status" onclick="return beforeChangeStatus();"/>
 	            		<g:actionSubmit class="print" value="Imprimir" action="printAllInList" onclick="return beforePrint();"/>
+	            		<g:link target="_blank" onclick="printAllInList()">Teste</g:link>
                     </div>
                 </fieldset>
     			<table>

@@ -411,3 +411,22 @@ function selecionarStatus() {
 	  });	    
 	modalForm.dialog('open');	
 };
+
+function getArrayCodigoPedidosSelecionados() {
+	var pedidos = $("input[name='pedidoSelecionado']:checked").map(function() {
+				  return $(this).val();	    
+	});
+    return pedidos.get();
+}
+
+function printAllInList() {
+	if (!hasPedidosSelecionados()) return;
+	var pedidos = getArrayCodigoPedidosSelecionados();
+    jQuery.ajax({
+		  url: '/befit/pedido/printAllInList?pedidoSelecionado=' + pedidos,
+		  async: false,
+		  success: function(data) {
+			  
+		  }	  
+	});
+}
