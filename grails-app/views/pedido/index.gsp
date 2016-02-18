@@ -78,8 +78,7 @@
 	            		<g:actionSubmit class="delete" value="Excluir" action="deleteAllInList" onclick="return beforeDelete();"/>
             		    <input type="button" class="add" value="Definir Status" onclick="selecionarStatus();"/>
             		    <g:actionSubmit id="changeStatusButton" action="defineStatusAllInList" value="Definir Status" onclick="return beforeChangeStatus();"/>
-	            		<g:actionSubmit class="print" value="Imprimir" action="printAllInList" onclick="return beforePrint();"/>
-	            		<g:link target="_blank" onclick="printAllInList()">Teste</g:link>
+	            		<input type="button" class="print" onclick="printAllInList()" value="Imprimir"/>	            		
                     </div>
                 </fieldset>
     			<table>

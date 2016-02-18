@@ -373,7 +373,7 @@ class PedidoController {
 	
 	def printAllInList = {
 		def parametros = [:]
-		parametros['pedidos'] = params.list("pedidoSelecionado").toString().replace("[", "").replace("]", "");
+		parametros['pedidos'] = params.list("pedidosSelecionados").toString().replace("[", "").replace("]", "");
 		parametros['_format'] = "PDF"
 		parametros['_inline'] = true
 		parametros['_file'] = 'reciboEntrega'

@@ -661,7 +661,7 @@ input.print {
 }
 
 input[type="button"] {
-    margin: 5px 15px 5px 15px;
+    /*margin: 5px 15px 5px 15px;*/
     padding-left: 28px;  
     border: none;
     text-align: left;

@@ -5,7 +5,7 @@ public class Lancamento {
 	FormaPagamento formaPagamento
 	Date data
 	BigDecimal valor
-	Usuario registradoPor
+	Usuario operador
 	
 	static belongsTo = [caixaDiario: CaixaDiario]
 	
@@ -17,8 +17,8 @@ public class Lancamento {
 		valor column: 'VAL_LANCAMENTO'
 		operacao column: 'SEQ_OPERACAO'
 		formaPagamento column: 'SEQ_FORMA_PAGAMENTO'
-		registradoPor column: 'SEQ_USUARIO_RESPONSAVEL_REGISTRO'
-		caixaDiario column: 'SEQ_CAIXA_DIARIO'	
+		operador column: 'SEQ_OPERADOR'
+		caixaDiario column: 'SEQ_CAIXA_DIARIO'
 	}
 	
 }

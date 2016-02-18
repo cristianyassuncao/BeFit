@@ -422,11 +422,5 @@ function getArrayCodigoPedidosSelecionados() {
 function printAllInList() {
 	if (!hasPedidosSelecionados()) return;
 	var pedidos = getArrayCodigoPedidosSelecionados();
-    jQuery.ajax({
-		  url: '/befit/pedido/printAllInList?pedidoSelecionado=' + pedidos,
-		  async: false,
-		  success: function(data) {
-			  
-		  }	  
-	});
+	window.open("/befit/pedido/printAllInList?pedidosSelecionados=" + pedidos.toString(), "_blank");
 }

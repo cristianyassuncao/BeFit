@@ -1,9 +1,8 @@
 
 public class CaixaDiario {
 	
-	Date abertura
-	Date fechamento
-	Usuario abertoPor
+	Date dataHoraAbertura
+	Date dataHoraFechamento
 	
 	static hasMany = [lancamentos: Lancamento]
 	
@@ -11,9 +10,8 @@ public class CaixaDiario {
 		table 'tb_caixa_diario'
 		version false
 		id column: 'SEQ_CAIXA_DIARIO', generator: 'increment'
-		abertura column: 'DTH_ABERTURA'
-		fechamento column: 'DTH_FECHAMENTO'
-		abertoPor column: 'SEQ_USUARIO_RESPONSAVEL_ABERTURA'
+		dataHoraAbertura column: 'DTH_ABERTURA'
+		dataHoraFechamento column: 'DTH_FECHAMENTO'
 		lancamentos joinTable: false, column: 'SEQ_CAIXA_DIARIO'
 	}
 
