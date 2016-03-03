@@ -18,11 +18,26 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
+            <g:form id="ajaxForm" name="ajaxForm" url="[controller: 'produto', action:'index']" update="[sucess:'message',failure:'error']">
+                <div class="detalhes">
+                    <table class="parametros">
+                        <tr align='left'>
+                            <td valign='middle'>
+                                <label for='nome'><g:message code="produto.nome.label"/>:</label>
+                                <input id='nome' type='text' name='nome' maxlength="200" size="100"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <fieldset class="buttons">
+                    <input class="procurar" type="submit" value="Procurar" />
+                </fieldset>
+            </g:form>
             <table>
                 <thead>
                     <tr>
                         <g:sortableColumn property="id" title="${message(code: 'produto.id.label')}" />			
-			<g:sortableColumn property="nome" title="${message(code: 'produto.nome.label')}" />
+						<g:sortableColumn property="nome" title="${message(code: 'produto.nome.label')}" />
                         <th>${message(code: 'produto.descricao.label')}</th>			
                         <th>${message(code: 'produto.imagem.label')}</th>
                     </tr>
@@ -39,7 +54,7 @@
                 </tbody>
             </table>
             <div class="pagination">
-                <g:paginate total="${produtoInstanceCount ?: 0}" />
+                <g:paginate total="${produtoInstanceTotal ?: 0}" />
             </div>
         </div>
     </body>
