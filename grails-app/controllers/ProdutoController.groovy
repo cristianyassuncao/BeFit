@@ -14,7 +14,7 @@ class ProdutoController {
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index(Integer max) {
-		params.max = Math.min( params.max ? params.max.toInteger() : 15,  100)
+		params.max = Math.min( params.max ? params.max.toInteger() : 30, 100)
 		if (!params.sort) params.sort = "nome"
 		if (!params.order) params.order = "asc"
 		def result = Produto.createCriteria().list(params) {
