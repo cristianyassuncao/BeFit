@@ -38,4 +38,8 @@ class RelatorioController {
 		render(view:"/relatorio/analiticoPedidosNoPeriodo")
 	}
 	
+	def gerarCSVRelatorioAnaliticoPedidos = {
+		
+	}
+	
 }

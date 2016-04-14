@@ -12,7 +12,7 @@
 	</div>
 	<div class="body">
 		<div class="conteudo">
-			<g:form id="monitorPedidos" name="monitorPedidos" controller="pedido" action="index" update="[sucess:'message',failure:'error']">
+			<g:form id="parametros" name="parametros" controller="relatorio" action="gerarCSVRelatorioAnaliticoPedidos" update="[sucess:'message',failure:'error']">
                 <div class="detalhes">
                     <table class="parametros">
                         <tr align='left'>
