@@ -69,6 +69,13 @@
 	                <li class="submenu">
 	                    <a href="${createLinkTo(dir:'pedido')}">Pedidos</a>
 	                </li>
+	                <li class="submenu"><a href="#">Relatórios</a>
+                        <ul>
+                        	<li>
+                           		<g:link controller="relatorio" action="exibirParametrosRelatorioAnaliticoPedidos">Analítico de Pedidos</g:link>
+                            </li>
+                        </ul>
+                    </li>                
 	            </ul>
 	        </div>
         </shiro:authenticated>

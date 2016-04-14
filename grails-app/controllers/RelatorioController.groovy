@@ -34,4 +34,8 @@ class RelatorioController {
 				jasperPrinter)
 	}
 	
+	def exibirParametrosRelatorioAnaliticoPedidos = {
+		render(view:"/relatorio/analiticoPedidosNoPeriodo")
+	}
+	
 }
