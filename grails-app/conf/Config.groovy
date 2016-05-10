@@ -104,7 +104,7 @@ log4j.main = {
     //}
 	
 	all "grails.app"
-
+	
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts

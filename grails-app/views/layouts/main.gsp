@@ -72,7 +72,7 @@
 	                <li class="submenu"><a href="#">Relatórios</a>
                         <ul>
                         	<li>
-                           		<g:link controller="relatorio" action="exibirParametrosRelatorioAnaliticoPedidos">Analítico de Pedidos</g:link>
+                           		<g:link controller="relatorio" action="exibirParametrosRelatorioAnaliticoPedidosEntregues">Pedidos Entregues num Período</g:link>
                             </li>
                         </ul>
                     </li>                

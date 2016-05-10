@@ -12,12 +12,12 @@
 	</div>
 	<div class="body">
 		<div class="conteudo">
-			<g:form id="parametros" name="parametros" controller="relatorio" action="gerarCSVRelatorioAnaliticoPedidos" update="[sucess:'message',failure:'error']">
+			<g:form id="parametros" name="parametros" controller="relatorio" action="gerarCSVRelatorioAnaliticoPedidosEntregues" update="[sucess:'message',failure:'error']">
                 <div class="detalhes">
                     <table class="parametros">
                         <tr align='left'>
                             <td valign='middle'>
-             	                <label for="datas">Pedidos efetuados entre:</label>
+             	                <label for="datas">Pedidos entregues entre:</label>
 	                			<input type="text" id="dataInicial" name="dataInicial" class="data"/>
 	                			e
 	                			<input type="text" id="dataFinal" name="dataFinal" class="data"/>
@@ -26,7 +26,7 @@
             		</table>
             	</div>
             	<fieldset class="buttons">
-                    <input class="procurar" type="submit" value="Download" />
+                    <input class="procurar" type="submit" value="Exportar Formato .CSV" />
                     <g:actionSubmit class="clear" action="clear" value="Limpar"/>
                 </fieldset>
             </g:form>				
