@@ -1,12 +1,17 @@
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.text.SimpleDateFormat
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-import liquibase.util.csv.opencsv.CSVWriter
 
+import liquibase.util.csv.opencsv.CSVWriter
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRXlsExporter
+
+import org.apache.commons.lang.CharSet;
 import org.codehaus.groovy.grails.plugins.jasper.*;
+
 import au.com.bytecode.opencsv.*
 
 class RelatorioController {
@@ -48,8 +53,8 @@ class RelatorioController {
 		char separator = ';'
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream()
-		CSVWriter wr = new CSVWriter(new OutputStreamWriter(output), separator);
-		wr.writeNext((String[]) ['idPedido', 'idCliente', 'nomeCliente', 'dataEntrega', 'valorAPagar', 'valorPago', 'entregador', 'formaPagamento', 'idProduto', 'nomeProduto', 'quantidade', 'valorUnitario', 'valorItem'])
+		CSVWriter wr = new CSVWriter(new OutputStreamWriter(output, Charset.forName("UTF-8").newEncoder()), separator);
+		wr.writeNext((String[]) ['idPedido', 'idCliente', 'nomeCliente', 'dataEntrega', 'valorAPagar', 'valorPago', 'idEntregador', 'nomeEntregador', 'formaPagamento', 'idProduto', 'nomeProduto', 'quantidade', 'valorUnitario', 'valorItem'])
 		pedidosSelecionados.each {p ->
 			p?.itens?.each {i ->
 				wr.writeNext((String[]) [p.id, 
@@ -58,6 +63,7 @@ class RelatorioController {
 										 dateFormat.format(p?.dataEntrega),
 										 p?.valorAPagar,
 										 p?.valorPago,
+										 p?.entregador?.id,
 										 p?.entregador?.nome,
 										 p?.formaPagamento?.nome,
 										 i?.produto?.id,
@@ -71,6 +77,7 @@ class RelatorioController {
 		byte[] bytes = output.toByteArray()
 		response.setContentLength(bytes.length)
 		response.setContentType("text/csv");
+		response.setCharacterEncoding("UTF-8");
 		response.setHeader("Content-Disposition", String.format("attachment; filename=relatorioAnaliticoPedidos.csv"));
 		response.outputStream << bytes
 	}
