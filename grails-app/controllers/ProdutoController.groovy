@@ -14,8 +14,17 @@ class ProdutoController {
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Produto.list(params), model:[produtoInstanceCount: Produto.count()]
+		params.max = Math.min( params.max ? params.max.toInteger() : 30, 100)
+		if (!params.sort) params.sort = "nome"
+		if (!params.order) params.order = "asc"
+		def result = Produto.createCriteria().list(params) {
+			if (params.nome != null && params.nome != "") {
+				ilike("nome", "%" + params.nome + "%")
+			}
+			order(params.sort,params.order)
+		}
+		def totalRegistros = result.totalCount
+		return render(view: 'index', model: [produtoInstanceList: result, produtoInstanceTotal: totalRegistros])
     }
 
     def show(Produto produtoInstance) {

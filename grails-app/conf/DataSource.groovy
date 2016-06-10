@@ -18,6 +18,7 @@ hibernate {
     cache.use_second_level_cache = true
     cache.use_query_cache = true
     cache.region.factory_class = 'org.hibernate.cache.ehcache.EhCacheRegionFactory' // Hibernate 4
+	format_sql=true
 }
 
 // environment specific settings
@@ -28,6 +29,7 @@ environments {
 			url = "jdbc:mysql://localhost:3306/befit"
             username="befit"
             password="L8Az7!UY"
+			logsql=true
         }
     }
     test {
