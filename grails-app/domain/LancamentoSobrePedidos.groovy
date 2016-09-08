@@ -1,5 +1,5 @@
 
-public class LancamentoSobrePedidos {
+public class LancamentoSobrePedidos extends Lancamento {
 	
 	Pedido pedido
 	

@@ -1,7 +1,7 @@
 class Preco implements Comparable {
     
+	Date aPartirDe
     BigDecimal valor
-    Date aPartirDe
     
     static belongsTo = [produto: Produto]
 
@@ -11,9 +11,10 @@ class Preco implements Comparable {
     }
    
     static mapping = {
+		tablePerHierarchy false
         table 'tb_preco'
         version false
-        id column: 'SEQ_PRECO', generator: 'increment'
+        id column: 'SEQ_PRECO', generator: 'increment'		
         valor column: 'VAL_VALOR'
         aPartirDe column: 'DAT_APARTIRDE'
         produto column: 'SEQ_PRODUTO'

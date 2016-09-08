@@ -34,6 +34,10 @@ class ProdutoController {
     def create() {
         respond new Produto(params)
     }
+	
+	def createPacote() {
+		render(view: "create", model:[produtoInstance: new Pacote(params)])
+	}
 
     def save = {
         def produtoInstance = cadastroService.criarProduto(params)

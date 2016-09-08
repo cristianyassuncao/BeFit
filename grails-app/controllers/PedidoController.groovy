@@ -304,12 +304,14 @@ class PedidoController {
 	}
 	
 	def carregarValorUnitario = {
-		def preco = Preco.find("FROM Preco p1 WHERE p1.produto.id = :idProduto AND aPartirDe = (SELECT MAX(aPartirDe) FROM Preco p2 WHERE p2.produto.id = p1.produto.id AND p2.aPartirDe <= :data)", ['idProduto': new Long(params?.idProduto), 'data': Util.parse(params?.data)])
-		if (preco == null) {
-			render "" as String
-		} else {
-			render Util.formatCurrency(preco?.valor) as String
-		}	
+		def produto = Produto.get(params?.idProduto)
+		if (produto != null) {
+			def preco = produto.getPreco(Util.parse(params?.data))
+			if (preco != null) {
+				render Util.formatCurrency(preco?.valor) as String
+			}
+		}		
+		render "" as String
 	}
 	
 	def recarregarListaProdutos = {

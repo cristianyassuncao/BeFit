@@ -19,6 +19,7 @@ class Produto implements Comparable {
         table 'tb_produto'
         version false
         id column: 'SEQ_PRODUTO', generator: 'increment'
+		discriminator column: 'TIP_PRODUTO', value: "0"
         nome column: 'NOM_PRODUTO'
         descricao column: 'DSC_PRODUTO'
         imagem column: 'ARQ_IMAGEM'
@@ -41,6 +42,10 @@ class Produto implements Comparable {
 	public boolean equals(Object obj) {
 		def produto = (Produto) obj;
 		return id?.equals(produto?.id);
+	}
+	
+	public Preco getPreco(Date data) {
+		return Preco.find("FROM Preco p1 WHERE p1.produto.id = :idProduto AND aPartirDe = (SELECT MAX(aPartirDe) FROM Preco p2 WHERE p2.produto.id = p1.produto.id AND p2.aPartirDe <= :data)", ['idProduto': this.id, 'data': data])
 	}
     
 }
