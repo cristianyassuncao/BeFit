@@ -7,48 +7,18 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT *
+		<![CDATA[SELECT i.num_quantidade, p.nom_produto, trim(i.txt_alteracao_prato) txt_alteracao_prato
 FROM tb_produto p, tb_item_pedido i
 WHERE i.seq_produto = p.seq_produto
 AND   i.seq_pedido = $P{pedido}]]>
 	</queryString>
-	<field name="seq_produto" class="java.lang.Integer">
+	<field name="num_quantidade" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nom_produto" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="dsc_produto" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="arq_imagem" class="java.lang.Object">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="tip_imagem" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="seq_item_pedido" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="seq_pedido" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="num_quantidade" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="val_unitario" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="ind_prato_sofreu_alteracao" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="txt_alteracao_prato" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="ind_molho_sofreu_alteracao" class="java.lang.Boolean">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="txt_alteracao_molho" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -89,16 +59,29 @@ AND   i.seq_pedido = $P{pedido}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="29" height="20" uuid="c549108e-80e8-4be0-850f-346598080935"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{num_quantidade}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isStretchWithOverflow="true">
 				<reportElement x="34" y="0" width="225" height="20" uuid="0b0715be-fbfe-4b37-8da0-1fcbde257303"/>
 				<textFieldExpression><![CDATA[$F{nom_produto}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="14" y="22" width="245" height="20" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="6897fa69-f7f3-41c4-b9b7-4fad62bf65cb"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{txt_alteracao_prato} == null || $F{txt_alteracao_prato}.isEmpty()) ? null : ("*" +  $F{txt_alteracao_prato})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="43" width="259" height="1" uuid="b7399baa-3b97-4b3c-beb1-3265be903ade"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reciboEntrega" language="groovy" columnCount="3" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="263" columnSpacing="6" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d3ab795-d871-40a5-89c9-c7b6fd0a575a">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reciboEntrega" language="groovy" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="274" columnSpacing="6" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0d3ab795-d871-40a5-89c9-c7b6fd0a575a">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -22,12 +22,15 @@
        PED.DTH_ENTREGAR_A_PARTIR_DE APARTIRDE,
        PED.DTH_ENTREGAR_ATE ATE,
        PES_E.NOM_PESSOA ENTREGADOR,
-       (PED.VAL_PAGAR = PED.VAL_PAGO) PAGO
+       (PED.VAL_PAGAR = PED.VAL_PAGO) PAGO,
+       PED.TXT_OBSERVACAO OBSERVACAO,
+       NOM_FORMA_PAGAMENTO FORMAPAGAMENTO
 FROM tb_pedido PED INNER JOIN tb_cliente CLI ON PED.SEQ_CLIENTE = CLI.SEQ_CLIENTE
      INNER JOIN tb_pessoa PES_C ON CLI.SEQ_PESSOA = PES_C.SEQ_PESSOA
      INNER JOIN tb_bairro BAI ON BAI.SEQ_BAIRRO = PED.SEQ_BAIRRO
      LEFT JOIN tb_entregador ENT ON PED.SEQ_ENTREGADOR = ENT.SEQ_ENTREGADOR
      LEFT JOIN tb_pessoa PES_E ON ENT.SEQ_PESSOA = PES_E.SEQ_PESSOA
+     LEFT JOIN tb_forma_pagamento FP ON FP.SEQ_FORMA_PAGAMENTO = PED.SEQ_FORMA_PAGAMENTO
 WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 	</queryString>
 	<field name="NUMEROPEDIDO" class="java.lang.Integer"/>
@@ -44,13 +47,15 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 	<field name="ATE" class="java.sql.Time"/>
 	<field name="ENTREGADOR" class="java.lang.String"/>
 	<field name="PAGO" class="java.lang.Long"/>
+	<field name="OBSERVACAO" class="java.lang.String"/>
+	<field name="FORMAPAGAMENTO" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="228" splitType="Stretch">
+		<band height="245" splitType="Stretch">
 			<rectangle>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="262" height="225" uuid="c8b84868-1307-42fe-be14-3d448939f229"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="262" height="243" uuid="c8b84868-1307-42fe-be14-3d448939f229"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
@@ -130,7 +135,10 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				<text><![CDATA[Entregar a partir de]]></text>
 			</staticText>
 			<textField pattern="HH:mm" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="105" y="123" width="52" height="20" uuid="a915994d-039f-4efb-b74a-a11f86d2367e"/>
+				<reportElement positionType="Float" x="105" y="123" width="52" height="20" forecolor="#F90303" uuid="a915994d-039f-4efb-b74a-a11f86d2367e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{APARTIRDE}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -141,11 +149,14 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				<text><![CDATA[Até]]></text>
 			</staticText>
 			<textField pattern="HH:mm" isBlankWhenNull="true">
-				<reportElement positionType="Float" x="199" y="123" width="63" height="20" uuid="616fd87c-27c2-4aaa-8257-0919caec02cc"/>
+				<reportElement positionType="Float" x="199" y="123" width="63" height="20" forecolor="#F90303" uuid="616fd87c-27c2-4aaa-8257-0919caec02cc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{ATE}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="162" width="98" height="20" isRemoveLineWhenBlank="true" uuid="74bb0cd3-d0b0-4a40-8d9b-495336029a99">
+				<reportElement positionType="Float" x="3" y="180" width="98" height="20" isRemoveLineWhenBlank="true" uuid="74bb0cd3-d0b0-4a40-8d9b-495336029a99">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -154,14 +165,14 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				<text><![CDATA[Valor Pedido]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="108" y="162" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b269c1b0-da2f-4418-a8e3-2f5d33dfb1a3">
+				<reportElement positionType="Float" x="108" y="180" width="100" height="20" isRemoveLineWhenBlank="true" uuid="b269c1b0-da2f-4418-a8e3-2f5d33dfb1a3">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VALORPEDIDO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="182" width="100" height="20" isRemoveLineWhenBlank="true" uuid="60d00676-99e4-4f9e-a7fc-cda4d7d90ef7">
+				<reportElement positionType="Float" x="3" y="201" width="100" height="20" isRemoveLineWhenBlank="true" uuid="60d00676-99e4-4f9e-a7fc-cda4d7d90ef7">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -170,14 +181,16 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				<text><![CDATA[Valor a Receber]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="108" y="182" width="100" height="20" isRemoveLineWhenBlank="true" uuid="2824227c-37f7-4686-8ab9-bde3d7964305">
+				<reportElement positionType="Float" x="108" y="201" width="100" height="20" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="2824227c-37f7-4686-8ab9-bde3d7964305">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{VALORARECEBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="3" y="202" width="100" height="20" isRemoveLineWhenBlank="true" uuid="aa6e76f1-2678-485b-abbf-e06896bd834d">
+				<reportElement positionType="Float" x="3" y="221" width="100" height="20" isRemoveLineWhenBlank="true" uuid="aa6e76f1-2678-485b-abbf-e06896bd834d">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -186,14 +199,14 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				<text><![CDATA[Troco]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="108" y="202" width="100" height="20" isRemoveLineWhenBlank="true" uuid="0148b253-7f1a-4b07-80ed-5bdd57e134d9">
+				<reportElement positionType="Float" x="108" y="221" width="100" height="20" isRemoveLineWhenBlank="true" uuid="0148b253-7f1a-4b07-80ed-5bdd57e134d9">
 					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VALORTROCO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="4" y="171" width="258" height="31" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="e26ec377-8715-44e2-b441-e14d171c5e28">
+				<reportElement positionType="Float" x="4" y="190" width="258" height="31" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="e26ec377-8715-44e2-b441-e14d171c5e28">
 					<printWhenExpression><![CDATA[$F{PAGO} == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -209,7 +222,7 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "reciboEntregaItensPedido.jasper"]]></subreportExpression>
 			</subreport>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement positionType="Float" x="172" y="103" width="90" height="20" uuid="9eade42b-99ba-4c79-b065-2d9002b5e7dc"/>
 				<textFieldExpression><![CDATA[$F{ENTREGADOR}]]></textFieldExpression>
 			</textField>
@@ -220,6 +233,24 @@ WHERE PED.SEQ_PEDIDO IN ($P!{pedidos})]]>
 				</textElement>
 				<text><![CDATA[Entregador]]></text>
 			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="3" y="159" width="118" height="20" isRemoveLineWhenBlank="true" uuid="92e39121-cc58-4774-9b56-539c734e67e1">
+					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Forma de Pagamento]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="124" y="159" width="138" height="20" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="2964ea41-b912-49c8-9cdc-04ffc062dbac">
+					<printWhenExpression><![CDATA[$F{PAGO} == 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FORMAPAGAMENTO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
