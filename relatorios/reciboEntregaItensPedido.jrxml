@@ -69,8 +69,8 @@ AND   i.seq_pedido = $P{pedido}]]>
 				<reportElement x="34" y="0" width="225" height="20" uuid="0b0715be-fbfe-4b37-8da0-1fcbde257303"/>
 				<textFieldExpression><![CDATA[$F{nom_produto}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" x="14" y="22" width="245" height="20" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="6897fa69-f7f3-41c4-b9b7-4fad62bf65cb"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="14" y="22" width="243" height="20" isRemoveLineWhenBlank="true" forecolor="#F90303" uuid="6897fa69-f7f3-41c4-b9b7-4fad62bf65cb"/>
 				<textElement textAlignment="Justified">
 					<font isBold="true"/>
 				</textElement>
